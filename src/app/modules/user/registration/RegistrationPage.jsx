@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import RegistrationForm from './RegistrationForm';
-import {registerUser} from '../../modules/user/actions/userActions';
+import {registerUser} from '../actions/userActions';
 
 // get state we are interested in
 const mapStateToProps = (state) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import App from './components/app/App';
 import Home from './components/Home/Home';
 import About from './components/about/About';
-import { RegistrationPage } from './components/registration/RegistrationPage';
+import { RegistrationPage } from './modules/user/registration/RegistrationPage';
 import { Router, Route, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 

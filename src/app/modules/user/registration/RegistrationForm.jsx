@@ -27,11 +27,11 @@ let RegistrationForm = React.createClass({
     },
 
     render: function () {
-        const { handleSubmit } = this.props;
+        const { onSaveRegistration } = this.props;
         return (
             <div>
                 <h1>Registration</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={onSaveRegistration}>
                     <TextField type='text' floatingLabelText='Name' name='name'
                                onChange={this.handleChange.bind(this, 'name')}
                                maxLength={120} errorText={this.getError('name')}/><br />
@@ -40,7 +40,7 @@ let RegistrationForm = React.createClass({
                                maxLength={120}/><br />
                     <Checkbox label="Hide password"
                               checked={this.state.passwordType === 'password'}
-                              onChange={this.handleHideShowPassword.bind(this, this.state.isPasswordHidden)}/>
+                              onChange={::this.handleHideShowPassword()}/>
                     <TextField type={this.state.passwordType} floatingLabelText='Password'
                                name='password' onChange={this.handleChange.bind(this, 'password')}
                                maxLength={120}/><br />
