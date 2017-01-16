@@ -1,4 +1,4 @@
-import * as types from '../modules/user/actions/actionTypes';
+import * as types from '../actions/actionTypes';
 
 export default function userReducer(state = [], action) {
     switch (action.type) {

@@ -23,7 +23,8 @@ const config = {
                 loader: 'babel',
                 include: APP_DIR,
                 query: {
-                    presets: ['react', 'es2015', 'stage-1']
+                    presets: ['react', 'es2015', 'stage-2'],
+                    plugins: ["transform-decorators-legacy", "transform-function-bind"]
                 }
             },
             // {
