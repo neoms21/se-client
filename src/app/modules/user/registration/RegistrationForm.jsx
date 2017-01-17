@@ -29,7 +29,7 @@ let RegistrationForm = React.createClass({
     render() {
         const { onSaveRegistration } = this.props;
         return (
-            <div>
+            <section>
                 <h1>Registration</h1>
                 <form onSubmit={onSaveRegistration}>
                     <TextField type='text' floatingLabelText='Name' name='name'
@@ -50,7 +50,7 @@ let RegistrationForm = React.createClass({
                         <RaisedButton label="Register" primary={true} />
                     </div>
                 </form>
-            </div>
+            </section>
         );
     }
 });

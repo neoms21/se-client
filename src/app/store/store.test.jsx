@@ -1,8 +1,6 @@
-import expect from 'expect';
 import { createStore } from 'redux';
 import rootReducer from '../reducers';
 import * as userActions from '../redux/actions/userActions';
-
 
 
 describe('Store', function() {
