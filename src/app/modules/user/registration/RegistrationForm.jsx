@@ -27,30 +27,31 @@ let RegistrationForm = React.createClass({
     },
 
     render: function () {
-        const { onSaveRegistration } = this.props;
+        //const { onSaveRegistration } = this.props;
         return (
-            <div>
-                <h1>Registration</h1>
-                <form onSubmit={onSaveRegistration}>
-                    <TextField type='text' floatingLabelText='Name' name='name'
-                               onChange={this.handleChange.bind(this, 'name')}
-                               maxLength={120} errorText={this.getError('name')}/><br />
-                    <TextField type='email' floatingLabelText='Email' name='email'
-                               onChange={this.handleChange.bind(this, 'email')}
-                               maxLength={120}/><br />
-                    <Checkbox label="Hide password"
-                              checked={this.state.passwordType === 'password'}
-                              onChange={::this.handleHideShowPassword()}/>
-                    <TextField type={this.state.passwordType} floatingLabelText='Password'
-                               name='password' onChange={this.handleChange.bind(this, 'password')}
-                               maxLength={120}/><br />
-                    <TextField type='telephone' floatingLabelText='Telephone' name='telephone'
-                               onChange={this.handleChange.bind(this, 'telephone')} maxLength={20}/>
-                    <div>
-                        <RaisedButton label="Register" primary={true} />
-                    </div>
-                </form>
-            </div>
+            <div>hhhhhhhhhhh</div>
+            // <div>
+            //     <h1>Registration</h1>
+            //     <form onSubmit={onSaveRegistration}>
+            //         <TextField type='text' floatingLabelText='Name' name='name'
+            //                    onChange={this.handleChange.bind(this, 'name')}
+            //                    maxLength={120} errorText={this.getError('name')}/><br />
+            //         <TextField type='email' floatingLabelText='Email' name='email'
+            //                    onChange={this.handleChange.bind(this, 'email')}
+            //                    maxLength={120}/><br />
+            //         <Checkbox label="Hide password"
+            //                   checked={this.state.passwordType === 'password'}
+            //                   onChange={::this.handleHideShowPassword()}/>
+            //         <TextField type={this.state.passwordType} floatingLabelText='Password'
+            //                    name='password' onChange={this.handleChange.bind(this, 'password')}
+            //                    maxLength={120}/><br />
+            //         <TextField type='telephone' floatingLabelText='Telephone' name='telephone'
+            //                    onChange={this.handleChange.bind(this, 'telephone')} maxLength={20}/>
+            //         <div>
+            //             <RaisedButton label="Register" primary={true} />
+            //         </div>
+            //     </form>
+            // </div>
         );
     }
 });
