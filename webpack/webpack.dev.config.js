@@ -14,6 +14,7 @@ const config = {
         path: BUILD_DIR,
         filename: 'bundle.js'
     },
+    devtool: 'source-map',
 
     module: {
         loaders: [
@@ -24,7 +25,7 @@ const config = {
                 include: APP_DIR,
                 query: {
                     presets: ['react', 'es2015', 'stage-2'],
-                    plugins: ["transform-decorators-legacy", "transform-function-bind"]
+                    plugins: ["transform-function-bind"]
                 }
             },
             // {

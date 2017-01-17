@@ -15,13 +15,13 @@ class App extends React.Component {
     }
 }
 
-App.propTypes = {
-    children: PropTypes.object.isRequired
-};
+// App.propTypes = {
+//     children: PropTypes.object.isRequired
+// };
 
 function mapStateToProps(state, ownProps) {
     return {
-        loading: state.ajaxCallsInProgress > 0
+       // loading: state.ajaxCallsInProgress > 0
     };
 }
 

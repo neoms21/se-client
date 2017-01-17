@@ -22,7 +22,7 @@ render(
             <Provider store={store}>
                 <Router history={history} routes={routes}/>
             </Provider>
-        </MuiThemeProvider>
+         </MuiThemeProvider>
     </div>,
     document.getElementById('app')
 );

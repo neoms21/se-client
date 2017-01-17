@@ -6,7 +6,7 @@ import {registerUser} from '../actions/userActions';
 // get state we are interested in
 const mapStateToProps = (state) => {
     return {
-        registration: state.userRegistration
+        //registration: state.userRegistration
     }
 };
 
@@ -20,6 +20,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // connect them
-const RegistrationPage = connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
-
-export default RegistrationPage;
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
