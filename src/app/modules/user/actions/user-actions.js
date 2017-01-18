@@ -1,11 +1,12 @@
 import * as types from './actionTypes';
 
 export const registerUser = (userInfo) => ({
-    type: types.REGISTER_USER
+    type: types.REGISTER_USER,
+    user: userInfo
 });
 
 export const registerUserSuccess = (user) => ({
-    type: types.REGISTER_USER,
+    type: types.REGISTER_USER_SUCCESS,
     user: user
 });
 

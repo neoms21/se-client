@@ -1,12 +1,11 @@
 {
-  "name": "transparent-jobs-demo",
+  "name": "sports-editor-react",
   "version": "1.0.0",
-  "description": "transparent jobs demo",
+  "description": "sports editor client",
   "main": "index.js",
   "scripts": {
-    "test": "jest src/**/*-tests.js --no-cache",
+    "test": "jest --no-cache --watch",
     "start": "webpack-dev-server --config webpack/webpack.dev.config --progress --inline --hot --history-api-fallback",
-    "start2": "webpack-dev-server --hot",
     "build": "webpack -p"
   },
   "repository": {
