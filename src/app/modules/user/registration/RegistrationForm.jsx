@@ -5,72 +5,72 @@ import RaisedButton from 'material-ui/RaisedButton';
 //import {reduxForm} from 'redux-form';
 //import {s} from './register-user.scss';
 
+const RegistrationForm = (props) => (
 
-let RegistrationForm = React.createClass({
-    errors: [],
+    // handleHideShowPassword: function () {
+    //     // this.setState({
+    //     //     passwordType: this.state.passwordType === 'text' ? 'password' : 'text'
+    //     // })
+    // },
 
-    handleChange: function (fieldName) {
+    // getInitialState() {
+    //     return {
+    //         passwordType: 'text'
+    //     }
+    // },
 
-    },
+    // getError(fieldName) {
+    //     switch(fieldName) {
+    //         case "name":
+    //             console.log(this.refs)
+    //              return (this.refs.name !== undefined && this.refs.name.length === 0) ? "Name is required" : "";
+    //     }
+    // },
 
-    handleHideShowPassword: function () {
-        // this.setState({
-        //     passwordType: this.state.passwordType === 'text' ? 'password' : 'text'
-        // })
-    },
+    <section className="register-user">
+        <h1>Register new user</h1>
+        <form>
+            <TextField type='text' floatingLabelText='Please enter your name - required' name='name'
+                       fullWidth={true} onChange={props.handleChangeName}
+                       maxLength={120} errorText={props.getError('name')}/>
+            <TextField type='email' floatingLabelText='Email is required, and will be used as your user name'
+                       name='email' fullWidth={true}
+                       onChange={props.handleChangeName('email')}
+                       maxLength={120} errorText={props.getError('email')}/>
+            <Checkbox label=" Hide password"
+                      checked={props.passwordType === 'password'}
+                      onChange={props.handleChangePasswordType}/>
+            <TextField type='text'
+                       floatingLabelText='Please enter your password - it needs to be at least 8 characters, and is required'
+                       name='password' fullWidth={true}
+                       onChange={props.handleChangePassword}
+                       maxLength={120} errorText={props.getError('password')}/>
+            <TextField type='text' floatingLabelText='Please re-enter your password - it needs to match'
+                       name='passwordConfirm' fullWidth={true}
+                       onChange={props.handleChangePasswordConfirm}
+                       maxLength={120} errorText={props.getError('passwordConfirm')}/>
 
-    getInitialState() {
-        return {
-            passwordType: 'text'
-        }
-    },
+            <div className="error">
+                {props.errors.map(err => <div>{err}</div>)}
+            </div>
 
-    getError(fieldName) {
-        switch(fieldName) {
-            case "name":
-                console.log(this.refs)
-                 return (this.refs.name !== undefined && this.refs.name.length === 0) ? "Name is required" : "";
-        }
-    },
+            <div className="button-row">
+                <RaisedButton label="Register" primary={true} onClick={props.onSaveRegistration} />
+            </div>
+        </form>
+    </section>
+);
 
-    render() {
-        const {onSaveRegistration} = this.props;
-        return (
-            <section className="register-user">
-                <h1>Register new user</h1>
-                <form>
-                    <TextField type='text' floatingLabelText='Please enter your name - required' name='name' id="name"
-                               onChange={::this.handleChange('name')} fullWidth={true}
-                               maxLength={120} errorText={::this.getError('name')}/>
-                    <TextField type='email' floatingLabelText='Email is required, and will be used as your user name'
-                               name='email' fullWidth={true}
-                               onChange={::this.handleChange('email')}
-                               maxLength={120} errorText={this.getError('email')}/>
-                    <Checkbox label=" Hide password"
-                              checked={this.state.passwordType === 'password'}
-                              onChange={::this.handleHideShowPassword()}/>
-                    <TextField type='text'
-                               floatingLabelText='Please enter your password - it needs to be at least 8 characters, and is required'
-                               name='password' fullWidth={true}
-                               onChange={this.handleChange.bind(this, 'password')}
-                               maxLength={120} errorText={this.getError('password')}/>
-                    <TextField type='text' floatingLabelText='Please re-enter your password - it needs to match'
-                               name='passwordConfirm' fullWidth={true}
-                               onChange={this.handleChange.bind(this, 'passwordConfirm')}
-                               maxLength={120} errorText={this.getError('passwordConfirm')}/>
+RegistrationForm.propTypes = {
+    handleChangePasswordConfirm: React.PropTypes.func.isRequired,
+    handleChangePasswordType: React.PropTypes.func.isRequired,
+    passwordType: React.PropTypes.string,
+    handleChangeName: React.PropTypes.func.isRequired,
+    getError: React.PropTypes.func.isRequired,
+    errors: React.PropTypes.array,
+    onSaveRegistration: React.PropTypes.func.isRequired
+};
 
-                    <div className="error">
-                        {this.errors.map(err => <div>{err}</div>)}
-                    </div>
-
-                    <div className="button-row">
-                        <RaisedButton label="Register" primary={true} onClick={onSaveRegistration} />
-                    </div>
-                </form>
-            </section>
-        );
-    }
-});
 
 // Decorate the form component
 // RegistrationForm = reduxForm({
