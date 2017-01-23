@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 //import {reduxForm} from 'redux-form';
-import {s} from './register-user.scss';
+//import {s} from './register-user.scss';
 
 
 let RegistrationForm = React.createClass({
@@ -26,7 +26,11 @@ let RegistrationForm = React.createClass({
     },
 
     getError(fieldName) {
-        return "";
+        switch(fieldName) {
+            case "name":
+                console.log(this.refs)
+                 return (this.refs.name !== undefined && this.refs.name.length === 0) ? "Name is required" : "";
+        }
     },
 
     render() {
@@ -34,10 +38,10 @@ let RegistrationForm = React.createClass({
         return (
             <section className="register-user">
                 <h1>Register new user</h1>
-                <form onSubmit={onSaveRegistration}>
-                    <TextField type='text' floatingLabelText='Please enter your name - required' name='name'
-                               onChange={this.handleChange.bind(this, 'name')} fullWidth={true}
-                               maxLength={120} errorText={this.getError('name')}/>
+                <form>
+                    <TextField type='text' floatingLabelText='Please enter your name - required' name='name' id="name"
+                               onChange={::this.handleChange('name')} fullWidth={true}
+                               maxLength={120} errorText={::this.getError('name')}/>
                     <TextField type='email' floatingLabelText='Email is required, and will be used as your user name'
                                name='email' fullWidth={true}
                                onChange={::this.handleChange('email')}
@@ -60,7 +64,7 @@ let RegistrationForm = React.createClass({
                     </div>
 
                     <div className="button-row">
-                        <RaisedButton label="Register" primary={true}/>
+                        <RaisedButton label="Register" primary={true} onClick={onSaveRegistration} />
                     </div>
                 </form>
             </section>
