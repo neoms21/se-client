@@ -13,11 +13,18 @@ const mapStateToProps = (state) => {
 // we are interested in these dispatchers
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSaveRegistration: (userDetails) => {
+        handleSubmit: (userDetails) => {
             dispatch(registerUser(userDetails));
+        },
+        reset: () => {
+
         }
     }
 };
+
+// const RegistrationForm = (
+//     <RegistrationForm handleSubmit="">
+// )
 
 // connect them
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

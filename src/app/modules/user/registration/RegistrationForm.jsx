@@ -23,19 +23,36 @@ const email = value =>
         'Invalid email address' : undefined;
 const tooOld = value =>
     value && value > 65 ? 'You might be too old for this' : undefined;
-const aol = value =>
-    value && /.+@aol\.com/.test(value) ?
-        'Really? You still use AOL for your email?' : undefined;
 
-// const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-//     <div>
-//         <label>{label}</label>
-//         <div><p>kkkkk</p>
-//             <input {...input} placeholder={label} type={type}/>
-//             {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
-//         </div>
-//     </div>
-// );
+
+const validate = values => {
+    const errors = {};
+    if (!values.name) {
+        errors.name = 'Required'
+    } else if (values.name.length > 60) {
+        errors.name = 'Must be 60 characters or less'
+    }
+    if (!values.email) {
+        errors.email = 'Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+    }
+    if (!values.password) {
+        errors.password = 'Required'
+    } else if (values.password.length < 8) {
+        errors.password = 'Must be at least 8 letters and/or numbers'
+    }
+    if (!values.passwordConfirm) {
+        errors.passwordConfirm = 'Required'
+    } else if (values.passwordConfirm.length < 8) {
+        errors.passwordConfirm = 'Must be at least 8 letters and/or numbers'
+    } else if (values.password !== values.passwordConfirm) {
+        errors.passwordConfirm = 'Must match password';
+    }
+
+    return errors;
+};
+
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField hintText={label}
@@ -50,19 +67,19 @@ const FieldLevelValidationForm = (props) => {
     const { handleSubmit, pristine, reset, submitting } = props;
     return (
         <form onSubmit={handleSubmit} className="register-user">
-            <Field name="username"
-                   component={renderTextField} label="Username"
-                   validate={[ required, maxLength60 ]} fullWidth={true}
+            <Field name="name"
+                   component={renderTextField} label="Name" fullWidth={true}
             />
             <Field name="email" type="email"
-                   component={renderTextField} label="Email"
-                   validate={email}
-                   warn={aol} fullWidth={true}
+                   component={renderTextField} label="Email" fullWidth={true}
             />
             <Field name="passwordType" type="checkbox" component="input" />
             <Field name="password" type="password"
                    component={renderTextField} label="Password"
-                   validate={[ required, minLength8 ]}
+                   fullWidth={true}
+            />
+            <Field name="passwordConfirm" type="password"
+                   component={renderTextField} label="Confirm password"
                    fullWidth={true}
             />
             <div className="button-row">
@@ -74,7 +91,8 @@ const FieldLevelValidationForm = (props) => {
 };
 
 export default reduxForm({
-    form: 'fieldLevelValidation' // a unique identifier for this form
+    form: 'fieldLevelValidation', // a unique identifier for this form
+    validate
 })(FieldLevelValidationForm)
 
 
