@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import RegistrationForm from './RegistrationForm';
 import {registerUser} from '../actions/user-actions';
 
