@@ -20,7 +20,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 // login user
 //todo: get from local storage? is this right place
 
-login('kk@kk', 'kkkkkkkk');
+login('g@h.com', 'mmmmmmmmmm');
 
 render(
     <div>
