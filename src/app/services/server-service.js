@@ -29,13 +29,25 @@ const login = (email, password) => {
         body: JSON.stringify({userName: email, password: password})
     })
         .then(function (resp) {
-            //let responseAsJson = resp.json();
-            console.log(resp.body.json())
-            // store token
-            //token = responseAsJson;
+            if (resp.status === 200) {
+                // logged in ok, so
+                resp.json()
+                    .then((respObject) => {
+                        console.log(respObject)
+                        // store token
+                        token = respObject;
+                    });
+            } else {
+                // error logging in
+                resp.text()
+                    .then(respText => {
+                        console.log('error ' + respText)
+                    });
+            }
+
         })
         .catch(function (err) {
-            console.log('err' + err.json());
+            console.log('err' + err);
         });
 
     // ajax.post('http://localhost:8180/login', {userName: email, password: password})
