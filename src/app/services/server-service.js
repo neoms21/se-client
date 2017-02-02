@@ -10,6 +10,7 @@ let streamForGeneral;
 let isAuthenticated;
 let token;
 
+
 const init = () => {
     try {
         streamForCommand = {};
@@ -22,10 +23,24 @@ const init = () => {
     }
 };
 
+// const reconnect = () => {
+//
+//     socket.disconnect();
+//     socket.connect('http://localhost:8180', {
+//         extraHeaders: {
+//             Authorization: "Bearer authorization_token_here"
+//         }
+//     });
+// };
+
 const login = (email, password) => {
 
     fetch('http://localhost:8180/login', {
         method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({userName: email, password: password})
     })
         .then(function (resp) {
@@ -33,9 +48,11 @@ const login = (email, password) => {
                 // logged in ok, so
                 resp.json()
                     .then((respObject) => {
-                        console.log(respObject)
+                        console.log('Authenticated user ' + email);
                         // store token
                         token = respObject;
+                        // set authorization
+                        socket.emit('authentication', {token: respObject});
                     });
             } else {
                 // error logging in
