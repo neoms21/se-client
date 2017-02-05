@@ -1,0 +1,14 @@
+# tell it which docker image to use, use one with yarn
+image: kkarczmarczyk/node-yarn:latest
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+  - node_modules/
+
+test_async:
+  script:
+   - yarn
+   - yarn run test:ci
+

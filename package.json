@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --no-cache --watch",
+    "test:ci": "jest --no-cache",
     "start": "webpack-dev-server --config webpack/webpack.dev.config --progress --inline --hot --history-api-fallback",
     "build": "webpack -p"
   },
@@ -68,7 +69,19 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
+    "webpack-babel-jest": "^1.0.4",
     "webpack-dev-server": "^1.16.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "jest": {
+    "transform": {
+      ".*": "<rootDir>/node_modules/webpack-babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "es6"
+    ]
+  }
 }
