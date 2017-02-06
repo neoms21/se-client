@@ -71,41 +71,6 @@ const login = (email, password) => {
             console.log('err' + err);
         });
 
-    // ajax.post('http://localhost:8180/login', {userName: email, password: password})
-    //     .subscribe(resp => {
-    //         console.log(resp)
-    //             token = resp;
-    //
-    //             // now connect with token
-    //             socket = io.connect('http://localhost:8180', {request: token});
-    //
-    //             socket.on('event', processReceiveEvent);
-    //             socket.on('connect', function () {
-    //                 console.log('authenticated');
-    //             }).on('disconnect', function () {
-    //                 console.log('disconnected');
-    //             });
-    //         }, (err) => {
-    //             console.log('@@@@@' + err.xhr)
-    //         }
-    //     );
-
-    // socket.emit('authentication', {username: email, password: password});
-    // socket.on('authenticated', (xxx) => {
-    //     // use the socket as usual, as user has been authenticated
-    //     console.log('authenticated ');
-    //     isAuthenticated = true;
-    // });
-    // socket.on('unauthorized', (err) => {
-    //     // either user name or password didnt match
-    //     console.log("There was an error with the authentication:", err.message);
-    //     isAuthenticated = false;
-    //
-    //     // create an event to send for any components that need an event, maybe promise better?!?!?
-    //     let resp = {};
-    //     resp.eventName = 'LoginFailed';
-    //     streamForGeneral.next(resp);
-    // });
 };
 
 const sendCommand = (name, payload) => {

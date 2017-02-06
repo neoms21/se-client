@@ -4,8 +4,8 @@
   "description": "sports editor client",
   "main": "index.js",
   "scripts": {
-    "test": "jest --no-cache --watch",
-    "test:ci": "jest --no-cache",
+    "test": "jest --no-cache --watch --coverage",
+    "ci": "jest --no-cache --coverage",
     "start": "webpack-dev-server --config webpack/webpack.dev.config --progress --inline --hot --history-api-fallback",
     "build": "webpack -p"
   },
@@ -82,6 +82,10 @@
       "jsx",
       "json",
       "es6"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js*",
+      "!src/**/*.test.js"
     ]
   }
 }
