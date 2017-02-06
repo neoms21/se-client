@@ -2,14 +2,11 @@
 import io from 'socket.io-client';
 import {Observable, Subject} from 'rxjs';
 import * as uuid from 'uuid';
-import {ajax} from 'rxjs/observable/dom/ajax';
 
 let socket;
 let streamForCommand;
 let streamForGeneral;
-let isAuthenticated;
 let token;
-
 
 const init = () => {
     try {
@@ -69,7 +66,6 @@ const login = (email, password) => {
                         console.log('error ' + respText)
                     });
             }
-
         })
         .catch(function (err) {
             console.log('err' + err);
