@@ -1,23 +1,21 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import {shallow} from 'enzyme';
-import RegistrationForm from './signin-form';
+import SigninForm from './signin-form';
 
 
-describe('User Registration form', () => {
+describe('User Signin form', () => {
     it('should render', () => {
-        const form = shallow(<RegistrationForm></RegistrationForm>);
+        const form = shallow(<SigninForm></SigninForm>);
         expect(form.text()).toBeDefined();
     });
 
     it('should invoke save when clicking save', () => {
         let myFunc = jest.genMockFunction();
-        //var myFuncSpy = spyOn(myFunc);
-        const form = shallow(<RegistrationForm handleSubmit={myFunc}></RegistrationForm>);
+
+        const form = shallow(<SigninForm handleSubmit={myFunc}></SigninForm>);
 
         form.simulate('submit');
-        //form.find('RaisedButton').last().simulate('click');
-        //expect(form.props.onSaveRegistration).toBeDefined();
         expect(myFunc).toBeCalled();
     });
 });

@@ -1,6 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import RegistrationForm from './RegistrationForm';
 import {registerUser} from '../actions/user-actions';
 
@@ -59,7 +58,7 @@ const validate = values => {
 };
 
 export default reduxForm({
-    form: 'fieldLevelValidation', // a unique identifier for this form
+    form: 'RegistrationForm', // a unique identifier for this form
     validate,
     onSubmit
 })(RegistrationForm)

@@ -39,6 +39,8 @@ const init = () => {
 // };
 
 const login = (email, password) => {
+    // login needs it own observable - would this be better as promise???
+    const ret = new Subject();
 
     fetch('http://localhost:8180/login', {
         method: 'post',
@@ -48,29 +50,33 @@ const login = (email, password) => {
         },
         body: JSON.stringify({userName: email, password: password})
     })
-        .then(function (resp) {
+        .then(function (resp) { // response from post
             if (resp.status === 200) {
-                // logged in ok, so
+                // logged in ok, so get response out
                 resp.json()
                     .then((respObject) => {
                         console.log('Authenticated user ' + email);
                         // store token
                         token = respObject;
-                        // set authorization
+                        // tell server that we are now authenticating the socket
                         socket.emit('authentication', {token: respObject});
+                        ret.next({userName: email})
                     });
             } else {
                 // error logging in
                 resp.text()
                     .then(respText => {
-                        console.log('error ' + respText)
+                        console.log('error ' + respText);
+                        ret.error(respText);
                     });
             }
         })
         .catch(function (err) {
             console.log('err' + err);
+            ret.error(err);
         });
 
+    return ret;
 };
 
 const sendCommand = (name, payload) => {
@@ -96,11 +102,7 @@ const sendCommand = (name, payload) => {
 const processReceiveEvent = (event) => {
     if (event.correlationId) {
         // happy days, find right observable
-        if (event.isFailure) {
-            streamForCommand[event.correlationId].error(event); // pass it on as error
-        } else {
-            streamForCommand[event.correlationId].next(event); // pass it on
-        }
+        streamForCommand[event.correlationId].next(event); // pass it on
     } else {
         streamForGeneral.next(event);
     }

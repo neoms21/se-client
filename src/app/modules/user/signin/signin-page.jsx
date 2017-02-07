@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
-
+import { reduxForm } from 'redux-form';
+import SigninForm from './signin-form';
+import {signinUser} from '../actions/user-actions';
 
 const onSubmit = (values, dispatch) => {
     let userDetails = {userName: values.userName, password: values.password };
@@ -39,7 +39,7 @@ const validate = values => {
 };
 
 export default reduxForm({
-    form: 'signinForm', // a unique identifier for this form
+    form: 'SigninForm', // a unique identifier for this form
     validate,
     onSubmit
 })(SigninForm)
