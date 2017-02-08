@@ -7,6 +7,8 @@ import {reducer as formReducer} from 'redux-form';
 import {createEpicMiddleware} from 'redux-observable';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {rootEpic} from '../epics/rootEpics';
+import {routerMiddleware} from 'react-router-redux';
+import {browserHistory} from 'react-router';
 
 export default function configureStore(initialState) {
 
@@ -21,7 +23,8 @@ export default function configureStore(initialState) {
     const reducer = combineReducers(reducers);
     // get all epics
     const epicMiddleware = createEpicMiddleware(rootEpic);
+    const routingMiddleware = routerMiddleware(browserHistory);
 
-    return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware,
-        reduxImmutableStateInvariant())));
+    return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(
+        epicMiddleware, routingMiddleware, reduxImmutableStateInvariant())));
 }

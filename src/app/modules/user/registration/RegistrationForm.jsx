@@ -24,7 +24,6 @@ const RegistrationForm = (props) => {
             <Field name="email" type="email"
                    component={renderTextField} label="Email" fullWidth={true}
             />
-            <Field name="passwordType" type="checkbox" component="input" />
             <Field name="password" type="password"
                    component={renderTextField} label="Password"
                    fullWidth={true}

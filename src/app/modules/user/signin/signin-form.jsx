@@ -20,7 +20,6 @@ const SigninForm = (props) => {
         <form onSubmit={handleSubmit} className="signin-user">
             <Field name="userName"
                    component={renderTextField} label="User name" fullWidth={true}/>
-            <Field name="passwordType" type="checkbox" component="input"/>
             <Field name="password" type="password"
                    component={renderTextField} label="Password"
                    fullWidth={true}

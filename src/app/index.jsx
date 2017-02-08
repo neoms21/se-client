@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {Router, browserHistory} from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import routes from './routes';
-import globalSass from '../assets/styles/global.scss';
+import {globalSass} from '../assets/styles/global.scss';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 

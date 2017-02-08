@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import {Observable, Subject} from 'rxjs';
 import * as uuid from 'uuid';
 
+// this controls interacttion with server using socket.io
+
 let socket;
 let streamForCommand;
 let streamForGeneral;
@@ -57,10 +59,10 @@ const login = (email, password) => {
                     .then((respObject) => {
                         console.log('Authenticated user ' + email);
                         // store token
-                        token = respObject;
+                        token = respObject.token;
                         // tell server that we are now authenticating the socket
-                        socket.emit('authentication', {token: respObject});
-                        ret.next({userName: email})
+                        socket.emit('authentication', respObject);
+                        ret.next({userName: email});
                     });
             } else {
                 // error logging in
@@ -72,7 +74,7 @@ const login = (email, password) => {
             }
         })
         .catch(function (err) {
-            console.log('err' + err);
+            console.log('err ' + err);
             ret.error(err);
         });
 

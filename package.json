@@ -4,7 +4,7 @@
   "description": "sports editor client",
   "main": "index.js",
   "scripts": {
-    "test": "jest --no-cache --watch --coverage",
+    "test": "jest --no-cache --watch",
     "ci": "jest --no-cache --coverage",
     "start": "webpack-dev-server --config webpack/webpack.dev.config --progress --inline --hot --history-api-fallback",
     "build": "webpack -p"
@@ -76,7 +76,7 @@
   "dependencies": {},
   "jest": {
     "transform": {
-      ".*": "<rootDir>/node_modules/webpack-babel-jest"
+      ".*": "./webpack/jest-preprocessor"
     },
     "moduleFileExtensions": [
       "js",

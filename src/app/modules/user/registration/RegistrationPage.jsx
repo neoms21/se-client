@@ -4,7 +4,6 @@ import RegistrationForm from './RegistrationForm';
 import {registerUser} from '../actions/user-actions';
 
 const onSubmit = (values, dispatch) => {
-    console.log(values);
     let userDetails = {name: values.name, password: values.password, email: values.email };
     dispatch(registerUser(userDetails));
 };
