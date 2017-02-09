@@ -14,21 +14,24 @@ const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
     />
 );
 
-const SigninForm = (props) => {
+let SigninForm = (props) => {
     const {handleSubmit, pristine, reset, submitting} = props;
     return (
-        <form onSubmit={handleSubmit} className="signin-user">
-            <Field name="userName"
-                   component={renderTextField} label="User name" fullWidth={true}/>
-            <Field name="password" type="password"
-                   component={renderTextField} label="Password"
-                   fullWidth={true}
-            />
-            <div className="button-row">
-                <RaisedButton label="Sign in" primary={true} type="submit" disabled={submitting}/>
-                <RaisedButton label="Clear Values" disabled={pristine || submitting} onClick={reset}/>
-            </div>
-        </form>
+        <section>
+            <h1>Sign in</h1>
+            <form onSubmit={handleSubmit} className="signin-user">
+                <Field name="userName"
+                       component={renderTextField} label="User name" fullWidth={true}/>
+                <Field name="password" type="password"
+                       component={renderTextField} label="Password"
+                       fullWidth={true}
+                />
+                <div className="button-row">
+                    <RaisedButton label="Sign in" primary={true} type="submit" disabled={submitting}/>
+                    <RaisedButton label="Clear Values" disabled={pristine || submitting} onClick={reset}/>
+                </div>
+            </form>
+        </section>
     )
 };
 
