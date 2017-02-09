@@ -1,0 +1,4 @@
+export const FETCH_SQUADS = 'FETCH_SQUADS';
+export const CREATE_SQUAD = 'CREATE_SQUAD';
+export const CREATE_SQUAD_SUCCESS = 'CREATE_SQUAD_SUCCESS';
+
