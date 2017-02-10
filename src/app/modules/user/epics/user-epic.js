@@ -15,9 +15,11 @@ export const registerUserEpic = action$ =>
 export const signinUserEpic = action$ =>
     action$.ofType(ActionTypes.SIGNIN_USER)
         .mergeMap(action =>
-            login(action.user.userName, action.user.password)
-                .map(ev => ev.isFailure ? userActions.signinUserFailure(err)
-                    : userActions.signinUserSuccess(ev.user)) // output success
+                login(action.user.userName, action.user.password)
+                    .map(resp => userActions.signinUserSuccess(resp))
+                    .catch(err => Observable.of(userActions.signinUserFailure(err)))
+            // .map(ev => ev.isFailure ? userActions.signinUserFailure(ev.error)
+            //     : userActions.signinUserSuccess(ev.user)) // output success
         );
 
 // when sign in was successful, send action to go to home
