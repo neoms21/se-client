@@ -14,7 +14,7 @@ const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
     />
 );
 
-let SigninForm = (props) => {
+const SigninForm = (props) => {
     const {handleSubmit, pristine, reset, submitting} = props;
     return (
         <section>
