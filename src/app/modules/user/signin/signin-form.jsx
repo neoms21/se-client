@@ -1,8 +1,8 @@
 import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
-import React from 'react'
-import {Field} from 'redux-form'
+import React from 'react';
+import {Field} from 'redux-form';
+import { createForm } from 'redux-form-utils';
 import './signin.scss';
 
 const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
@@ -14,18 +14,17 @@ const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
     />
 );
 
-const SigninForm = (props) => {
+const BasicForm = (props) => {
     const {handleSubmit, pristine, reset, submitting} = props;
     return (
         <section>
             <h1>Sign in</h1>
             <form onSubmit={handleSubmit} className="signin-user">
-                <Field name="userName"
-                       component={renderTextField} label="User name" fullWidth={true}/>
-                <Field name="password" type="password"
-                       component={renderTextField} label="Password"
-                       fullWidth={true}
-                />
+                <TextField name="userName" floatingLabelText="User name" errorText={}
+                           hintText="User name" fullWidth={true}/>
+                <TextField name="password" type="password"
+                           floatingLabelText="Password" label="Password"
+                       fullWidth={true}/>
                 <div className="button-row">
                     <RaisedButton label="Sign in" primary={true} type="submit" disabled={submitting}/>
                     <RaisedButton label="Clear Values" disabled={pristine || submitting} onClick={reset}/>
@@ -34,5 +33,10 @@ const SigninForm = (props) => {
         </section>
     )
 };
+
+const SigninForm = createForm({
+    form: 'signin-form',
+    fields: ['userName', 'password']
+})(BasicForm);
 
 export default SigninForm;
