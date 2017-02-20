@@ -114,6 +114,7 @@ const sendCommand = (name, payload) => {
     let command = {commandName: name, correlationId: uuid.v4(), payload: payload};
     // create observable for client
     let clientObserver = new Subject();
+    // console.log( clientObserver.subscribe(console.log));
     streamForCommand[command.correlationId] = clientObserver;
 
     // send it
@@ -129,6 +130,7 @@ const sendCommand = (name, payload) => {
 };
 
 const processReceiveEvent = (event) => {
+    // console.log(event);
     if (event.correlationId) {
         // happy days, find right observable
         if (event.isFailure) {

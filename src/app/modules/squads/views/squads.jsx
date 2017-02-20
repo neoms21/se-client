@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class SquadsComponent extends React.Component {
+class SquadsComponent extends React.Component {
     constructor(props) {
         super(props);
         // console.log(props);
@@ -8,11 +8,11 @@ export class SquadsComponent extends React.Component {
     }
 
     render() {
-
-            <div>
-                Squads Component
-            </div>
-
+        return (
+            <div>Squad Component</div>
+        );
     }
 
 }
+
+export default SquadsComponent
