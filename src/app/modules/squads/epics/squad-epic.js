@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {connect} from 'react-redux';
 
 
-export const createSquadEpic = action$ => action$.ofType(ActionTypes.REGISTER_USER)
+export const createSquadEpic = action$ => action$.ofType(ActionTypes.CREATE_SQUAD)
     .mergeMap(action => sendCommand('CreateSquad', action.squad)
         .map(ev => ev.isFailure ? squadActions.createSquadFailure(ev.errors)
             : squadActions.createSquadSuccess(action.squad)));

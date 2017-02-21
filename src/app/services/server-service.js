@@ -55,9 +55,9 @@ const login = (email, password) => {
                     .then((respObject) => {
                         console.log('Authenticated user ' + email);
                         // store token
-                        token = respObject;
-                        // set authorization
-                        socket.emit('authentication', {token: respObject});
+                        token = respObject.token;
+                        // tell server that we are now authenticating the socket
+                        socket.emit('authentication', respObject);
                     });
             } else {
                 // error logging in
