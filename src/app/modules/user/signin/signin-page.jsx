@@ -35,13 +35,13 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-SigninForm = reduxForm({
-    form: 'SigninForm', // a unique identifier for this form
-    validate,
-    onSubmit
-})(SigninForm);
+// SigninForm = reduxForm({
+//     form: 'SigninForm', // a unique identifier for this form
+//     validate,
+//     onSubmit
+// })(SigninForm);
 
-SigninForm = connect(mapStateToProps)(SigninForm);
+connect(mapStateToProps)(SigninForm);
 
 export default SigninForm;
 

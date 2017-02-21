@@ -20,7 +20,7 @@ const BasicForm = (props) => {
         <section>
             <h1>Sign in</h1>
             <form onSubmit={handleSubmit} className="signin-user">
-                <TextField name="userName" floatingLabelText="User name" errorText={}
+                <TextField name="userName" floatingLabelText="User name"
                            hintText="User name" fullWidth={true}/>
                 <TextField name="password" type="password"
                            floatingLabelText="Password" label="Password"
