@@ -6,9 +6,9 @@ import {sendCommand, login} from '../../../services/server-service';
 import { SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 
-const onSubmit = (values, dispatch) => {
+const onSubmit = (values, dispatch, xxxx) => {
     let userDetails = {userName: values.userName, password: values.password};
-    dispatch(signinUser(userDetails));
+    //dispatch(signinUser(userDetails));
     // login(values.userName, values.password)
     //     .subscribe(succ => {
     //
@@ -31,7 +31,8 @@ const validate = values => {
 
 function mapStateToProps(state, ownProps) {
     return {
-        errors: state.rootReducer.userReducer.errors
+        errors: state.rootReducer.userReducer.errors,
+        handleSubmit: onSubmit
     };
 }
 
@@ -41,7 +42,13 @@ function mapStateToProps(state, ownProps) {
 //     onSubmit
 // })(SigninForm);
 
-connect(mapStateToProps)(SigninForm);
+// const SignInPage = () => {
+//     return(
+//         <SigninForm handleSubmit={onSubmit}/>
+//     )
+// }
 
-export default SigninForm;
+const SigninPageConnected = connect(mapStateToProps)(SigninForm);
+
+export default SigninPageConnected;
 
