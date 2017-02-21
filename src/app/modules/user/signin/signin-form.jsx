@@ -31,6 +31,11 @@ export default class SigninForm extends Component {
         this.values[e.target.name] = e.target.value;
     };
 
+    handleSubmit = (e) => {
+        this.props.handleSubmit(this.values, e);
+    };
+
+
     // errorText={this.props.errors['userName']}
 
     render = () => {
@@ -38,7 +43,7 @@ export default class SigninForm extends Component {
         return (
             <section>
                 <h1>Sign in</h1>
-                <form onSubmit={handleSubmit(this.values)} onChange={this.handleChange} className="signin-user">
+                <form onSubmit={::this.handleSubmit} onChange={::this.handleChange} className="signin-user">
                     <TextField name="userName" floatingLabelText="User name"
                                hintText="User name" fullWidth={true}/>
                     <TextField name="password" type="password"

@@ -4,11 +4,11 @@ import SigninForm from './signin-form';
 import {signinUser} from '../actions/user-actions';
 import {sendCommand, login} from '../../../services/server-service';
 import { SubmissionError } from 'redux-form';
-import { connect } from 'react-redux';
+import { connect, dispatch } from 'react-redux';
 
-const onSubmit = (values, dispatch, xxxx) => {
+const onSubmit = (values, e) => {
     let userDetails = {userName: values.userName, password: values.password};
-    //dispatch(signinUser(userDetails));
+    dispatch(signinUser(userDetails));
     // login(values.userName, values.password)
     //     .subscribe(succ => {
     //
