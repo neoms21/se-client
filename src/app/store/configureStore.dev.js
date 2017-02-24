@@ -3,7 +3,7 @@ import rootReducer from '../reducers';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import {routerReducer} from 'react-router-redux';
 import userReducer from "../modules/user/reducers/user-reducer";
-import {reducer as formReducer} from 'redux-form';
+//import {reducer as formReducer} from 'redux-form';
 import {createEpicMiddleware} from 'redux-observable';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {rootEpic} from '../epics/rootEpics';
@@ -16,7 +16,7 @@ export default function configureStore(initialState) {
         rootReducer,
         ...userReducer,
         routing: routerReducer,
-        form: formReducer     // <---- Mounted at 'form'
+        // form: formReducer     // <---- Mounted at 'form'
     };
 
     // get all reducers

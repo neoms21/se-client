@@ -1,21 +1,7 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
 import SigninForm from './signin-form';
 import {signinUser} from '../actions/user-actions';
-import {sendCommand, login} from '../../../services/server-service';
-import { SubmissionError } from 'redux-form';
-import { connect, dispatch } from 'react-redux';
-
-const onSubmit = (values, e) => {
-    let userDetails = {userName: values.userName, password: values.password};
-    dispatch(signinUser(userDetails));
-    // login(values.userName, values.password)
-    //     .subscribe(succ => {
-    //
-    //     }, err => {
-    //         throw new SubmissionError({userName: err})
-    //     })
-};
+import {connect} from 'react-redux';
 
 const validate = values => {
     const errors = {};
@@ -31,10 +17,18 @@ const validate = values => {
 
 function mapStateToProps(state, ownProps) {
     return {
-        errors: state.rootReducer.userReducer.errors,
-        handleSubmit: onSubmit
+        errors: {userName: state.rootReducer.userReducer.errors}
     };
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleSubmit: (values) => {
+            let userDetails = {userName: values.userName, password: values.password};
+            dispatch(signinUser(userDetails));
+        }
+    }
+};
 
 // SigninForm = reduxForm({
 //     form: 'SigninForm', // a unique identifier for this form
@@ -48,7 +42,7 @@ function mapStateToProps(state, ownProps) {
 //     )
 // }
 
-const SigninPageConnected = connect(mapStateToProps)(SigninForm);
+const SigninPageConnected = connect(mapStateToProps, mapDispatchToProps)(SigninForm);
 
 export default SigninPageConnected;
 

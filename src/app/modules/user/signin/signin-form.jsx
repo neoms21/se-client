@@ -1,19 +1,18 @@
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import {Field} from 'redux-form';
-import {createForm} from 'redux-form-utils';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 let {Component, PropTypes} = React;
 import './signin.scss';
 
-const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
-    <TextField hintText={label}
-               floatingLabelText={label}
-               errorText={touched && error}
-               {...input}
-               {...custom}
-    />
-);
+// const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
+//     <TextField hintText={label}
+//                floatingLabelText={label}
+//                errorText={touched && error}
+//                {...input}
+//                {...custom}
+//     />
+// );
 
 export default class SigninForm extends Component {
     values = {};
@@ -31,29 +30,37 @@ export default class SigninForm extends Component {
         this.values[e.target.name] = e.target.value;
     };
 
-    handleSubmit = (e) => {
-        this.props.handleSubmit(this.values, e);
+    handleSubmit = () => {
+        this.props.handleSubmit(this.values);
     };
 
-
-    // errorText={this.props.errors['userName']}
+    //
 
     render = () => {
         const {handleSubmit, pristine, reset, submitting} = this.props;
+        let email = '';
         return (
             <section>
                 <h1>Sign in</h1>
-                <form onSubmit={::this.handleSubmit} onChange={::this.handleChange} className="signin-user">
+                <ValidatorForm onSubmit={::this.handleSubmit} onChange={::this.handleChange} className="signin-user">
+                    <TextValidator
+                        floatingLabelText="Email"
+                        onChange={this.handleChange}
+                        name="email"
+                        value={email}
+                        validators={['required', 'isEmail']}
+                        errorMessages={['this field is required', 'email is not valid']}
+                    />
                     <TextField name="userName" floatingLabelText="User name"
-                               hintText="User name" fullWidth={true}/>
+                               hintText="User name" fullWidth={true} errorText={this.props.errors.userName}/>
                     <TextField name="password" type="password"
-                               floatingLabelText="Password" label="Password"
+                               floatingLabelText="Password" label="Password" errorText={this.props.errors.password}
                                fullWidth={true}/>
                     <div className="button-row">
                         <RaisedButton label="Sign in" primary={true} type="submit" disabled={submitting}/>
                         <RaisedButton label="Clear Values" disabled={pristine || submitting} onClick={reset}/>
                     </div>
-                </form>
+                </ValidatorForm>
             </section>
         )
     }

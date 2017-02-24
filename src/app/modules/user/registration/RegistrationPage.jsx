@@ -1,5 +1,5 @@
 import React from 'react';
-import { reduxForm } from 'redux-form';
+// import { reduxForm } from 'redux-form';
 import RegistrationForm from './RegistrationForm';
 import {registerUser} from '../actions/user-actions';
 
@@ -56,9 +56,9 @@ const validate = values => {
     return errors;
 };
 
-export default reduxForm({
-    form: 'RegistrationForm', // a unique identifier for this form
-    validate,
-    onSubmit
-})(RegistrationForm)
+// export default reduxForm({
+//     form: 'RegistrationForm', // a unique identifier for this form
+//     validate,
+//     onSubmit
+// })(RegistrationForm)
 

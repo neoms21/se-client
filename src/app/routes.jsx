@@ -10,7 +10,7 @@ import SigninPage from './modules/user/signin/signin-page';
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={Home}/>
-        <Route path="/registration" component={RegistrationPage} />
+        {/*<Route path="/registration" component={RegistrationPage} />*/}
         <Route path="/signin" component={SigninPage} />
         <Route path="/about" component={About} />
     </Route>
