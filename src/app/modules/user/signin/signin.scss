@@ -29,8 +29,18 @@
     }
   }
 
-  .error {
+  .submission-errors {
+    border-radius: 4px;
+    padding: 8px;
     color: red;
     background: pink;
+
+    &.visible {
+      opacity: 1;
+    }
+
+    &.hidden {
+      opacity: 0;
+    }
   }
 }

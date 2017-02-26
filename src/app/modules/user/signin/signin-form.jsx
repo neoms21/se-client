@@ -1,73 +1,159 @@
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {FormsyText} from 'formsy-material-ui';
+import Formsy from 'formsy-react';
 let {Component, PropTypes} = React;
 import './signin.scss';
 
-// const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
-//     <TextField hintText={label}
-//                floatingLabelText={label}
-//                errorText={touched && error}
-//                {...input}
-//                {...custom}
-//     />
-// );
-
 export default class SigninForm extends Component {
-    values = {};
+    isError: false;
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            isSubmitting: false,
+            pristine: true,
+            userName: '',
+            password: '',
+            showError: false
+        };
     }
 
     static propTypes = {
         handleSubmit: PropTypes.func,
-        errors: PropTypes.object
+        error: PropTypes.string
     };
 
-    handleChange = (e) => {
-        this.values[e.target.name] = e.target.value;
+    errorMessages = {
+        wordsError: "Please only use letters",
+        numericError: "Please provide a number",
+        urlError: "Please provide a valid URL",
+        userNameError: 'Please provide your user name (your email)'
+    };
+
+    enableButton = () => {
+        this.setState({
+            canSubmit: true,
+        });
+    };
+
+    disableButton = () => {
+        this.setState({
+            canSubmit: false,
+        });
+    };
+
+    componentWillUpdate = (nextProps, nextState) => {
+        // perform any preparations for an upcoming update
+        //this.setState({error: nextProps.error});
+        // this.isError = nextProps.error !== undefined;
     };
 
     handleSubmit = () => {
-        this.props.handleSubmit(this.values);
+        //submit to container handler
+        this.props.handleSubmit({userName: this.state.userName});
     };
 
-    //
+    userNameChange = (e) => {
+        this.setState({pristine: false, showError: false, userName: e.target.value});
+        this.isError = false;
+    };
+
+    passwordChange = (e) => {
+        this.setState({pristine: false, error: undefined, password: e.target.value});
+    };
+
+    isResetDisabled = () => {
+        return this.state.pristine || !this.state.isSubmitting;
+    };
+
+    getErrorClasses = () => {
+        let classes = 'submission-errors ';
+        return classes + (this.state.showError ? 'visible' : 'hidden');
+    };
+
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            // set something
+            showError: nextProps.error !== undefined
+        });
+    };
+
+    // handleChange(event) {
+    //     const email = event.target.value;
+    //     this.setState({email});
+    //     console.log('state', this.state)
+    // }
 
     render = () => {
-        const {handleSubmit, pristine, reset, submitting} = this.props;
-        let email = '';
+        const {error, handleSubmit} = this.props;
+        const {userName, password} = this.state;
+
         return (
-            <section>
-                <h1>Sign in</h1>
-                <ValidatorForm onSubmit={::this.handleSubmit} onChange={::this.handleChange} className="signin-user">
-                    <TextValidator
-                        floatingLabelText="Email"
-                        onChange={this.handleChange}
-                        name="email"
-                        value={email}
-                        validators={['required', 'isEmail']}
-                        errorMessages={['this field is required', 'email is not valid']}
-                    />
-                    <TextField name="userName" floatingLabelText="User name"
-                               hintText="User name" fullWidth={true} errorText={this.props.errors.userName}/>
-                    <TextField name="password" type="password"
-                               floatingLabelText="Password" label="Password" errorText={this.props.errors.password}
-                               fullWidth={true}/>
-                    <div className="button-row">
-                        <RaisedButton label="Sign in" primary={true} type="submit" disabled={submitting}/>
-                        <RaisedButton label="Clear Values" disabled={pristine || submitting} onClick={reset}/>
-                    </div>
-                </ValidatorForm>
-            </section>
-        )
+            // <section>
+            //     <h1>Sign in</h1>
+            //     <ValidatorForm
+            //         ref="form" instantValidate
+            //         onSubmit={::this.handleSubmit}>
+            //         <TextValidator
+            //             floatingLabelText="User name"
+            //             onChange={::this.userNameChange}
+            //             name="userName"
+            //             value={userName}
+            //             fullWidth={true}
+            //             validators={['required', 'isEmail']}
+            //             errorMessages={['this field is required', 'is not valid email']}
+            //         />
+            //         <TextValidator
+            //             floatingLabelText="Password"
+            //             onChange={::this.passwordChange}
+            //             name="password"
+            //             value={password}
+            //             validators={['required']}
+            //             errorMessages={['this field is required']}
+            //         />
+            //         <div className="submission-errors">
+            //             <span>{error}</span>
+            //         </div>
+            //         <RaisedButton type="submit" label="Sign in" primary={true}/>
+            //         <RaisedButton label="Clear Values" disabled={::this.isResetDisabled()}/>
+            //     </ValidatorForm>
+            // </section>
+
+            <Formsy.Form ref="form" onValid={this.enableButton}
+                         onInvalid={this.disableButton}
+                         onValidSubmit={handleSubmit}
+                         className="signin-user">
+                <FormsyText
+                    name="userName"
+                    validations="isEmail"
+                    validationError={this.errorMessages.userNameError}
+                    required updateImmediately fullWidth={true}
+                    hintText="Enter your user name (usually email)"
+                    floatingLabelText="User Name"
+                    onChange={this.userNameChange}
+                />
+                <FormsyText
+                    name="password"
+                    validations="isWords"
+                    validationError={this.errorMessages.wordsError}
+                    required updateImmediately fullWidth={true}
+                    hintText="Enter your password"
+                    floatingLabelText="Password"
+                />
+                <div className={::this.getErrorClasses()}>
+                    <span>{error}</span>
+                </div>
+                <div className="button-row">
+                    <RaisedButton label="Sign in" primary={true} type="submit"/>
+                    <RaisedButton label="Clear Values" disabled={this.state.pristine} onClick={this.reset}/>
+                </div>
+            </Formsy.Form>
+        );
     }
 }
 
-// const SigninForm = createForm({
-//     form: 'signin-form',
-//     fields: ['userName', 'password']
-// })(BasicForm);
 
