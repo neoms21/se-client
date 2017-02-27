@@ -16,7 +16,7 @@ export default function userReducer(state = initialState, action) {
         case types.SIGNIN_USER_SUCCESS:
             return { ...state, isLoading: false, ...{currentUser: action.user}};
         case types.SIGNIN_USER_FAILURE:
-            return { ...state, isLoading: false, errors: action.errors};
+            return { ...state, isLoading: false, error: action.error};
         default:
             return state;
     }

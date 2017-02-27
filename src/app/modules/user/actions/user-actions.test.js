@@ -68,11 +68,11 @@ describe('User actions', () => {
         });
 
         it('should return correct object for registerUserFailure', () => {
-            const result = UserActions.signinUserFailure(['error with server']);
+            const result = UserActions.signinUserFailure('error with server');
 
             expect(result.type).toBe(ActionTypes.SIGNIN_USER_FAILURE);
-            expect(result.errors).toBeDefined();
-            expect(result.errors[0]).toBe('error with server');
-        });
+            expect(result.error).toBeDefined();
+            expect(result.error).toBe('error with server');
+        })
     });
 });

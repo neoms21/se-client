@@ -1,8 +1,7 @@
 //import {ConfigService} from './config-service';
 import io from 'socket.io-client';
-import {Observable, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import * as uuid from 'uuid';
-//import {RxHttpRequest} from 'rx-http-request';
 import request from 'superagent';
 
 // this controls interaction with server using socket.io
@@ -45,40 +44,6 @@ const init = () => {
 const login = (email, password) => {
     // login needs it own observable - would this be better as promise???
     const ret = new Subject();
-
-    // fetch('http://localhost:8180/login', {
-    //     method: 'post',
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({userName: email, password: password})
-    // })
-    //     .then(function (resp) { // response from post
-    //         if (resp.status === 200) {
-    //             // logged in ok, so get response out
-    //             resp.json()
-    //                 .then((respObject) => {
-    //                     console.log('Authenticated user ' + email);
-    //                     // store token
-    //                     token = respObject.token;
-    //                     // tell server that we are now authenticating the socket
-    //                     socket.emit('authentication', respObject);
-    //                     ret.next({userName: email});
-    //                 });
-    //         } else {
-    //             // error logging in
-    //             resp.text()
-    //                 .then((respText) => {
-    //                     console.log('error ' + respText);
-    //                     ret.error(respText);
-    //                 });
-    //         }
-    //     })
-    //     .catch(function (err) {
-    //         console.log('err ' + err);
-    //         ret.error(err);
-    //     });
 
     request.post('http://localhost:8180/login')
         .send({

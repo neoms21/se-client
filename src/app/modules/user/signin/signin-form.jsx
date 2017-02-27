@@ -1,14 +1,11 @@
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {FormsyText} from 'formsy-material-ui';
 import Formsy from 'formsy-react';
 let {Component, PropTypes} = React;
 import './signin.scss';
 
 export default class SigninForm extends Component {
-    isError: false;
 
     constructor(props) {
         super(props);
@@ -16,8 +13,6 @@ export default class SigninForm extends Component {
         this.state = {
             isSubmitting: false,
             pristine: true,
-            userName: '',
-            password: '',
             showError: false
         };
     }
@@ -29,45 +24,12 @@ export default class SigninForm extends Component {
 
     errorMessages = {
         wordsError: "Please only use letters",
-        numericError: "Please provide a number",
-        urlError: "Please provide a valid URL",
         userNameError: 'Please provide your user name (your email)'
     };
 
-    enableButton = () => {
-        this.setState({
-            canSubmit: true,
-        });
-    };
-
-    disableButton = () => {
-        this.setState({
-            canSubmit: false,
-        });
-    };
-
-    componentWillUpdate = (nextProps, nextState) => {
-        // perform any preparations for an upcoming update
-        //this.setState({error: nextProps.error});
-        // this.isError = nextProps.error !== undefined;
-    };
-
-    handleSubmit = () => {
-        //submit to container handler
-        this.props.handleSubmit({userName: this.state.userName});
-    };
-
-    userNameChange = (e) => {
-        this.setState({pristine: false, showError: false, userName: e.target.value});
-        this.isError = false;
-    };
-
-    passwordChange = (e) => {
-        this.setState({pristine: false, error: undefined, password: e.target.value});
-    };
-
-    isResetDisabled = () => {
-        return this.state.pristine || !this.state.isSubmitting;
+    handleChange = (e) => {
+        // remove error
+        this.setState({pristine: false, showError: false});
     };
 
     getErrorClasses = () => {
@@ -77,64 +39,30 @@ export default class SigninForm extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         this.setState({
-            // set something
+            // set our state to control error display
             showError: nextProps.error !== undefined
         });
     };
 
-    // handleChange(event) {
-    //     const email = event.target.value;
-    //     this.setState({email});
-    //     console.log('state', this.state)
-    // }
+    reset = () => {
+      this.refs.form.reset();
+    };
 
     render = () => {
         const {error, handleSubmit} = this.props;
-        const {userName, password} = this.state;
 
         return (
-            // <section>
-            //     <h1>Sign in</h1>
-            //     <ValidatorForm
-            //         ref="form" instantValidate
-            //         onSubmit={::this.handleSubmit}>
-            //         <TextValidator
-            //             floatingLabelText="User name"
-            //             onChange={::this.userNameChange}
-            //             name="userName"
-            //             value={userName}
-            //             fullWidth={true}
-            //             validators={['required', 'isEmail']}
-            //             errorMessages={['this field is required', 'is not valid email']}
-            //         />
-            //         <TextValidator
-            //             floatingLabelText="Password"
-            //             onChange={::this.passwordChange}
-            //             name="password"
-            //             value={password}
-            //             validators={['required']}
-            //             errorMessages={['this field is required']}
-            //         />
-            //         <div className="submission-errors">
-            //             <span>{error}</span>
-            //         </div>
-            //         <RaisedButton type="submit" label="Sign in" primary={true}/>
-            //         <RaisedButton label="Clear Values" disabled={::this.isResetDisabled()}/>
-            //     </ValidatorForm>
-            // </section>
-
-            <Formsy.Form ref="form" onValid={this.enableButton}
-                         onInvalid={this.disableButton}
+            <Formsy.Form ref="form"
                          onValidSubmit={handleSubmit}
                          className="signin-user">
                 <FormsyText
                     name="userName"
                     validations="isEmail"
-                    validationError={this.errorMessages.userNameError}
+                    validationError={this.errorMessages.emailError}
                     required updateImmediately fullWidth={true}
                     hintText="Enter your user name (usually email)"
                     floatingLabelText="User Name"
-                    onChange={this.userNameChange}
+                    onChange={this.handleChange}
                 />
                 <FormsyText
                     name="password"
@@ -143,6 +71,7 @@ export default class SigninForm extends Component {
                     required updateImmediately fullWidth={true}
                     hintText="Enter your password"
                     floatingLabelText="Password"
+                    onChange={this.handleChange}
                 />
                 <div className={::this.getErrorClasses()}>
                     <span>{error}</span>

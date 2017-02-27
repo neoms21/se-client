@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 function mapStateToProps(state, ownProps) {
     return {
-        error: state.rootReducer.userReducer.errors,
+        error: state.rootReducer.userReducer.error,
         values: {userName: '', password: ''}
     };
 }

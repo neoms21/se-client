@@ -25,7 +25,7 @@ export const signinUserSuccess = (user) => ({
     user: user
 });
 
-export const signinUserFailure = (errors) => ({
+export const signinUserFailure = (error) => ({
     type: types.SIGNIN_USER_FAILURE,
-    errors: errors
+    error: error
 });

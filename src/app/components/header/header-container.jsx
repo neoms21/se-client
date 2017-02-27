@@ -13,14 +13,15 @@ const handleSignin = () => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isSignedIn: state.currentUser !== undefined
+        currentUser: state.rootReducer.userReducer.currentUser
     };
 };
 
 const headerContainer = React.createClass({
     render: function () {
         return (
-            <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}/>
+            <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
+                    currentUser={this.props.currentUser}/>
         );
     },
 });
