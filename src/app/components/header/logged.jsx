@@ -5,10 +5,11 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import styles from './logged.scss';
 
 const Logged = (props) => (
-    <div>
-        <span>{props.currentUser.name}</span>
+    <div className="logged">
+        <span className="user-name">{props.currentUser.userName}</span>
         <IconMenu
             {...props}
             iconButtonElement={<IconButton>
