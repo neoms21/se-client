@@ -12,11 +12,14 @@ export default function userReducer(state = initialState, action) {
         case types.REGISTER_USER_FAILURE:
             return {...state, isLoading: false, errors: convertError(action.errors)};
         case types.SIGNIN_USER:
-            return {isLoading: true, ...state};
+            let stateCopy = {...state};
+            delete stateCopy.error;
+            delete stateCopy.currentUser;
+            return {isLoading: true, ...stateCopy};
         case types.SIGNIN_USER_SUCCESS:
             return {...state, isLoading: false, ...{currentUser: action.user}};
         case types.SIGNIN_USER_FAILURE:
-            return {...state, isLoading: false, errors: action.errors};
+            return {...state, isLoading: false, error: action.error};
         default:
             return state;
     }

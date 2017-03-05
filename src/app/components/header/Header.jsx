@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link, browserHistory} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import headerSass from './HeaderStyle.scss';
 import Logged from './logged';

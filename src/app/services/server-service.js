@@ -111,18 +111,18 @@ const processReceiveEvent = (event) => {
 };
 
 const processReceiveCommandEvent = (event) => {
-    if (event.command.correlationId) {
+    if (event.command.properties.correlationId) {
         // happy days, find right observable
-        streamForCommand[event.command.correlationId].next(event); // pass it on
+        streamForCommand[event.command.properties.correlationId].next(event); // pass it on
     } else {
         console.log('Command event with no correlation id ', event.properties);
     }
 };
 
 const processReceiveQueryEvent = (event) => {
-    if (event.query.correlationId) {
+    if (event.query.properties.correlationId) {
         // happy days, find right observable
-        streamForQuery[event.query.correlationId].next(event); // pass it on
+        streamForQuery[event.query.properties.correlationId].next(event); // pass it on
     } else {
         console.log('Query event with no correlation id ', event.properties);
     }
