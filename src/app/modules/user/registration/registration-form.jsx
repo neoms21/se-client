@@ -36,11 +36,10 @@ export default class RegistrationForm extends React.Component {
     componentWillReceiveProps = (nextProps) => {
         this.setState({
             // set our state to control error display if we get a non field error
-            showError: nextProps.errors['@#@'] !== undefined
+            showError: nextProps.errors.general.length !== 0
         });
 
-        let fieldErrors = Object.assign({}, nextProps.errors);
-        delete fieldErrors['@#@'];
+        let fieldErrors = Object.assign({}, nextProps.errors.specific);
         this.refs.form.updateInputsWithError(fieldErrors);
     };
 
@@ -50,8 +49,8 @@ export default class RegistrationForm extends React.Component {
 
     render = () => {
         const {errors, handleSubmit} = this.props;
-        const generalError = errors === undefined || Object.keys(errors).length === 0
-        || !errors.hasOwnProperty('@#@') ? '' : errors['@#@'];
+        const generalError = errors === undefined || errors.general === undefined || errors.length === 0
+            ? '' : errors[0];
 
         return (
             <Formsy.Form ref="form"

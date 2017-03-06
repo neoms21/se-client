@@ -1,5 +1,5 @@
 import * as types from '../actions/actionTypes';
-import {convertError} from '../../../services/utils-service';
+import convertErrorArrayToObject from '../../../services/utils-service';
 
 const initialState = {};
 
@@ -8,9 +8,9 @@ export default function userReducer(state = initialState, action) {
         case types.REGISTER_USER:
             return {isLoading: true, ...state};
         case types.REGISTER_USER_SUCCESS:
-            return {...state, isLoading: false, message: action.message};
+            return {...state, isLoading: false};
         case types.REGISTER_USER_FAILURE:
-            return {...state, isLoading: false, errors: convertError(action.errors)};
+            return {...state, isLoading: false, errors: convertErrorArrayToObject(action.errors)};
         case types.SIGNIN_USER:
             let stateCopy = {...state};
             delete stateCopy.error;
