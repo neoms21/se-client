@@ -1,6 +1,3 @@
-//import { createStore } from 'redux';
-import rootReducer from '../reducers';
-import * as userActions from '../modules/user/actions/user-actions';
 import configureStore from './configureStore.dev';
 
 

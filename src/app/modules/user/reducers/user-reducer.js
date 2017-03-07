@@ -8,7 +8,7 @@ export default function userReducer(state = initialState, action) {
         case types.REGISTER_USER:
             return {isLoading: true, ...state};
         case types.REGISTER_USER_SUCCESS:
-            return {...state, isLoading: false};
+            return {...state, isLoading: false, message: action.message};
         case types.REGISTER_USER_FAILURE:
             return {...state, isLoading: false, errors: convertErrorArrayToObject(action.errors)};
         case types.SIGNIN_USER:
