@@ -63,7 +63,7 @@
     "redux-observable": "^0.13.0",
     "redux-saga": "^0.14.3",
     "redux-thunk": "^2.2.0",
-    "rxjs": "^5.0.3",
+    "rxjs": "^5.1.1",
     "sass-loader": "^4.1.1",
     "socket.io-client": "^1.7.2",
     "style-loader": "^0.13.1",
@@ -72,7 +72,9 @@
     "webpack-babel-jest": "^1.0.4",
     "webpack-dev-server": "^1.16.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "webpack-babel-jest": "^1.0.4"
+  },
   "jest": {
     "transform": {
       ".*": "<rootDir>/node_modules/webpack-babel-jest"

@@ -5,12 +5,14 @@ import * as uuid from 'uuid';
 
 let socket;
 let streamForCommand;
+let streamForQuery;
 let streamForGeneral;
 let token;
 
 const init = () => {
     try {
         streamForCommand = {};
+        streamForQuery = {};
         streamForGeneral = new Subject();
 
         let connectionOptions = {
@@ -22,6 +24,8 @@ const init = () => {
         socket = io.connect('http://localhost:8180', connectionOptions);
 
         socket.on('event', processReceiveEvent);
+        socket.on('commandEvent', processReceiveCommandEvent);
+        socket.on('queryEvent', processReceiveQueryEvent);
     }
     catch (err) {
         console.log(err);
@@ -55,9 +59,9 @@ const login = (email, password) => {
                     .then((respObject) => {
                         console.log('Authenticated user ' + email);
                         // store token
-                        token = respObject;
-                        // set authorization
-                        socket.emit('authentication', {token: respObject});
+                        token = respObject.token;
+                        // tell server that we are now authenticating the socket
+                        socket.emit('authentication', respObject);
                     });
             } else {
                 // error logging in
@@ -111,9 +115,10 @@ const login = (email, password) => {
 const sendCommand = (name, payload) => {
 
     // need to give it a correlation id
-    let command = {commandName: name, correlationId: uuid.v4(), payload: payload};
+    let command = {properties:{commandName: name, correlationId: uuid.v4()}, payload: payload};
     // create observable for client
     let clientObserver = new Subject();
+    // console.log( clientObserver.subscribe(console.log));
     streamForCommand[command.correlationId] = clientObserver;
 
     // send it
@@ -128,19 +133,51 @@ const sendCommand = (name, payload) => {
     return clientObserver;
 };
 
+const sendQuery = (name, payload) => {
+
+    // need to give it a correlation id
+    let query = {properties:{queryName: name ,correlationId: uuid.v4()}, payload: payload};
+    // create observable for client
+    let clientObserver = new Subject();
+    // console.log( clientObserver.subscribe(console.log));
+    streamForQuery[query.properties.correlationId] = clientObserver;
+
+    // send it
+    try {
+        socket.emit('query', query);
+    }
+    catch (err) {
+        console.log(err);
+        clientObserver.error(err);
+    }
+
+    // let consumer have it
+    return clientObserver;
+};
+
 const processReceiveEvent = (event) => {
-    if (event.correlationId) {
+    streamForGeneral.next(event);
+};
+
+const processReceiveCommandEvent = (event) => {
+    if (event.command.properties.correlationId) {
         // happy days, find right observable
-        if (event.isFailure) {
-            streamForCommand[event.correlationId].error(event); // pass it on as error
-        } else {
-            streamForCommand[event.correlationId].next(event); // pass it on
-        }
+        streamForCommand[event.command.properties.correlationId].next(event); // pass it on
     } else {
-        streamForGeneral.next(event);
+        console.log('Command event with no correlation id ', event.properties);
     }
 };
 
+const processReceiveQueryEvent = (event) => {
+    if (event.query.properties.correlationId) {
+        // happy days, find right observable
+        streamForQuery[event.query.properties.correlationId].next(event); // pass it on
+    } else {
+        console.log('Query event with no correlation id ', event.query.properties);
+    }
+};
+
+
 init();
 
-export {login, sendCommand};
+export {login, sendCommand, sendQuery};

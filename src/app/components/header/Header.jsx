@@ -9,6 +9,7 @@ export default React.createClass({
             <AppBar title="Sports Editor"  onLeftIconButtonTouchTap={this.handleHomeClick}>
                     <Link to="/registration" onlyActiveOnIndex activeClassName="active">Registration</Link>
                     <Link to="/about" onlyActiveOnIndex activeClassName="active">About</Link>
+                    <Link to="/squads" onlyActiveOnIndex activeClassName="active">Squads</Link>
 
             </AppBar>
         );
