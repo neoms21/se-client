@@ -13,9 +13,9 @@ class SquadsComponent extends React.Component {
 
     render() {
         return (
-            <div>Squad Component
+            <div>
                 {this.props.squads.map(function(name, index){
-                    return <li key={ index }>{name.name}</li>;
+                    return <div key={index}>{name.name}</div>;
                 })}
             </div>
         );
@@ -23,7 +23,6 @@ class SquadsComponent extends React.Component {
 
 }
 function mapStateToProps(state) {
-    console.log(state.squads.squads);
     return {
         squads: state.squads.squads
     }

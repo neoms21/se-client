@@ -8,10 +8,8 @@ const initialState = {
 export default function squadReducer(state = initialState, action) {
     switch (action.type) {
         case types.FETCH_SQUADS:
-            console.log('in fetch');
             return state;
         case types.FETCH_SQUADS_SUCCESS:
-            console.log(action);
             return Object.assign({}, state, {
                 squads: action.payload
             });

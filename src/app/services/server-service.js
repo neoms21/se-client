@@ -115,7 +115,7 @@ const login = (email, password) => {
 const sendCommand = (name, payload) => {
 
     // need to give it a correlation id
-    let command = {commandName: name, correlationId: uuid.v4(), payload: payload};
+    let command = {properties:{commandName: name, correlationId: uuid.v4()}, payload: payload};
     // create observable for client
     let clientObserver = new Subject();
     // console.log( clientObserver.subscribe(console.log));
@@ -169,7 +169,6 @@ const processReceiveCommandEvent = (event) => {
 };
 
 const processReceiveQueryEvent = (event) => {
-    console.log(event);
     if (event.query.properties.correlationId) {
         // happy days, find right observable
         streamForQuery[event.query.properties.correlationId].next(event); // pass it on
