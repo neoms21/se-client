@@ -13,8 +13,6 @@ export default function configureStore(initialState) {
 
     const reducers = {
         rootReducer,
-        ...userReducer,
-        ...squadReducer,
         routing: routerReducer,
         form: formReducer     // <---- Mounted at 'form'
     };

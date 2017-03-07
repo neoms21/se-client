@@ -129,6 +129,28 @@ const sendCommand = (name, payload) => {
     return clientObserver;
 };
 
+const sendQuery = (name, payload) => {
+
+    // need to give it a correlation id
+    let query = {properties:{queryName: name ,correlationId: uuid.v4()}, payload: payload};
+    // create observable for client
+    let clientObserver = new Subject();
+    // console.log( clientObserver.subscribe(console.log));
+    streamForCommand[query.correlationId] = clientObserver;
+
+    // send it
+    try {
+        socket.emit('query', query);
+    }
+    catch (err) {
+        console.log(err);
+        clientObserver.error(err);
+    }
+
+    // let consumer have it
+    return clientObserver;
+};
+
 const processReceiveEvent = (event) => {
     // console.log(event);
     if (event.correlationId) {
@@ -145,4 +167,4 @@ const processReceiveEvent = (event) => {
 
 init();
 
-export {login, sendCommand};
+export {login, sendCommand, sendQuery};

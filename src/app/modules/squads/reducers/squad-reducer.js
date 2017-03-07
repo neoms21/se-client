@@ -1,20 +1,23 @@
 import * as types from '../actions/squad.actionTypes';
 
 const initialState = {
+    squads: [],
     saved: false
 };
 
 export default function squadReducer(state = initialState, action) {
     switch (action.type) {
+        case types.FETCH_SQUADS:
+            console.log('in fetch');
+            return state;
+        case types.FETCH_SQUADS_SUCCESS:
+            return Object.assign({}, state, {
+                squads: action.payload
+            });
         case types.CREATE_SQUAD:
-            console.log('in reduccer create squad');
-            console.log(action);
             return state;
         case types.CREATE_SQUAD_SUCCESS:
-            console.log('in reducer');
-            let x = Object.assign({}, state, {saved: true});
-            console.log(x);
-            return x;
+            return Object.assign({}, state, {saved: true});
         default:
             return state;
     }

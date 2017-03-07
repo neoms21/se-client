@@ -33,7 +33,6 @@ let CreateSquadForm = (props) => {
 
 CreateSquadForm = connect(
     state => {
-        console.log(state.rootReducer);
         return {
             initialValues: state // pull initial values from account reducer
         }},
