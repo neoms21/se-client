@@ -5,12 +5,14 @@ import * as uuid from 'uuid';
 
 let socket;
 let streamForCommand;
+let streamForQuery;
 let streamForGeneral;
 let token;
 
 const init = () => {
     try {
         streamForCommand = {};
+        streamForQuery = {};
         streamForGeneral = new Subject();
 
         let connectionOptions = {
@@ -22,6 +24,8 @@ const init = () => {
         socket = io.connect('http://localhost:8180', connectionOptions);
 
         socket.on('event', processReceiveEvent);
+        socket.on('commandEvent', processReceiveCommandEvent);
+        socket.on('queryEvent', processReceiveQueryEvent);
     }
     catch (err) {
         console.log(err);
@@ -136,7 +140,7 @@ const sendQuery = (name, payload) => {
     // create observable for client
     let clientObserver = new Subject();
     // console.log( clientObserver.subscribe(console.log));
-    streamForCommand[query.correlationId] = clientObserver;
+    streamForQuery[query.properties.correlationId] = clientObserver;
 
     // send it
     try {
@@ -152,18 +156,28 @@ const sendQuery = (name, payload) => {
 };
 
 const processReceiveEvent = (event) => {
-    // console.log(event);
-    if (event.correlationId) {
+    streamForGeneral.next(event);
+};
+
+const processReceiveCommandEvent = (event) => {
+    if (event.command.properties.correlationId) {
         // happy days, find right observable
-        if (event.isFailure) {
-            streamForCommand[event.correlationId].error(event); // pass it on as error
-        } else {
-            streamForCommand[event.correlationId].next(event); // pass it on
-        }
+        streamForCommand[event.command.properties.correlationId].next(event); // pass it on
     } else {
-        streamForGeneral.next(event);
+        console.log('Command event with no correlation id ', event.properties);
     }
 };
+
+const processReceiveQueryEvent = (event) => {
+    console.log(event);
+    if (event.query.properties.correlationId) {
+        // happy days, find right observable
+        streamForQuery[event.query.properties.correlationId].next(event); // pass it on
+    } else {
+        console.log('Query event with no correlation id ', event.query.properties);
+    }
+};
+
 
 init();
 

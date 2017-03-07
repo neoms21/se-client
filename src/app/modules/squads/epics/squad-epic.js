@@ -14,4 +14,4 @@ export const createSquadEpic = action$ => action$.ofType(ActionTypes.CREATE_SQUA
 export const fetchSquadsEpic = action$ => action$.ofType(ActionTypes.FETCH_SQUADS)
     .mergeMap(action => sendQuery('FetchSquads')
         .map(ev => ev.isFailure ? squadActions.fetchSquadFailure(ev.errors)
-            : squadActions.fetchSquadSuccess(ev)));
+            : squadActions.fetchSquadSuccess(ev.data)));

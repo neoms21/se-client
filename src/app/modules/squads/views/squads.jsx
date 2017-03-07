@@ -13,15 +13,21 @@ class SquadsComponent extends React.Component {
 
     render() {
         return (
-            <div>Squad Component</div>
+            <div>Squad Component
+                {this.props.squads.map(function(name, index){
+                    return <li key={ index }>{name.name}</li>;
+                })}
+            </div>
         );
     }
 
 }
 function mapStateToProps(state) {
+    console.log(state.squads.squads);
     return {
-        squads: state.squads
+        squads: state.squads.squads
     }
 }
+
 
 export default connect(mapStateToProps)(SquadsComponent)

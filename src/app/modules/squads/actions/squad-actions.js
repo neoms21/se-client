@@ -15,10 +15,10 @@ export const createSquadSuccess = (squad) => (
     squad: squad
 });
 
-export const fetchSquadSuccess = (squad) => (
+export const fetchSquadSuccess = (squads) => (
 {
     type: types.FETCH_SQUADS_SUCCESS,
-    squad: squad
+    payload: squads
 });
 
 export const createSquadFailure = (errors) => ({

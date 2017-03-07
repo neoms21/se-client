@@ -11,6 +11,7 @@ export default function squadReducer(state = initialState, action) {
             console.log('in fetch');
             return state;
         case types.FETCH_SQUADS_SUCCESS:
+            console.log(action);
             return Object.assign({}, state, {
                 squads: action.payload
             });
