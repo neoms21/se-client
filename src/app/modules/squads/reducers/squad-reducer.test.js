@@ -9,7 +9,7 @@ describe('Squad Reducer', () => {
     it('should append the states when fetch squads is sent', () => {
         const initialState = {saved: false, squads: []};
         expect(SquadReducer(initialState,
-            {type: types.FETCH_SQUADS, payload: ['Abcd', 'Defg']}))
+            {type: types.FETCH_SQUADS_SUCCESS, payload: ['Abcd', 'Defg']}))
             .toEqual({saved: false, squads: ['Abcd', 'Defg']});
     });
 });
