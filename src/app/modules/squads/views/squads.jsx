@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import squads from '../reducers/squad-reducer'
+import {squad} from './squad'
 import * as squadActions from '../actions/squad-actions'
 
 class SquadsComponent extends React.Component {
@@ -11,12 +11,18 @@ class SquadsComponent extends React.Component {
         // this.state = { /* initial state, this is ES6 syntax (classes) */ };
     }
 
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    }
+
     render() {
         return (
             <div>
+
                 {this.props.squads.map(function(name, index){
-                    return <div key={index}>{name.name}</div>;
+                    return <squad key={index}>{name.name}</squad>;
                 })}
+                <input type="button" value="Add Squad" />
             </div>
         );
     }
