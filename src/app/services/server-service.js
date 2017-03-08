@@ -119,7 +119,7 @@ const sendCommand = (name, payload) => {
     // create observable for client
     let clientObserver = new Subject();
     // console.log( clientObserver.subscribe(console.log));
-    streamForCommand[command.correlationId] = clientObserver;
+    streamForCommand[command.properties.correlationId] = clientObserver;
 
     // send it
     try {
