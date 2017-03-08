@@ -2,6 +2,8 @@ import {createStore, applyMiddleware, combineReducers} from 'redux';
 import rootReducer from '../reducers';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import {routerReducer} from 'react-router-redux';
+import squads from "../modules/squads/reducers/squad-reducer";
+import {reducer as formReducer} from 'redux-form';
 import userReducer from "../modules/user/reducers/user-reducer";
 //import {reducer as formReducer} from 'redux-form';
 import {createEpicMiddleware} from 'redux-observable';

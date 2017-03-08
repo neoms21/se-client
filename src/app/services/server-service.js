@@ -1,6 +1,6 @@
 //import {ConfigService} from './config-service';
 import io from 'socket.io-client';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import * as uuid from 'uuid';
 import request from 'superagent';
 
@@ -8,12 +8,14 @@ import request from 'superagent';
 
 let socket;
 let streamForCommand;
+let streamForQuery;
 let streamForGeneral;
 let token;
 
 const init = () => {
     try {
         streamForCommand = {};
+        streamForQuery = {};
         streamForGeneral = new Subject();
 
         let connectionOptions = {
@@ -106,6 +108,28 @@ const sendCommand = (name, payload) => {
     return clientObserver;
 };
 
+const sendQuery = (name, payload) => {
+
+    // need to give it a correlation id
+    let query = {properties:{queryName: name ,correlationId: uuid.v4()}, payload: payload};
+    // create observable for client
+    let clientObserver = new Subject();
+    // console.log( clientObserver.subscribe(console.log));
+    streamForQuery[query.properties.correlationId] = clientObserver;
+
+    // send it
+    try {
+        socket.emit('query', query);
+    }
+    catch (err) {
+        console.log(err);
+        clientObserver.error(err);
+    }
+
+    // let consumer have it
+    return clientObserver;
+};
+
 const processReceiveEvent = (event) => {
     streamForGeneral.next(event);
 };
@@ -130,4 +154,4 @@ const processReceiveQueryEvent = (event) => {
 
 init();
 
-export {login, sendCommand};
+export {login, sendCommand, sendQuery};
