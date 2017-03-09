@@ -95,6 +95,7 @@ const sendCommand = (name, payload) => {
     // create observable for client
     let clientObserver = new Subject();
     streamForCommand[command.properties.correlationId] = clientObserver;
+    // console.log( clientObserver.subscribe(console.log));
 
     // send it
     try {
@@ -148,7 +149,7 @@ const processReceiveQueryEvent = (event) => {
         // happy days, find right observable
         streamForQuery[event.query.properties.correlationId].next(event); // pass it on
     } else {
-        console.log('Query event with no correlation id ', event.properties);
+        console.log('Query event with no correlation id ', event.query.properties);
     }
 };
 
