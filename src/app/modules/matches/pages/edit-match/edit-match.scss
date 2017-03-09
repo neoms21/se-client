@@ -1,0 +1,37 @@
+.edit-match {
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .full-width-control {
+    flex-basis: auto;
+    margin-bottom: 1.5%;
+
+    span {
+      left: 100px;
+    }
+  }
+
+  .button-row {
+    margin-top: 20px;
+  }
+
+  .submission-errors {
+    border-radius: 4px;
+    padding: 8px;
+    color: red;
+    margin-top: 10px;
+    background: pink;
+
+    &.visible {
+      opacity: 1;
+    }
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
+}

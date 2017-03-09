@@ -1,11 +1,9 @@
 import {createStore, applyMiddleware, combineReducers} from 'redux';
-import rootReducer from '../reducers';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import {routerReducer} from 'react-router-redux';
 import squads from "../modules/squads/reducers/squad-reducer";
-import {reducer as formReducer} from 'redux-form';
-import userReducer from "../modules/user/reducers/user-reducer";
-//import {reducer as formReducer} from 'redux-form';
+import user from "../modules/user/reducers/user-reducer";
+import matches from '../modules/matches/reducers/match-reducer';
 import {createEpicMiddleware} from 'redux-observable';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {rootEpic} from '../epics/rootEpics';
@@ -15,10 +13,10 @@ import {browserHistory} from 'react-router';
 export default function configureStore(initialState) {
 
     const reducers = {
-        rootReducer,
-        ...userReducer,
-        routing: routerReducer,
-        // form: formReducer     // <---- Mounted at 'form'
+        user,
+        squads,
+        matches,
+        routing: routerReducer
     };
 
     // get all reducers
