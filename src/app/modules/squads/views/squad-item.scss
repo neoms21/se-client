@@ -1,0 +1,17 @@
+.squad-container {
+  display: flex;
+  padding: 0.5em;
+  border: 1px solid #aeb4e7;
+  margin-bottom: 2px;
+  border-radius: 3px;
+}
+
+.squad-container__name {
+  flex: 1;
+}
+
+.squad-container__delete {
+  width: 24px;
+  height: 24px;
+  color: red;
+}
