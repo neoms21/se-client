@@ -1,28 +1,28 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {squad} from './squad'
+import Squad from './squad'
 import * as squadActions from '../actions/squad-actions'
 
 class SquadsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.props.dispatch(squadActions.fetchSquads());
-        // console.log(props);
-        // this.state = { /* initial state, this is ES6 syntax (classes) */ };
     }
-
-    static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    }
+    //
+    // static contextTypes = {
+    //     router: React.PropTypes.object.isRequired
+    // }
 
     render() {
         return (
             <div>
-
-                {this.props.squads.map(function(name, index){
-                    return <squad key={index}>{name.name}</squad>;
+                {this.props.squads.map(function(squad, index){
+                    return <Squad key={index} name={squad.name} onClick= {()=>{
+                        console.log(squad);
+                      }}></Squad>;
                 })}
-                <input type="button" value="Add Squad" />
+
+                <input type="button" className="button" value="Add Squad" />
             </div>
         );
     }
