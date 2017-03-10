@@ -21,7 +21,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // do a redux subscription
-const SigninPageConnected = connect(mapStateToProps, mapDispatchToProps)(SigninForm);
-
-export default SigninPageConnected;
+export default connect(mapStateToProps, mapDispatchToProps)(SigninForm);
 

@@ -9,8 +9,9 @@ export const registerUserEpic = action$ =>
             sendCommand('RegisterUser', action.user)
                 .map(ev => {
                     console.log(ev);
-                        return ev.properties.isFailure ? userActions.registerUserFailure(ev.errors)
-                    : userActions.registerUserSuccess(ev.user); }) // output success
+                    return ev.properties.isFailure ? userActions.registerUserFailure(ev.errors)
+                        : userActions.registerUserSuccess(ev.user);
+                }) // output success
         );
 
 // when we are doing signing in , call login on server, and then send appropriate action

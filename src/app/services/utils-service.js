@@ -6,7 +6,7 @@ const convertErrorArrayToObject = (array) => {
         }
     };
 
-    for(let i=0; i <= array.length; i++) {
+    for(let i=0; i < array.length; i++) {
         const error = array[i];
         if(typeof(error) === 'object') {
             const key = Object.keys(error)[0];

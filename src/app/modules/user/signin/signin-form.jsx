@@ -77,7 +77,7 @@ export default class SigninForm extends Component {
                     <span>{error}</span>
                 </div>
                 <div className="button-row">
-                    <RaisedButton label="Sign in" primary={true} type="submit"/>
+                    <RaisedButton label="Sign in" primary={true} type="submit" disabled={this.state.isSubmitting}/>
                     <RaisedButton label="Clear Values" disabled={this.state.pristine} onClick={this.reset}/>
                 </div>
             </Formsy.Form>
