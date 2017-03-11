@@ -13,7 +13,7 @@ const handleSignin = () => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        currentUser: state.rootReducer.userReducer.currentUser
+        currentUser: state.user.currentUser
     };
 };
 
