@@ -23,9 +23,7 @@ const config = {
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel',
                 include: APP_DIR,
-                query: {
-
-                }
+                query: {}
             },
             // {
             //     test: /(\.scss$|\.css$)/,
@@ -72,16 +70,23 @@ const config = {
                 loader: "url-loader?limit=25000",
                 //loader: 'file?name=[path][name].[ext]',
                 include: APP_DIR
-            }
+            },
+            {test: /\.json$/, loader: 'json-loader'}
         ]
     },
     postcss: [autoprefixer],
     resolve: {
-        extensions: ['', '.scss', '.css', '.js', '.json', '.jsx', '.woff', 'woff2', 'png', 'jpg'],
+        extensions: ['', '.scss', '.css', '.js', '.jsx', '.json', '.woff', 'woff2', 'png', 'jpg'],
         modulesDirectories: [
             'node_modules',
             path.resolve(APP_DIR, './node_modules')
         ]
+    },
+    node: {
+        console: true,
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
     },
 // sassLoader: {
 //     data: '@import "theme/_config.scss";',

@@ -2,6 +2,9 @@
 import io from 'socket.io-client';
 import {Observable, Subject} from 'rxjs';
 import * as uuid from 'uuid';
+import request from 'superagent';
+
+// this controls interaction with server using socket.io
 
 let socket;
 let streamForCommand;
@@ -43,83 +46,56 @@ const init = () => {
 // };
 
 const login = (email, password) => {
+    // login needs it own observable - would this be better as promise???
+    const ret = new Subject();
 
-    fetch('http://localhost:8180/login', {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({userName: email, password: password})
-    })
-        .then(function (resp) {
+    request.post('http://localhost:8180/login')
+        .send({
+            userName: email,
+            password: password
+        })
+        .then((resp) => {
             if (resp.status === 200) {
-                // logged in ok, so
-                resp.json()
-                    .then((respObject) => {
-                        console.log('Authenticated user ' + email);
-                        // store token
-                        token = respObject.token;
-                        // tell server that we are now authenticating the socket
-                        socket.emit('authentication', respObject);
-                    });
-            } else {
+                // logged in ok, so get response out
+                console.log('Authenticated user ' + email);
+                // store token
+                token = resp.body.token;
+                // tell server that we are now authenticating the socket
+                socket.emit('authentication', resp.body);
+                ret.next({userName: email});
+            }
+            else {
                 // error logging in
-                resp.text()
-                    .then(respText => {
-                        console.log('error ' + respText)
-                    });
+                console.log('error ' + resp.text);
+                ret.error(resp.text);
             }
         })
-        .catch(function (err) {
-            console.log('err' + err);
+        .catch((errResp) => {
+            // something bad happened
+            console.log(errResp);
+            ret.error(errResp);
         });
 
-    // ajax.post('http://localhost:8180/login', {userName: email, password: password})
-    //     .subscribe(resp => {
-    //         console.log(resp)
-    //             token = resp;
-    //
-    //             // now connect with token
-    //             socket = io.connect('http://localhost:8180', {request: token});
-    //
-    //             socket.on('event', processReceiveEvent);
-    //             socket.on('connect', function () {
-    //                 console.log('authenticated');
-    //             }).on('disconnect', function () {
-    //                 console.log('disconnected');
-    //             });
-    //         }, (err) => {
-    //             console.log('@@@@@' + err.xhr)
-    //         }
-    //     );
-
-    // socket.emit('authentication', {username: email, password: password});
-    // socket.on('authenticated', (xxx) => {
-    //     // use the socket as usual, as user has been authenticated
-    //     console.log('authenticated ');
-    //     isAuthenticated = true;
-    // });
-    // socket.on('unauthorized', (err) => {
-    //     // either user name or password didnt match
-    //     console.log("There was an error with the authentication:", err.message);
-    //     isAuthenticated = false;
-    //
-    //     // create an event to send for any components that need an event, maybe promise better?!?!?
-    //     let resp = {};
-    //     resp.eventName = 'LoginFailed';
-    //     streamForGeneral.next(resp);
-    // });
+    return ret;
 };
 
 const sendCommand = (name, payload) => {
 
     // need to give it a correlation id
-    let command = {properties:{commandName: name, correlationId: uuid.v4()}, payload: payload};
+    let command = {
+        properties: {
+            commandName: name,
+            correlationId: uuid.v4()
+        }
+    };
+
+    // add the payload to the command
+    Object.assign(command, payload);
+
     // create observable for client
     let clientObserver = new Subject();
-    // console.log( clientObserver.subscribe(console.log));
     streamForCommand[command.properties.correlationId] = clientObserver;
+    // console.log( clientObserver.subscribe(console.log));
 
     // send it
     try {
@@ -176,7 +152,6 @@ const processReceiveQueryEvent = (event) => {
         console.log('Query event with no correlation id ', event.query.properties);
     }
 };
-
 
 init();
 

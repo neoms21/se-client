@@ -10,5 +10,5 @@ cache:
 test_async:
   script:
    - yarn
-   - yarn run test:ci
+   - yarn run ci
 
