@@ -1,43 +1,60 @@
-import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import {FormsyText} from 'formsy-material-ui';
+import Formsy from 'formsy-react';
 
-import {squadReducer} from '../reducers/squad-reducer'
-import {connect} from 'react-redux';
-
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-    <TextField hintText={label}
-               floatingLabelText={label}
-               errorText={touched && error}
-               {...input}
-               {...custom}
-    />
-);
-
-let CreateSquadForm = (props) => {
-    const { handleSubmit, pristine, reset, submitting } = props;
-    return (
-        <form onSubmit={handleSubmit} className="register-user">
-            <Field name="squadName"
-                   component={renderTextField} label="Squad Name" fullWidth={true}
-            />
-
-            <div className="button-row">
-                <RaisedButton label="Register" primary={true} type="submit" disabled={submitting}/>
-            </div>
-        </form>
-    )
-};
-
-CreateSquadForm = connect(
-    state => {
-        return {
-            initialValues: state // pull initial values from account reducer
-        }},
-    { squad: squadReducer }               // bind account loading action creator
-)(CreateSquadForm);
+let {Component, PropTypes} = React;
 
 
-export default CreateSquadForm;
+export default class CreateSquadForm extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isSubmitting: false,
+            pristine: true
+        };
+    }
+
+    static propTypes = {
+        handleSubmit: PropTypes.func
+    };
+
+    errorMessages = {
+        squadNameError: 'Please provide your squad name (at least 8 letters)'
+    };
+
+    handleChange = (e) => {
+        // remove error
+        this.setState({pristine: false, showError: false});
+    };
+
+    reset = () => {
+        this.refs.form.reset();
+    };
+
+    render = () => {
+        const {handleSubmit} = this.props;
+
+        return (
+            <Formsy.Form onSubmit={handleSubmit}>
+                <FormsyText
+                    name="squadName"
+                    validations="minLength:8"
+                    validationError={this.errorMessages.squadNameError}
+                    required updateImmediately fullWidth={true}
+                    hintText="Enter the name of the squad"
+                    floatingLabelText="Squad name"
+                    onChange={this.handleChange}
+                />
+
+                <div className="button-row">
+                    <RaisedButton label="Register" primary={true} type="submit" disabled={this.state.isSubmitting}/>
+                    <RaisedButton label="Clear Values" disabled={this.state.pristine} onClick={this.reset}/>
+                </div>
+            </Formsy.Form>
+        );
+    };
+}
+

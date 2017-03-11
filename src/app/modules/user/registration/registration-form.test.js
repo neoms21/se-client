@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import {shallow} from 'enzyme';
-import RegistrationForm from './RegistrationForm';
+import RegistrationForm from './registration-form';
 
 
 describe('User Registration form', () => {
@@ -15,9 +15,11 @@ describe('User Registration form', () => {
         //var myFuncSpy = spyOn(myFunc);
         const form = shallow(<RegistrationForm handleSubmit={myFunc}></RegistrationForm>);
 
-        form.simulate('submit');
-        //form.find('RaisedButton').last().simulate('click');
-        //expect(form.props.onSaveRegistration).toBeDefined();
-        expect(myFunc).toBeCalled();
+        setTimeout(() => {
+            form.simulate('submit');
+            //form.find('RaisedButton').first().simulate('click');
+            //expect(form.props.onSaveRegistration).toBeDefined();
+            expect(myFunc).toBeCalled();
+        }, 100);
     });
 });
