@@ -5,9 +5,6 @@ const initialState = {};
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
-        case types.REGISTER_USER_SUCCESS:
-            console.log('in reg recucer');
-            return state;
         case types.REGISTER_USER:
             return {isLoading: true, ...state};
         case types.REGISTER_USER_SUCCESS:
