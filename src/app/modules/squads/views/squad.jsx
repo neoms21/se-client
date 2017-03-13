@@ -5,7 +5,6 @@ import Edit from '../../../svg/edit'
 
 export default function Squad(props) {
 
-    console.log(props);
     return <div className="squad-container">
 
     <span className="squad-container__name">

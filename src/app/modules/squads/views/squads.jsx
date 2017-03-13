@@ -11,18 +11,15 @@ class SquadsComponent extends React.Component {
         super(props);
         this.props.dispatch(squadActions.fetchSquads());
     }
-    //
-    // static contextTypes = {
-    //     router: React.PropTypes.object.isRequired
-    // }
 
     render() {
         return (
             <div className="squad-list">
 
-                {/*<input type="button"  value="Add Squad" />*/}
                 <RaisedButton className="squad-list__button"
-                              label="Add Squad" primary={true} />
+                              label="Add Squad" primary={true} onClick={()=>{
+                                  this.props.router.push('squad');
+                }} />
                 {this.props.squads.map(function(squad, index){
                     return <Squad key={index} name={squad.name} onClick= {()=>{
                         console.log(squad);

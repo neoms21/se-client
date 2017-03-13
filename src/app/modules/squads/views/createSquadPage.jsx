@@ -3,12 +3,15 @@ import {connect} from 'react-redux';
 import {Observable} from 'rxjs';
 import CreateSquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
+import {getSquad} from '../selectors/getSquadSelector'
 
 const mapStateToProps = (state, ownProps) => {
     return {
         //error: state.squads.error,
-        //values: {userName: '', password: ''}
-    };
+        values: {squadName: 'abcd'},
+        squadName: getSquad(state, '58bf301b616e2a1e4a07724e').name
+    }
+
 };
 
 const mapDispatchToProps = (dispatch) => {
