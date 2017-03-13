@@ -3,6 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import headerSass from './HeaderStyle.scss';
 import Logged from './logged';
 import Login from './login';
+import LeftHandMenu from "./LeftHandMenu";
 
 export default class HeaderComponent extends React.Component {
 
@@ -21,6 +22,7 @@ export default class HeaderComponent extends React.Component {
     render = () => {
         return (
             <AppBar title='Sports Editor' onLeftIconButtonTouchTap={this.props.handleLeftIconClick}
+                    iconElementLeft={<LeftHandMenu />}
                     iconElementRight={this.state.isSignedIn
                         ? <Logged currentUser={this.props.currentUser}/>
                         : <Login handleSignin={this.props.handleSignin}/>}>
