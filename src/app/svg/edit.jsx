@@ -10,7 +10,7 @@ class Edit extends React.Component {
         return (
 
             <svg onClick={this.props.onClick}
-                className="squad-container__delete"
+                className={this.props.cssClass}
                 viewBox="0 0 24 24">
 
                 <path

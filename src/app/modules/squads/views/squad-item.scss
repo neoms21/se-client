@@ -8,9 +8,10 @@
 
 .squad-container__name {
   flex: 1;
+  margin-top: 0.4em;
 }
 
-.squad-container__delete {
+.squad-container__edit {
   width: 24px;
   height: 24px;
   color: red;

@@ -14,7 +14,8 @@ export default (
         <IndexRoute component={Home}/>
         <Route path="/registration" component={RegistrationPage}/>
         <Route path="/squads" component={SquadsComponent}/>
-        <Route path="/squad/id" component={CreateSquadComponent}/>
+        <Route path="/squad" component={CreateSquadComponent}/>
+
         <Route path="/signin" component={SigninPage} />
         <Route path="/about" component={About} />
     </Route>
