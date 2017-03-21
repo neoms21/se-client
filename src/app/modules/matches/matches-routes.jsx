@@ -5,8 +5,8 @@ import EditMatchPage from './pages/edit-match/edit-match-page';
 
 const matchesRoutes = (
     <Route>
-        <Route path="/editmatch" component={EditMatchPage}/>
-
+        <Route path="creatematch" component={EditMatchPage}/>
+        <Route path="editmatch" component={EditMatchPage}/>
     </Route>
 );
 

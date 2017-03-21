@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
-import RaisedButton from 'material-ui/RaisedButton';
+import {RaisedButton, Card, IconButton, CardHeader, CardText} from 'material-ui';
 import Formsy from 'formsy-react';
 import './edit-match.scss';
 
@@ -13,7 +13,8 @@ export default class EditMatchForm extends React.Component {
             isSubmitting: false,
             pristine: true,
             showError: false,
-            players: []
+            players: [],
+            nextId: 1
         };
     }
 
@@ -47,9 +48,10 @@ export default class EditMatchForm extends React.Component {
     };
 
     addPlayer = () => {
-        const newPlayer = {id: 1000, position: ''};
+        const newPlayer = {id: this.state.nextId, position: ''};
         this.setState({
-            players: [...this.state.players, newPlayer]
+            players: [...this.state.players, newPlayer],
+            nextId: this.state.nextId + 1
         })
     };
 
@@ -63,12 +65,11 @@ export default class EditMatchForm extends React.Component {
             ? '' : errors[0];
 
         return (
-            <section>
+            <section className="edit-match">
                 <h1>Create match</h1>
-                <Formsy.Form ref="form"
-                             onValidSubmit={handleSubmit}
-                             className="edit-match">
-                    <span>
+                <Formsy.Form ref="form" className="edit-match-form"
+                             onValidSubmit={handleSubmit}>
+                    <div className="top-section">
                         <FormsySelect
                             name="team"
                             hintText="Select your team"
@@ -76,7 +77,7 @@ export default class EditMatchForm extends React.Component {
                             onChange={this.handleChange}
                         />
                         <FormsyDate
-                            name="when"
+                            name="when" required
                             hintText="Enter the date of the match"
                             floatingLabelText="Date of the match"
                             onChange={this.handleChange}
@@ -90,29 +91,38 @@ export default class EditMatchForm extends React.Component {
                             floatingLabelText="Opponents name"
                             onChange={this.handleChange}
                         />
-                    </span>
-                    <h3>Players</h3>
-                    <RaisedButton label="Add" onClick={this.addPlayer}/>
-                    {this.state.players.map(player =>
-                        <div>
-                            <FormsySelect
-                                name="player"
-                                required updateImmediately
-                                hintText="Select player"
-                                floatingLabelText="Select player"
-                                onChange={this.handleChange}
-                            />
-                            <FormsyText
-                                name="position"
-                                validations="minLength:2"
-                                validationError={this.errorMessages.positionError}
-                                required updateImmediately
-                                hintText="Enter their starting position"
-                                floatingLabelText="Starting position"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                    )}
+                    </div>
+                    <h3>Players
+                        <IconButton
+                            iconClassName="material-icons" tooltip="Add"
+                            tooltipPosition="top-right" onClick={this.addPlayer}>add_circle</IconButton>
+                    </h3>
+                    <div className="players-section">
+
+                        {this.state.players.map(player =>
+                            <Card key={player.id} className="player-card">
+                                    <div className="">
+                                        <FormsySelect
+                                            name="player"
+                                            required
+                                            hintText="Select player"
+                                            floatingLabelText="Select player"
+                                            onChange={this.handleChange}
+                                        />
+                                        <FormsyText
+                                            name="position"
+                                            validations="minLength:2"
+                                            validationError={this.errorMessages.positionError}
+                                            required updateImmediately
+                                            hintText="Enter their starting position"
+                                            floatingLabelText="Starting position"
+                                            onChange={this.handleChange}
+                                        />
+                                    </div>
+                                </CardText>
+                            </Card>
+                        )}
+                    </div>
 
                     <div className={::this.getErrorClasses()}>
                         <span>{generalError}</span>

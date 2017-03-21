@@ -1,9 +1,22 @@
 .edit-match {
 
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  .edit-match-form {
+    .top-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .players-section {
+      display: inline;
+      //flex-direction: row;
+      //justify-content: space-between;
+
+      .player-card {
+        border-width: 1px;
+        border-radius: 5px;
+      }
+    }
   }
 
   .full-width-control {
@@ -13,6 +26,10 @@
     span {
       left: 100px;
     }
+  }
+
+  .players-section {
+    margin: 1%;
   }
 
   .button-row {

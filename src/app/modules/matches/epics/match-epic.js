@@ -16,4 +16,4 @@ export const createMatchEpic = action$ =>
 export const createMatchSuccessEpic = action$ =>
     action$.ofType(ActionTypes.CREATE_MATCH_SUCCESS)
         .mergeMap(action =>
-            Observable.of(push('/createdmatch', action.message))); // change route to home on successful register
+            Observable.of(push('/createdmatch', action.message)));
