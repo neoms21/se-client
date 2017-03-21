@@ -41,6 +41,7 @@ export default class CreateSquadForm extends Component {
             <Formsy.Form onSubmit={handleSubmit}>
                 <FormsyText
                     name="squadName"
+                    value={this.props.squadName}
                     validations="minLength:8"
                     validationError={this.errorMessages.squadNameError}
                     required updateImmediately fullWidth={true}

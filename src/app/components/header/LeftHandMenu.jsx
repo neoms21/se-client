@@ -2,9 +2,13 @@ import React from 'react';
 import {IconMenu, MenuItem, IconButton} from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'react-router';
 
 export default class LeftHandMenu extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
 
     handleMatchList() {
         browserHistory.push('matchlist');
@@ -13,6 +17,15 @@ export default class LeftHandMenu extends React.Component {
     handleCreateMatch() {
         browserHistory.push('/creatematch');
     }
+
+    handleSquadsList() {
+        browserHistory.push('/squads');
+    }
+
+    handleCreateSquad() {
+        browserHistory.push('/squad');
+    }
+
 
     render() {
 
@@ -34,8 +47,8 @@ export default class LeftHandMenu extends React.Component {
 
                     <MenuItem primaryText='Squads' rightIcon={<ArrowDropRight />}
                               menuItems={[
-                                  <MenuItem primaryText="List"/>,
-                                  <MenuItem primaryText="Create"/>,
+                                  <MenuItem primaryText="List" onTouchTap={this.handleSquadsList}/>,
+                                  <MenuItem primaryText="Create" onTouchTap={this.handleCreateSquad}/>,
                               ]}
                     />
                     <MenuItem primaryText='Matches' rightIcon={<ArrowDropRight />}
