@@ -4,9 +4,9 @@ import Home from './components/Home/Home';
 import About from './components/about/About';
 import RegistrationPage from './modules/user/registration/registration-page';
 import SquadsComponent from './modules/squads/views/squads'
-import SquadComponent from './modules/squads/views/createSquadPage';
 import { Router, Route, IndexRoute } from 'react-router';
 import SigninPage from './modules/user/signin/signin-page';
+import CreateSquadComponent from './modules/squads/views/createSquadPage'
 
 
 export default (
@@ -14,7 +14,8 @@ export default (
         <IndexRoute component={Home}/>
         <Route path="/registration" component={RegistrationPage}/>
         <Route path="/squads" component={SquadsComponent}/>
-        <Route path="/squad" component={SquadComponent}/>
+        <Route path="/squad" component={CreateSquadComponent}/>
+
         <Route path="/signin" component={SigninPage} />
         <Route path="/about" component={About} />
     </Route>

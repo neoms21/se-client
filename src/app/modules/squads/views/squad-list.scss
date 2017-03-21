@@ -1,0 +1,10 @@
+.squad-list{
+  display: flex;
+  flex-direction: column;
+}
+
+.squad-list__button{
+  align-self: flex-start;
+  margin-bottom: 3px;
+  margin-top: 5px;
+}
