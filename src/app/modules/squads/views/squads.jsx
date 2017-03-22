@@ -17,18 +17,22 @@ class SquadsComponent extends React.Component {
             <div className="squad-list">
 
                 <RaisedButton className="squad-list__button"
-                              label="Add Squad" primary={true} onClick={()=>{
-                                  this.props.router.push('squad');
-                }} />
-                {this.props.squads.map(function(squad, index){
-                    return <Squad key={index} name={squad.name} onClick= {()=>{
-                        console.log(squad);
-                      }}></Squad>;
+                              label="Add Squad" primary={true} onClick={() => {
+                    this.props.router.push('squad');
+                }}/>
+                {this.props.squads.map((squad,index) => {
+                    return <Squad key={index} name={squad.name} onSquadClick={() => {
+                        this.props.router.push('squad/' + squad._id + '/players');
+                    }}
+                                  onEditClick={() => {
+                                      console.log(squad);
+                                  }}></Squad>;
                 })}
 
             </div>
         );
     }
+
 
 }
 function mapStateToProps(state) {
