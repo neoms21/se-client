@@ -1,12 +1,13 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
+//noinspection JSUnresolvedVariable
 import {FormsyText} from 'formsy-material-ui';
 import Formsy from 'formsy-react';
 
 let {Component, PropTypes} = React;
 
 
-export default class CreateSquadForm extends Component {
+export default class PlayerForm extends Component {
 
     constructor(props) {
         super(props);
@@ -22,7 +23,10 @@ export default class CreateSquadForm extends Component {
     };
 
     errorMessages = {
-        squadNameError: 'Please provide your squad name (at least 8 letters)'
+        nameError: 'Name is mandatory',
+        ageError: 'Age is mandatory',
+        positionError: 'Position is mandatory',
+        emailError: 'Email is mandatory',
     };
 
     handleChange = (e) => {
@@ -40,13 +44,12 @@ export default class CreateSquadForm extends Component {
         return (
             <Formsy.Form onSubmit={handleSubmit}>
                 <FormsyText
-                    name="squadName"
-                    value={this.props.squadName}
-                    validations="minLength:1"
-                    validationError={this.errorMessages.squadNameError}
+                    name="name"
+                    value={this.props.name}
+                    validationError={this.errorMessages.nameError}
                     required updateImmediately fullWidth={true}
-                    hintText="Enter the name of the squad"
-                    floatingLabelText="Squad name"
+                    hintText="Enter the name of the player"
+                    floatingLabelText="Player name"
                     onChange={this.handleChange}
                 />
 

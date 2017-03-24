@@ -19,7 +19,6 @@ export default function Squad(props) {
 
             <FontIcon style={iconStyles}
                       className="material-icons"
-
                       onClick={props.onSquadClick}
                       color={blue500}>people_outline</FontIcon>
             <FontIcon style={iconStyles}
