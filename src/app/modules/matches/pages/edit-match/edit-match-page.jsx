@@ -2,6 +2,7 @@ import React from 'react';
 import EditMatchForm from './edit-match-form';
 import {registerMatch} from '../../actions/match-actions';
 import {connect} from 'react-redux';
+import {ServerService} from '../../../../services/server-service';
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -16,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 };
+
+
+
 
 // do a redux subscription
 export default connect(mapStateToProps, mapDispatchToProps)(EditMatchForm);

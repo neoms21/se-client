@@ -1,8 +1,10 @@
 import React from 'react';
-import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
-import {RaisedButton, Card, IconButton, CardHeader, CardText} from 'material-ui';
-import Formsy from 'formsy-react';
+//import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
+import {RaisedButton, Card, IconButton, CardHeader, CardText, SelectField,  MenuItem} from 'material-ui';
+//import Formsy from 'formsy-react';
+import {ServerService} from '../../../../services/server-service';
 import './edit-match.scss';
+import PlayerSelectionComponent from "./player-seelction-component";
 
 export default class EditMatchForm extends React.Component {
 
@@ -29,7 +31,16 @@ export default class EditMatchForm extends React.Component {
 
     handleChange = (e) => {
         // remove error
-        this.setState({pristine: false, showError: false});
+        this.setState({pristine: false, showError: false, value: e.target.value});
+    };
+
+    handleChangeTeam = (e, team) => {
+        ServerService.sendQuery('Players', {team})
+            .subscribe(p => {
+                this.players.push(p);
+            });
+
+        this.handleChange(e);
     };
 
     getErrorClasses = () => {
@@ -47,13 +58,15 @@ export default class EditMatchForm extends React.Component {
         this.refs.form.updateInputsWithError(fieldErrors);
     };
 
-    addPlayer = () => {
-        const newPlayer = {id: this.state.nextId, position: ''};
+    addPlayer = (e) => {
+        e.stopPropagation();
+        const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
         this.setState({
             players: [...this.state.players, newPlayer],
             nextId: this.state.nextId + 1
         })
     };
+
 
     reset = () => {
         this.refs.form.reset();
@@ -64,65 +77,59 @@ export default class EditMatchForm extends React.Component {
         const generalError = errors === undefined || errors.general === undefined || errors.length === 0
             ? '' : errors[0];
 
+        const xxx = {padding: "2px", display: "inline-block"};
+
         return (
             <section className="edit-match">
                 <h1>Create match</h1>
-                <Formsy.Form ref="form" className="edit-match-form"
-                             onValidSubmit={handleSubmit}>
+                <form ref="form" className="edit-match-form"
+                             onSubmit={handleSubmit}>
                     <div className="top-section">
-                        <FormsySelect
+                        <SelectField
                             name="team"
-                            hintText="Select your team"
-                            floatingLabelText="Select team"
+                            value={this.state.value} floatingLabelText="Select team"
                             onChange={this.handleChange}
-                        />
-                        <FormsyDate
-                            name="when" required
-                            hintText="Enter the date of the match"
-                            floatingLabelText="Date of the match"
-                            onChange={this.handleChange}
-                        />
-                        <FormsyText
-                            name="opposition"
-                            validations="minLength:8"
-                            validationError={this.errorMessages.oppositionError}
-                            required
-                            hintText="Enter your opponents (at least 8 characters)"
-                            floatingLabelText="Opponents name"
-                            onChange={this.handleChange}
-                        />
+                        >
+                            <MenuItem value={1} primaryText="Never" />
+                            <MenuItem value={2} primaryText="Every Night" />
+                            <MenuItem value={3} primaryText="Weeknights" />
+                            <MenuItem value={4} primaryText="Weekends" />
+                            <MenuItem value={5} primaryText="Weekly" />
+                        </SelectField>
+                        {/*<FormsySelect*/}
+                            {/*name="team"*/}
+                            {/*hintText="Select your team"*/}
+                            {/**/}
+                            {/*onChange={this.handleChangeTeam}*/}
+                        {/*/>*/}
+                        {/*<FormsyDate*/}
+                            {/*name="when" required*/}
+                            {/*hintText="Enter the date of the match"*/}
+                            {/*floatingLabelText="Date of the match"*/}
+                            {/*onChange={this.handleChange}*/}
+                        {/*/>*/}
+                        {/*<FormsyText*/}
+                            {/*name="opposition"*/}
+                            {/*validations="minLength:8"*/}
+                            {/*validationError={this.errorMessages.oppositionError}*/}
+                            {/*required*/}
+                            {/*hintText="Enter your opponents (at least 8 characters)"*/}
+                            {/*floatingLabelText="Opponents name"*/}
+                            {/*onChange={this.handleChange}*/}
+                        {/*/>*/}
                     </div>
                     <h3>Players
                         <IconButton
                             iconClassName="material-icons" tooltip="Add"
                             tooltipPosition="top-right" onClick={this.addPlayer}>add_circle</IconButton>
                     </h3>
-                    <div className="players-section">
-
+                    <ul className="players-section">
                         {this.state.players.map(player =>
-                            <Card key={player.id} className="player-card">
-                                    <div className="">
-                                        <FormsySelect
-                                            name="player"
-                                            required
-                                            hintText="Select player"
-                                            floatingLabelText="Select player"
-                                            onChange={this.handleChange}
-                                        />
-                                        <FormsyText
-                                            name="position"
-                                            validations="minLength:2"
-                                            validationError={this.errorMessages.positionError}
-                                            required updateImmediately
-                                            hintText="Enter their starting position"
-                                            floatingLabelText="Starting position"
-                                            onChange={this.handleChange}
-                                        />
-                                    </div>
-                                </CardText>
-                            </Card>
+                            <li key={player.id} className="player-card">
+                                {/*<PlayerSelectionComponent player={player} />*/}
+                            </li>
                         )}
-                    </div>
+                    </ul>
 
                     <div className={::this.getErrorClasses()}>
                         <span>{generalError}</span>
@@ -131,7 +138,7 @@ export default class EditMatchForm extends React.Component {
                         <RaisedButton label="Save" primary={true} type="submit"/>
                         <RaisedButton label="Clear Values" disabled={this.state.pristine} onClick={this.reset}/>
                     </div>
-                </Formsy.Form>
+                </form>
             </section>
         );
     }
