@@ -51,8 +51,8 @@ export default class PlayerSelectionComponent extends React.Component {
         const {player} = this.props;
 
         return (
-            <div>
-                { this.state.isEditing ?
+            <div className="player-selection">
+                {this.state.isEditing ?
                     <div className="player-selection">
                         <TextField ref="position" hintText="Enter their starting position" className="position"
                                    floatingLabelText="Starting position" errorText={this.state.positionError}
@@ -62,22 +62,6 @@ export default class PlayerSelectionComponent extends React.Component {
                                      floatingLabelText="Select player" value={this.state.player}
                                      onChange={this.handlePlayerChange}/>
 
-
-                        {/*<FormsyText*/}
-                        {/*name="position"*/}
-                        {/*validations="minLength:2" style={{display: 'inline-block'}}*/}
-                        {/*validationError={this.errorMessages.positionError}*/}
-                        {/*required updateImmediately*/}
-                        {/*hintText="Enter their starting position"*/}
-                        {/*floatingLabelText="Starting position"*/}
-                        {/*onChange={this.handleChange}*/}
-                        {/*/>*/}
-                        {/*<FormsySelect*/}
-                        {/*name="player"*/}
-                        {/*required style={{display: 'inline-block', verticalAlign: 'top'}}*/}
-                        {/*hintText="Select player"*/}
-                        {/*floatingLabelText="Select player"*/}
-                        {/*onChange={this.handleChange}/>*/}
                         <IconButton iconClassName="material-icons" tooltip="Close"
                                     tooltipPosition="top-right" onClick={::this.closePlayer}
                         >close_circle</IconButton>
@@ -93,8 +77,7 @@ export default class PlayerSelectionComponent extends React.Component {
                                     tooltipPosition="top-right"
                                     onClick={::this.editPlayer}>edit_circle</IconButton>
                     </div>
-                }
-            </div>
+                }   </div>
         );
     }
 }
