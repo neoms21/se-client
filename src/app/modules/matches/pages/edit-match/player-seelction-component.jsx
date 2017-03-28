@@ -1,8 +1,8 @@
 import React from 'react';
-import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
-import {RaisedButton, Card, IconButton, CardHeader, CardText} from 'material-ui';
-import {List, ListItem} from 'material-ui/List';
+//import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
+import {RaisedButton, Card, IconButton, CardHeader, CardText, TextField, SelectField} from 'material-ui';
 import Formsy from 'formsy-react';
+import './edit-match.scss';
 
 export default class PlayerSelectionComponent extends React.Component {
 
@@ -23,21 +23,28 @@ export default class PlayerSelectionComponent extends React.Component {
         oppositionError: 'Please provide opposition name'
     };
 
-    editPlayer = (player) => {
+    editPlayer = () => {
         this.setState({isEditing: true});
-        //player.isEditing = true;
     };
 
-    closePlayer = (player) => {
-        // const playerIndex = this.props.player.findIndex(pl => pl.id === playerId);
-        // if (playerIndex > -1) {
-        //     const playersCopy = this.props.players.concat();
-        //     playersCopy[playerIndex].isEditing = false;
-        //     this.setState({
-        //         players: playersCopy
-        //     });
-        // }
+    closePlayer = () => {
         this.setState({isEditing: false});
+    };
+
+    deletePlayer = () => {
+        this.closePlayer();
+        this.props.deletePlayer();
+    };
+
+    handlePositionChange = (event) => {
+        this.setState({
+            position: event.target.value,
+            positionError: event.target.value.length === 0 ? 'Position is required' : ''
+        });
+    };
+
+    handlePlayerChange = (event, key, value) => {
+        this.setState({player: value});
     };
 
     render = () => {
@@ -46,25 +53,37 @@ export default class PlayerSelectionComponent extends React.Component {
         return (
             <div>
                 { this.state.isEditing ?
-                    <div style={{display: 'inline-block'}}>
-                        <FormsyText
-                            name="position"
-                            validations="minLength:2" style={{display: 'inline-block'}}
-                            validationError={this.errorMessages.positionError}
-                            required updateImmediately
-                            hintText="Enter their starting position"
-                            floatingLabelText="Starting position"
-                            onChange={this.handleChange}
+                    <div className="player-selection">
+                        <TextField ref="position" hintText="Enter their starting position" className="position"
+                                   floatingLabelText="Starting position" errorText={this.state.positionError}
+                                   onChange={this.handlePositionChange}
                         />
-                        <FormsySelect
-                            name="player"
-                            required style={{display: 'inline-block', verticalAlign: 'top'}}
-                            hintText="Select player"
-                            floatingLabelText="Select player"
-                            onChange={this.handleChange}/>
+                        <SelectField ref="player" hintText="Select player" className="player"
+                                     floatingLabelText="Select player" value={this.state.player}
+                                     onChange={this.handlePlayerChange}/>
+
+
+                        {/*<FormsyText*/}
+                        {/*name="position"*/}
+                        {/*validations="minLength:2" style={{display: 'inline-block'}}*/}
+                        {/*validationError={this.errorMessages.positionError}*/}
+                        {/*required updateImmediately*/}
+                        {/*hintText="Enter their starting position"*/}
+                        {/*floatingLabelText="Starting position"*/}
+                        {/*onChange={this.handleChange}*/}
+                        {/*/>*/}
+                        {/*<FormsySelect*/}
+                        {/*name="player"*/}
+                        {/*required style={{display: 'inline-block', verticalAlign: 'top'}}*/}
+                        {/*hintText="Select player"*/}
+                        {/*floatingLabelText="Select player"*/}
+                        {/*onChange={this.handleChange}/>*/}
                         <IconButton iconClassName="material-icons" tooltip="Close"
                                     tooltipPosition="top-right" onClick={::this.closePlayer}
                         >close_circle</IconButton>
+                        <IconButton iconClassName="material-icons" tooltip="Remove"
+                                    tooltipPosition="top-right" onClick={::this.deletePlayer}
+                        >delete_circle</IconButton>
                     </div>
                     :
                     <div>

@@ -51,3 +51,15 @@
     }
   }
 }
+
+.player-selection {
+  display: inline-block;
+
+  .position {
+    display: inline-block;
+  }
+
+  .player {
+    display: inline-block;
+  }
+}

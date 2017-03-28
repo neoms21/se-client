@@ -1,6 +1,6 @@
 import React from 'react';
 //import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
-import {RaisedButton, Card, IconButton, CardHeader, CardText, SelectField,  MenuItem} from 'material-ui';
+import {RaisedButton, IconButton, SelectField, MenuItem, TextField, DatePicker} from 'material-ui';
 //import Formsy from 'formsy-react';
 import {ServerService} from '../../../../services/server-service';
 import './edit-match.scss';
@@ -15,8 +15,14 @@ export default class EditMatchForm extends React.Component {
             isSubmitting: false,
             pristine: true,
             showError: false,
-            players: [],
-            nextId: 1
+            nextId: 1,
+            validationErrors: {},
+            values: {
+                team: '',
+                matchDate: new Date(),
+                opponents: '',
+                players: []
+            }
         };
     }
 
@@ -31,7 +37,11 @@ export default class EditMatchForm extends React.Component {
 
     handleChange = (e) => {
         // remove error
-        this.setState({pristine: false, showError: false, value: e.target.value});
+        this.setState({
+            pristine: false, showError: false, values: {
+                [e.target.name]: e.target.value
+            }
+        });
     };
 
     handleChangeTeam = (e, team) => {
@@ -62,11 +72,26 @@ export default class EditMatchForm extends React.Component {
         e.stopPropagation();
         const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
         this.setState({
-            players: [...this.state.players, newPlayer],
-            nextId: this.state.nextId + 1
+            nextId: this.state.nextId + 1,
+            values: {
+                players: [...this.state.values.players, newPlayer]
+            }
         })
     };
 
+    deletePlayer = (player) => {
+        let copyOfPlayers = this.state.values.players.concat();
+        const playerIndexToBeDeleted = copyOfPlayers.findIndex((copyPlayer) => copyPlayer.id === player.id);
+        if (playerIndexToBeDeleted > -1) {
+            copyOfPlayers.splice(playerIndexToBeDeleted, 1);
+        }
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        // send values back to page
+        this.props.handleSubmit(this.state.values);
+    };
 
     reset = () => {
         this.refs.form.reset();
@@ -77,56 +102,34 @@ export default class EditMatchForm extends React.Component {
         const generalError = errors === undefined || errors.general === undefined || errors.length === 0
             ? '' : errors[0];
 
-        const xxx = {padding: "2px", display: "inline-block"};
-
         return (
             <section className="edit-match">
                 <h1>Create match</h1>
                 <form ref="form" className="edit-match-form"
-                             onSubmit={handleSubmit}>
+                      onSubmit={handleSubmit}>
                     <div className="top-section">
                         <SelectField
                             name="team"
-                            value={this.state.value} floatingLabelText="Select team"
-                            onChange={this.handleChange}
+                            value={this.state.values.team} floatingLabelText="Select team"
+                            onChange={this.handleChangeTeam}
                         >
-                            <MenuItem value={1} primaryText="Never" />
-                            <MenuItem value={2} primaryText="Every Night" />
-                            <MenuItem value={3} primaryText="Weeknights" />
-                            <MenuItem value={4} primaryText="Weekends" />
-                            <MenuItem value={5} primaryText="Weekly" />
                         </SelectField>
-                        {/*<FormsySelect*/}
-                            {/*name="team"*/}
-                            {/*hintText="Select your team"*/}
-                            {/**/}
-                            {/*onChange={this.handleChangeTeam}*/}
-                        {/*/>*/}
-                        {/*<FormsyDate*/}
-                            {/*name="when" required*/}
-                            {/*hintText="Enter the date of the match"*/}
-                            {/*floatingLabelText="Date of the match"*/}
-                            {/*onChange={this.handleChange}*/}
-                        {/*/>*/}
-                        {/*<FormsyText*/}
-                            {/*name="opposition"*/}
-                            {/*validations="minLength:8"*/}
-                            {/*validationError={this.errorMessages.oppositionError}*/}
-                            {/*required*/}
-                            {/*hintText="Enter your opponents (at least 8 characters)"*/}
-                            {/*floatingLabelText="Opponents name"*/}
-                            {/*onChange={this.handleChange}*/}
-                        {/*/>*/}
+                        <DatePicker name="matchDate" value={this.state.values.matchDate}
+                                   floatingLabelText="Select when the match is"
+                                    container="inline" mode="landscape"
+                                   onChange={this.handleChange}>
+                        </DatePicker>
+                        <TextField name="opposition" floatingLabelText="Opponents name"
+                                   onChange={this.handleChange}></TextField>
                     </div>
-                    <h3>Players
-                        <IconButton
-                            iconClassName="material-icons" tooltip="Add"
-                            tooltipPosition="top-right" onClick={this.addPlayer}>add_circle</IconButton>
+                    <h3>Players <IconButton
+                        iconClassName="material-icons" tooltip="Add"
+                        tooltipPosition="top-right" onClick={this.addPlayer}>add_circle</IconButton>
                     </h3>
                     <ul className="players-section">
-                        {this.state.players.map(player =>
+                        {this.state.values.players.map(player =>
                             <li key={player.id} className="player-card">
-                                {/*<PlayerSelectionComponent player={player} />*/}
+                                <PlayerSelectionComponent player={player} deletePlayer={::this.deletePlayer}/>
                             </li>
                         )}
                     </ul>
