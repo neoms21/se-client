@@ -9,12 +9,15 @@
 
     .players-section {
       display: inline;
+      padding: 0;
       //flex-direction: row;
       //justify-content: space-between;
 
       .player-card {
         border-width: 1px;
         border-radius: 5px;
+        border-color: blue;
+        padding: 8px;
         max-width: 100px;
         max-height: 32px;
         display: inline;
@@ -54,6 +57,22 @@
 
 .player-selection {
   display: inline;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: blue;
+  padding: 8px;
+
+  .edit-player {
+    display: inline-block;
+    .player {
+      display: inline-block;
+      vertical-align: bottom;
+    }
+  }
+
+  .view-player {
+    display: inline;
+  }
 
   .position {
     display: inline;

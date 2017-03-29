@@ -24,33 +24,55 @@ export default class EditMatchForm extends React.Component {
                 players: []
             }
         };
+
+        ServerService
     }
 
-    errorMessages = {
-        wordsError: "Please only use letters",
-        whenError: 'Please specify date of match',
-        emailError: 'Please provide your email',
-        positionError: 'The position must be minimum of 2 letters, numbers or symbols',
-        passwordConfirmError: 'The passwords must match',
-        oppositionError: 'Please provide opposition name'
-    };
-
     handleChange = (e) => {
+        let copyValues = {...this.state.values};
+        copyValues[e.target.name] = e.target.value;
+
         // remove error
         this.setState({
-            pristine: false, showError: false, values: {
-                [e.target.name]: e.target.value
-            }
+            pristine: false, showError: false, values: copyValues
+        });
+    };
+
+    handleDateChange = (e, newDate) => {
+        let copyValues = {...this.state.values};
+        copyValues.matchDate = newDate;
+
+        // now set it
+        this.setState({
+            pristine: false,
+            showError: false,
+            values: copyValues
         });
     };
 
     handleChangeTeam = (e, team) => {
-        ServerService.sendQuery('Players', {team})
-            .subscribe(p => {
+        const subscription = ServerService.sendQuery('Players', {team});
+
+        subscription.subscribe(p => {
                 this.players.push(p);
+            },
+            (err) => {
+                this.setState({
+                    showError: true
+                });
+            },
+            () => {
+                subscription.close();
             });
 
-        this.handleChange(e);
+        // change the team in state
+        let copyValues = {...this.state.values};
+        copyValues[e.target.name] = e.target.value;
+
+        // remove error
+        this.setState({
+            pristine: false, showError: false, values: copyValues
+        });
     };
 
     getErrorClasses = () => {
@@ -69,22 +91,29 @@ export default class EditMatchForm extends React.Component {
     };
 
     addPlayer = (e) => {
-        e.stopPropagation();
+        //e.stopPropagation();
         const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
+        let copyValues = {...this.state.values};
+        copyValues.players.push(newPlayer);
+        //let copyOfPlayers = this.state.values.players.concat();
+        //copyOfPlayers.push(newPlayer);
         this.setState({
             nextId: this.state.nextId + 1,
-            values: {
-                players: [...this.state.values.players, newPlayer]
-            }
+            values: copyValues
         })
     };
 
-    deletePlayer = (player) => {
-        let copyOfPlayers = this.state.values.players.concat();
-        const playerIndexToBeDeleted = copyOfPlayers.findIndex((copyPlayer) => copyPlayer.id === player.id);
+    deletePlayer = (playerId) => {
+        let copyValues = {...this.state.values};
+        //let copyOfPlayers = this.state.values.players.concat();
+        const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
         if (playerIndexToBeDeleted > -1) {
             copyOfPlayers.splice(playerIndexToBeDeleted, 1);
         }
+        // now we have trimmed it, update the state
+        this.setState({
+            values: copyValues
+        });
     };
 
     handleSubmit = (event) => {
@@ -111,13 +140,12 @@ export default class EditMatchForm extends React.Component {
                         <SelectField
                             name="team"
                             value={this.state.values.team} floatingLabelText="Select team"
-                            onChange={this.handleChangeTeam}
-                        >
+                            onChange={this.handleChangeTeam}>
                         </SelectField>
                         <DatePicker name="matchDate" value={this.state.values.matchDate}
-                                   floatingLabelText="Select when the match is"
+                                    floatingLabelText="Select when the match is"
                                     container="inline" mode="landscape"
-                                   onChange={this.handleChange}>
+                                    onChange={this.handleDateChange}>
                         </DatePicker>
                         <TextField name="opposition" floatingLabelText="Opponents name"
                                    onChange={this.handleChange}></TextField>

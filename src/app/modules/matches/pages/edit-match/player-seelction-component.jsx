@@ -1,7 +1,5 @@
 import React from 'react';
-//import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
-import {RaisedButton, Card, IconButton, CardHeader, CardText, TextField, SelectField} from 'material-ui';
-import Formsy from 'formsy-react';
+import {RaisedButton, Card, IconButton, CardHeader, CardText, TextField, SelectField, MenuItem} from 'material-ui';
 import './edit-match.scss';
 
 export default class PlayerSelectionComponent extends React.Component {
@@ -14,15 +12,6 @@ export default class PlayerSelectionComponent extends React.Component {
         }
     }
 
-    errorMessages = {
-        wordsError: "Please only use letters",
-        whenError: 'Please specify date of match',
-        emailError: 'Please provide your email',
-        positionError: 'The position must be minimum of 2 letters, numbers or symbols',
-        passwordConfirmError: 'The passwords must match',
-        oppositionError: 'Please provide opposition name'
-    };
-
     editPlayer = () => {
         this.setState({isEditing: true});
     };
@@ -31,15 +20,26 @@ export default class PlayerSelectionComponent extends React.Component {
         this.setState({isEditing: false});
     };
 
-    deletePlayer = () => {
+    deletePlayer = (event) => {
+        event.stopPropagation();
         this.closePlayer();
-        this.props.deletePlayer();
+        this.props.deletePlayer(this.props.player.id);
     };
 
     handlePositionChange = (event) => {
+        let positionError;
+
+        if (event.target.value.length === 0) {
+            positionError = 'Position is required';
+        } else {
+            if (event.target.value.length < 3) {
+                positionError = 'The position must be minimum of 2 letters, numbers or symbols';
+            }
+        }
+
         this.setState({
             position: event.target.value,
-            positionError: event.target.value.length === 0 ? 'Position is required' : ''
+            positionError: positionError
         });
     };
 
@@ -53,31 +53,35 @@ export default class PlayerSelectionComponent extends React.Component {
         return (
             <div className="player-selection">
                 {this.state.isEditing ?
-                    <div className="player-selection">
+                    <div className="edit-player">
                         <TextField ref="position" hintText="Enter their starting position" className="position"
                                    floatingLabelText="Starting position" errorText={this.state.positionError}
-                                   onChange={this.handlePositionChange}
+                                   onChange={this.handlePositionChange} value={this.state.position}
                         />
                         <SelectField ref="player" hintText="Select player" className="player"
                                      floatingLabelText="Select player" value={this.state.player}
-                                     onChange={this.handlePlayerChange}/>
+                                     onChange={this.handlePlayerChange} autoWidth={true}>
+                            {this.props.availablePlayers.map(avail => {
+                                <MenuItem key={avail.id} value={avail.code} primaryText={avail.description}/>
+                            })}
+                        </SelectField>
 
                         <IconButton iconClassName="material-icons" tooltip="Close"
-                                    tooltipPosition="top-right" onClick={::this.closePlayer}
-                        >close_circle</IconButton>
+                                    tooltipPosition="top-right" onClick={::this.closePlayer}>close_circle</IconButton>
                         <IconButton iconClassName="material-icons" tooltip="Remove"
-                                    tooltipPosition="top-right" onClick={::this.deletePlayer}
-                        >delete_circle</IconButton>
+                                    tooltipPosition="top-right"
+                                    onClick={::this.deletePlayer}>delete_circle</IconButton>
                     </div>
                     :
-                    <div>
+                    <div className="view-player">
                         <span>Name {player.name}</span>
                         <span>Position {player.position}</span>
                         <IconButton iconClassName="material-icons" tooltip="Edit"
                                     tooltipPosition="top-right"
                                     onClick={::this.editPlayer}>edit_circle</IconButton>
                     </div>
-                }   </div>
+                }
+            </div>
         );
     }
 }
