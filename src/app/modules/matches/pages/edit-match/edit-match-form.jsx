@@ -8,6 +8,11 @@ import PlayerSelectionComponent from "./player-seelction-component";
 
 export default class EditMatchForm extends React.Component {
 
+    let
+    teamsSubscription;
+    let
+    availablePlayers = [];
+
     constructor(props) {
         super(props);
 
@@ -25,7 +30,10 @@ export default class EditMatchForm extends React.Component {
             }
         };
 
-        ServerService
+        // get the teams
+        //todo: is this the best place
+        teamsSubscription = ServerService.sendQuery('Players', {team});
+        teamsSubscription.subscribe(processTeams);
     }
 
     handleChange = (e) => {
@@ -58,11 +66,12 @@ export default class EditMatchForm extends React.Component {
             },
             (err) => {
                 this.setState({
-                    showError: true
+                    showError: true,
+                    error: 'Unable to get list of players'
                 });
             },
             () => {
-                subscription.close();
+                subscription.dispose();
             });
 
         // change the team in state
@@ -74,6 +83,18 @@ export default class EditMatchForm extends React.Component {
             pristine: false, showError: false, values: copyValues
         });
     };
+
+    processTeams = ((teams) => {
+        this.availablePlayers = this.availablePlayers.concat(teams);
+    }, (err) => {
+        this.setState({
+            showError: true,
+            error: 'Unable to get list of teams'
+        });
+
+    }, () => {
+        this.teamsSubscription.dispatch();
+    });
 
     getErrorClasses = () => {
         let classes = 'submission-errors ';
@@ -91,12 +112,11 @@ export default class EditMatchForm extends React.Component {
     };
 
     addPlayer = (e) => {
-        //e.stopPropagation();
         const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
         let copyValues = {...this.state.values};
         copyValues.players.push(newPlayer);
-        //let copyOfPlayers = this.state.values.players.concat();
-        //copyOfPlayers.push(newPlayer);
+
+        // now change it
         this.setState({
             nextId: this.state.nextId + 1,
             values: copyValues
@@ -157,7 +177,8 @@ export default class EditMatchForm extends React.Component {
                     <ul className="players-section">
                         {this.state.values.players.map(player =>
                             <li key={player.id} className="player-card">
-                                <PlayerSelectionComponent player={player} deletePlayer={::this.deletePlayer}/>
+                                <PlayerSelectionComponent player={player} deletePlayer={::this.deletePlayer}
+                                                          availablePlayers={this.availablePlayers}/>
                             </li>
                         )}
                     </ul>

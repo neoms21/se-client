@@ -4,11 +4,18 @@ import './edit-match.scss';
 
 export default class PlayerSelectionComponent extends React.Component {
 
+    let ourValues = {
+        position: '',
+        player: ''
+    };
+
     constructor(props) {
         super(props);
 
+        // set initial
         this.state = {
-            isEditing: true
+            isEditing: true,
+            values: this.ourValues
         }
     }
 
@@ -21,12 +28,11 @@ export default class PlayerSelectionComponent extends React.Component {
     };
 
     deletePlayer = (event) => {
-        event.stopPropagation();
         this.closePlayer();
         this.props.deletePlayer(this.props.player.id);
     };
 
-    handlePositionChange = (event) => {
+    validate = () => {
         let positionError;
 
         if (event.target.value.length === 0) {
@@ -37,9 +43,16 @@ export default class PlayerSelectionComponent extends React.Component {
             }
         }
 
+    };
+
+    handlePositionChange = (event) => {
+
+        this.ourValues.position = event.target.value;
+
+        this.validate();
+
         this.setState({
-            position: event.target.value,
-            positionError: positionError
+            values: this.ourValues
         });
     };
 
