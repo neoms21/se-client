@@ -34,34 +34,6 @@ const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
 let {Component, PropTypes} = React;
 
 
-// export default class PlayerForm extends Component {
-
-// constructor(props) {
-//     super(props);
-//     this.state = {
-//         isSubmitting: false,
-//         pristine: true
-//     };
-// }
-//
-// static propTypes = {
-//     handleSubmit: PropTypes.func
-// };
-//
-// handleChange = (e) => {
-//     // remove error
-//     this.setState({pristine: false, showError: false});
-// };
-
-// reset = () => {
-//     this.refs.form.reset();
-// };
-
-const handleSubmit = (e) => {
-    this.props.handleSubmit(this.values, e);
-};
-
-
 const playerForm = props => {
     const {handleSubmit, pristine, reset, submitting} = props;
 

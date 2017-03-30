@@ -1,8 +1,31 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import CreateSquadForm from './squadForm'
+import SquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
 import {getSquad} from '../selectors/getSquadSelector'
+
+
+class CreateSquadPage extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    handleSubmit(data) {
+        // event.preventDefault();
+        // this should be the data, but is an event
+        console.log(data); // no data here, either...
+        console.log('Submission received!', data);
+        this.props.dispatch(createSquad(data)); // clear form: THIS works
+        return false;
+    }
+
+    render(){
+                return (
+            <SquadForm onSubmit={this.handleSubmit.bind(this)}/>
+        );
+    }
+}
 
 const mapStateToProps = (state, ownProps) => {
     let squad = getSquad(state, '58bf301b616e2a1e4a07724e');
@@ -14,74 +37,4 @@ const mapStateToProps = (state, ownProps) => {
 
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        handleSubmit: (values) => {
-            console.log(values);
-            let squadDetails = {squadName: values.squadName};
-            dispatch(createSquad(squadDetails));
-        },
-        validate: (values) => {
-            const errors = {};
-            if (!values.squadName) {
-                errors.squadName = 'Required'
-            }
-            return errors;
-        }
-    }
-};
-
-// do a redux subscription
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSquadForm);
-
-class CreateSquadPage extends React.Component {
-
-
-}
-
-export default CreateSquadPage
-
-// class SquadsComponent extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.props.dispatch(squadActions.fetchSquads());
-//     }
-//
-//     addSquad = () => {
-//         this.props.router.push('squad');
-//     };
-//
-//     goToPlayers = (id) => {
-//
-//         this.props.router.push('squad/' + id + '/players');
-//     };
-//
-//     editSquad = (squad) => {
-//         console.log(squad);
-//     };
-//
-//     render() {
-//         return (
-//             <div className="squad-list">
-//
-//                 <RaisedButton className="squad-list__button"
-//                               label="Add Squad" primary={true} onClick={this.addSquad}/>
-//                 {this.props.squads.map((squad, index) => {
-//                     return <Squad key={index} name={squad.name} onSquadClick={() => this.goToPlayers(squad._id)}
-//                                   onEditClick={() => this.editSquad(squad)}/>;
-//                 })}
-//
-//             </div>
-//         );
-//     }
-//
-//
-// }
-// function mapStateToProps(state) {
-//     return {
-//         squads: state.squads.squads
-//     }
-// }
-//
-//
-// export default connect(mapStateToProps)(SquadsComponent)
+export default connect(mapStateToProps)(CreateSquadPage)
