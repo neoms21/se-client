@@ -33,3 +33,55 @@ const mapDispatchToProps = (dispatch) => {
 
 // do a redux subscription
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSquadForm);
+
+class CreateSquadPage extends React.Component {
+
+
+}
+
+export default CreateSquadPage
+
+// class SquadsComponent extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.props.dispatch(squadActions.fetchSquads());
+//     }
+//
+//     addSquad = () => {
+//         this.props.router.push('squad');
+//     };
+//
+//     goToPlayers = (id) => {
+//
+//         this.props.router.push('squad/' + id + '/players');
+//     };
+//
+//     editSquad = (squad) => {
+//         console.log(squad);
+//     };
+//
+//     render() {
+//         return (
+//             <div className="squad-list">
+//
+//                 <RaisedButton className="squad-list__button"
+//                               label="Add Squad" primary={true} onClick={this.addSquad}/>
+//                 {this.props.squads.map((squad, index) => {
+//                     return <Squad key={index} name={squad.name} onSquadClick={() => this.goToPlayers(squad._id)}
+//                                   onEditClick={() => this.editSquad(squad)}/>;
+//                 })}
+//
+//             </div>
+//         );
+//     }
+//
+//
+// }
+// function mapStateToProps(state) {
+//     return {
+//         squads: state.squads.squads
+//     }
+// }
+//
+//
+// export default connect(mapStateToProps)(SquadsComponent)
