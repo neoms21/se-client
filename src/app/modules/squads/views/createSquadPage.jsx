@@ -14,7 +14,6 @@ class CreateSquadPage extends React.Component {
     handleSubmit(data) {
         // event.preventDefault();
         // this should be the data, but is an event
-        console.log(data); // no data here, either...
         console.log('Submission received!', data);
         this.props.dispatch(createSquad(data)); // clear form: THIS works
         return false;

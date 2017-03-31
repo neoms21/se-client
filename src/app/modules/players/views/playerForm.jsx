@@ -2,25 +2,28 @@ import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 import TextField from 'material-ui/TextField'
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
-import Checkbox from 'material-ui/Checkbox'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
+import '../../../core.scss'
+
+import {validateRequiredFields} from '../../../validations'
 // import asyncValidate from './asyncValidate'
 
 const validate = values => {
-    const errors = {};
-    const requiredFields = ['playerName'];
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-            errors[field] = field + 'is Required';
-        }
-    });
-    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-    }
-    return errors
+    return validateRequiredFields(values, ['playerName']) // find our how to combine with other validations
 };
+//
+// const validate = values => {
+//     const errors = {};
+//     const requiredFields = ['playerName'];
+//     requiredFields.forEach(field => {
+//         if (!values[field]) {
+//             errors[field] = field + 'is Required';
+//         }
+//     });
+//     if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+//         errors.email = 'Invalid email address'
+//     }
+//     return errors
+// };
 
 const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
     <TextField hintText={label}
@@ -30,9 +33,6 @@ const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
                {...custom}
     />
 );
-
-let {Component, PropTypes} = React;
-
 
 const playerForm = props => {
     const {handleSubmit, pristine, reset, submitting} = props;
