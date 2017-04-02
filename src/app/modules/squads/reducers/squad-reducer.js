@@ -13,6 +13,10 @@ export default function squadReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 squads: action.payload
             });
+        case types.FETCH_SQUADS_FAILURE:
+            return Object.assign({}, state, {
+                errors: action.errors
+            });
         case types.CREATE_SQUAD:
             return state;
         case types.CREATE_SQUAD_SUCCESS:

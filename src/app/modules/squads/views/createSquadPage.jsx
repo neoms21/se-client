@@ -2,18 +2,23 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
-import {getSquad} from '../selectors/getSquadSelector'
-
+import {stopSubmit} from 'redux-form';
 
 class CreateSquadPage extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors && nextProps.errors.length > 0) {
+            console.log(nextProps.errors);
+            this.props.dispatch(stopSubmit('SquadForm', nextProps.errors));
+        } else if (nextProps.saved) {
+            nextProps.router.push('squads');
+        }
+    }
+
     handleSubmit(data) {
-        // event.preventDefault();
-        // this should be the data, but is an event
-        console.log('Submission received!', data);
         this.props.dispatch(createSquad(data)); // clear form: THIS works
         return false;
     }
@@ -27,9 +32,9 @@ class CreateSquadPage extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
 
-    let squad = {};// getSquad(state, ownProps.params.id);
     return {
-        initialValues: squad ? squad.name : ""
+        saved: state.squads.saved,
+        errors: state.squads.errors
     }
 
 };
