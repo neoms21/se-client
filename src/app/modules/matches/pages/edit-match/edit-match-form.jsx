@@ -2,15 +2,13 @@ import React from 'react';
 //import {FormsyText, FormsySelect, FormsyDate} from 'formsy-material-ui';
 import {RaisedButton, IconButton, SelectField, MenuItem, TextField, DatePicker} from 'material-ui';
 //import Formsy from 'formsy-react';
-import {ServerService} from '../../../../services/server-service';
+import {sendQuery} from '../../../../services/server-service';
 import './edit-match.scss';
 import PlayerSelectionComponent from "./player-seelction-component";
 
 export default class EditMatchForm extends React.Component {
 
-    let
     teamsSubscription;
-    let
     availablePlayers = [];
 
     constructor(props) {
@@ -22,6 +20,7 @@ export default class EditMatchForm extends React.Component {
             showError: false,
             nextId: 1,
             validationErrors: {},
+            teams: [],
             values: {
                 team: '',
                 matchDate: new Date(),
@@ -32,8 +31,22 @@ export default class EditMatchForm extends React.Component {
 
         // get the teams
         //todo: is this the best place
-        teamsSubscription = ServerService.sendQuery('Players', {team});
-        teamsSubscription.subscribe(processTeams);
+        this.teamsSubscription = sendQuery('Teams');
+        this.teamsSubscription.subscribe((teamsEvent) => {
+            if (teamsEvent.properties.isFailure || !teamsEvent.teams) {
+                this.setState({
+                    showError: true,
+                    error: 'Unable to get list of teams'
+                });
+            } else {
+                this.setState({
+                    teams: this.state.teams.concat(teamsEvent.teams)
+                });
+            }
+        }, (err) => {
+        }, () => {
+            this.teamsSubscription.unsubscribe();
+        });
     }
 
     handleChange = (e) => {
@@ -59,10 +72,10 @@ export default class EditMatchForm extends React.Component {
     };
 
     handleChangeTeam = (e, team) => {
-        const subscription = ServerService.sendQuery('Players', {team});
+        const subscription = sendQuery('Players', {team});
 
-        subscription.subscribe(p => {
-                this.players.push(p);
+        subscription.subscribe(playersEvent => {
+                this.availablePlayers = playersEvent.availablePlayers;
             },
             (err) => {
                 this.setState({
@@ -71,7 +84,7 @@ export default class EditMatchForm extends React.Component {
                 });
             },
             () => {
-                subscription.dispose();
+                subscription.unsubscribe();
             });
 
         // change the team in state
@@ -83,18 +96,6 @@ export default class EditMatchForm extends React.Component {
             pristine: false, showError: false, values: copyValues
         });
     };
-
-    processTeams = ((teams) => {
-        this.availablePlayers = this.availablePlayers.concat(teams);
-    }, (err) => {
-        this.setState({
-            showError: true,
-            error: 'Unable to get list of teams'
-        });
-
-    }, () => {
-        this.teamsSubscription.dispatch();
-    });
 
     getErrorClasses = () => {
         let classes = 'submission-errors ';
@@ -149,7 +150,7 @@ export default class EditMatchForm extends React.Component {
     render = () => {
         const {errors, handleSubmit} = this.props;
         const generalError = errors === undefined || errors.general === undefined || errors.length === 0
-            ? '' : errors[0];
+            ? '' || this.state.error : errors[0];
 
         return (
             <section className="edit-match">
@@ -161,6 +162,9 @@ export default class EditMatchForm extends React.Component {
                             name="team"
                             value={this.state.values.team} floatingLabelText="Select team"
                             onChange={this.handleChangeTeam}>
+                            {this.state.teams.map(team => {
+                                <MenuItem key={team._id} value={team.name} primaryText={team.name}/>
+                            })}
                         </SelectField>
                         <DatePicker name="matchDate" value={this.state.values.matchDate}
                                     floatingLabelText="Select when the match is"

@@ -112,7 +112,7 @@ const sendCommand = (name, payload) => {
 const sendQuery = (name, payload) => {
 
     // need to give it a correlation id
-    let query = {properties:{queryName: name ,correlationId: uuid.v4()}, payload: payload};
+    let query = {properties: {queryName: name, correlationId: uuid.v4()}, payload: payload};
     // create observable for client
     let clientObserver = new Subject();
     // console.log( clientObserver.subscribe(console.log));
@@ -138,7 +138,8 @@ const processReceiveEvent = (event) => {
 const processReceiveCommandEvent = (event) => {
     if (event.command.properties.correlationId) {
         // happy days, find right observable
-        streamForCommand[event.command.properties.correlationId].next(event); // pass it on
+        const stream = streamForCommand[event.command.properties.correlationId];
+        stream.next(event); // pass it on
     } else {
         console.log('Command event with no correlation id ', event.properties);
     }
@@ -147,9 +148,17 @@ const processReceiveCommandEvent = (event) => {
 const processReceiveQueryEvent = (event) => {
     console.log(streamForQuery);
     console.log(event);
-    if (event.query.properties.correlationId ) {
+    if (event.query.properties.correlationId) {
         // happy days, find right observable
-        streamForQuery[event.query.properties.correlationId].next(event); // pass it on
+        const queryStream = streamForQuery[event.query.properties.correlationId];
+        if (queryStream) {
+            queryStream.next(event); // pass it on
+
+            // is it last response
+            // if (event.messageNum === event.totalMessages) {
+            //     queryStream.complete();
+            // }
+        }
     } else {
         console.log('Query event with no correlation id ', event.query.properties);
     }

@@ -4,7 +4,7 @@ import './edit-match.scss';
 
 export default class PlayerSelectionComponent extends React.Component {
 
-    let ourValues = {
+    ourValues = {
         position: '',
         player: ''
     };
@@ -15,7 +15,7 @@ export default class PlayerSelectionComponent extends React.Component {
         // set initial
         this.state = {
             isEditing: true,
-            values: this.ourValues
+            values: {}
         }
     }
 
@@ -32,32 +32,49 @@ export default class PlayerSelectionComponent extends React.Component {
         this.props.deletePlayer(this.props.player.id);
     };
 
-    validate = () => {
-        let positionError;
+    validate = (propertyToCheck) => {
+        let positionError, playerError;
 
-        if (event.target.value.length === 0) {
-            positionError = 'Position is required';
-        } else {
-            if (event.target.value.length < 3) {
-                positionError = 'The position must be minimum of 2 letters, numbers or symbols';
+        if(propertyToCheck === undefined || propertyToCheck === 'position') {
+            if (this.ourValues.position.length === 0) {
+                positionError = 'Position is required';
+            } else {
+                if (this.ourValues.position.length < 3) {
+                    positionError = 'The position must be minimum of 2 letters, numbers or symbols';
+                }
             }
         }
 
+        if(propertyToCheck === undefined || propertyToCheck === 'player') {
+            if (this.ourValues.player == undefined || this.ourValues.player.length === 0) {
+                playerError = 'Player is required';
+            }
+        }
+
+        return { positionError, playerError};
     };
 
     handlePositionChange = (event) => {
-
         this.ourValues.position = event.target.value;
-
-        this.validate();
+        const errors = this.validate();
+        const valuesToUpdate = {...this.ourValues};
 
         this.setState({
-            values: this.ourValues
+            values: valuesToUpdate,
+            errors: errors
         });
     };
 
     handlePlayerChange = (event, key, value) => {
-        this.setState({player: value});
+        this.ourValues.player = event.target.value;
+        const errors = this.validate();
+        const valuesToUpdate = {...this.ourValues};
+
+        this.setState({
+            values: valuesToUpdate,
+            errors: errors
+        });
+
     };
 
     render = () => {
