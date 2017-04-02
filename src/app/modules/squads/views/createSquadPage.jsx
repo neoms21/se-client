@@ -8,7 +8,6 @@ import {getSquad} from '../selectors/getSquadSelector'
 class CreateSquadPage extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     handleSubmit(data) {
@@ -19,19 +18,18 @@ class CreateSquadPage extends React.Component {
         return false;
     }
 
-    render(){
-                return (
-            <SquadForm onSubmit={this.handleSubmit.bind(this)}/>
+    render() {
+        return (
+            <SquadForm onSubmit={::this.handleSubmit} id={this.props.params.id}/>
         );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-    let squad = getSquad(state, '58bf301b616e2a1e4a07724e');
+
+    let squad = {};// getSquad(state, ownProps.params.id);
     return {
-        //error: state.squads.error,
-        values: {squadName: 'abcd'},
-        squadName: squad ? squad.name : ""
+        initialValues: squad ? squad.name : ""
     }
 
 };

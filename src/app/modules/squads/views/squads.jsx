@@ -22,7 +22,7 @@ class SquadsComponent extends React.Component {
     };
 
     editSquad = (squad) => {
-        console.log(squad);
+        this.props.router.push('squad/' + squad._id);
     };
 
     render() {
