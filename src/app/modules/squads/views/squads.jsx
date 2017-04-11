@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import Squad from './squad'
 import './squad-list.scss'
-
+import {push} from 'react-router-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as squadActions from '../actions/squad-actions'
 
@@ -13,11 +13,10 @@ class SquadsComponent extends React.Component {
     }
 
     addSquad = () => {
-        this.props.router.push('squad');
+        push('squad');
     };
 
     goToPlayers = (id) => {
-
         this.props.router.push('squad/' + id + '/players');
     };
 
