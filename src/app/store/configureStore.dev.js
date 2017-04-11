@@ -9,6 +9,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {rootEpic} from '../epics/rootEpics';
 import {routerMiddleware} from 'react-router-redux';
 import {browserHistory} from 'react-router';
+import { reducer as formReducer } from 'redux-form'
 
 export default function configureStore(initialState) {
 
@@ -16,6 +17,7 @@ export default function configureStore(initialState) {
         user,
         squads,
         matches,
+        formReducer,
         routing: routerReducer
     };
 
