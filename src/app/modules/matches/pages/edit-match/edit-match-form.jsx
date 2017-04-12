@@ -108,7 +108,7 @@ class EditMatchForm extends React.Component {
                     <div className="top-section">
                         <Field component={::this.renderSelectField} name="team" label="Select team">
                             {squads.map(squad =>
-                                <MenuItem value={squad._id} primaryText={squad.name} />)
+                                <MenuItem key={squad._id} value={squad._id} primaryText={squad.name} />)
                             }
                         </Field>
                         <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
