@@ -73,15 +73,47 @@ class EditMatchForm extends React.Component {
         />
     );
 
-    renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) =>
-        (
-            <DatePicker
-                errorText={touched && error} hintText={label}
-                floatingLabelText={label}
-                autoOk={true}
-                {...custom}
-            />
-        );
+    renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) => (
+        <DatePicker
+            errorText={touched && error} hintText={label}
+            floatingLabelText={label}
+            autoOk={true}
+            {...custom}
+        />
+    );
+
+    renderPlayer = ({input, label, type, meta: {touched, error}}) => (
+        <div>
+            <PlayerSelectionComponent deletePlayer={::this.deletePlayer}/>
+        </div>
+    );
+
+    renderPlayers = ({fields, meta: {touched, error, submitFailed}}) => (
+        <ul>
+            <li>
+                fld {fields.length}
+                <IconButton iconClassName="material-icons" tooltip="Add"
+                            tooltipPosition="top-right"
+                            onClick={() => fields.push({})}>add_circle</IconButton>
+                {(touched || submitFailed) && error && <span>{error}</span>}
+            </li>
+            {/*{fields.map((member, index) =>*/}
+                {/*<li key={index}>*/}
+                    {/*<div>hhhhhhhhhh</div>*/}
+                    {/*<button*/}
+                        {/*type="button"*/}
+                        {/*title="Remove Member"*/}
+                        {/*onClick={() => fields.remove(index)}/>*/}
+                    {/*<h4>Member #{index + 1}</h4>*/}
+                    {/*/!*<Field*!/*/}
+                        {/*/!*name={`${member}.row`}*!/*/}
+                        {/*/!*type="text"*!/*/}
+                        {/*/!*component={::this.renderPlayer}*!/*/}
+                        {/*/!*label="First Name"/>*!/*/}
+                {/*</li>*/}
+            {/*)}*/}
+        </ul>
+    );
 
     componentDidMount = () => {
         // const initData = {
@@ -108,25 +140,15 @@ class EditMatchForm extends React.Component {
                     <div className="top-section">
                         <Field component={::this.renderSelectField} name="team" label="Select team">
                             {squads.map(squad =>
-                                <MenuItem key={squad._id} value={squad._id} primaryText={squad.name} />)
+                                <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
                             }
                         </Field>
                         <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
                                format={(v) => ((v === '') ? null : v)}/>
                         <Field component={::this.renderTextField} name="opposition" label="Opponents name"/>
                     </div>
-                    <h3 className="players-section">Players <IconButton
-                        iconClassName="material-icons" tooltip="Add"
-                        tooltipPosition="top-right" onClick={::this.addPlayer}>add_circle</IconButton>
-                    </h3>
-
-                    {/*{this.state.values.players.map(player =>*/}
-                    {/*<li key={player.id} className="player-card">*/}
-                    {/*<PlayerSelectionComponent player={player} deletePlayer={::this.deletePlayer}*/}
-                    {/*availablePlayers={this.availablePlayers}/>*/}
-                    {/*</li>*/}
-                    {/*)}*/}
-
+                    <h3 className="players-section">Players</h3>
+                    <FieldArray name="playersPositions" component={::this.renderPlayers}/>
 
                     {/*<div className={getErrorClasses()}>*/}
                     {/*<span>{generalError}</span>*/}
