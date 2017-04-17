@@ -9,7 +9,8 @@ import {sendQuery} from '../../../../services/server-service';
 function mapStateToProps(state, ownProps) {
     return {
         errors: state.matches.errors,
-        squads: state.squads.squads
+        squads: state.squads.squads,
+        disabled: false
     };
 }
 

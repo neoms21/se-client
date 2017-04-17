@@ -88,32 +88,37 @@ class EditMatchForm extends React.Component {
         </div>
     );
 
-    renderPlayers = ({fields, meta: {touched, error, submitFailed}}) => (
-        <ul>
-            <li>
-                fld {fields.length}
-                <IconButton iconClassName="material-icons" tooltip="Add"
-                            tooltipPosition="top-right"
-                            onClick={() => fields.push({})}>add_circle</IconButton>
-                {(touched || submitFailed) && error && <span>{error}</span>}
-            </li>
-            {/*{fields.map((member, index) =>*/}
-                {/*<li key={index}>*/}
-                    {/*<div>hhhhhhhhhh</div>*/}
-                    {/*<button*/}
-                        {/*type="button"*/}
-                        {/*title="Remove Member"*/}
-                        {/*onClick={() => fields.remove(index)}/>*/}
-                    {/*<h4>Member #{index + 1}</h4>*/}
-                    {/*/!*<Field*!/*/}
-                        {/*/!*name={`${member}.row`}*!/*/}
-                        {/*/!*type="text"*!/*/}
-                        {/*/!*component={::this.renderPlayer}*!/*/}
-                        {/*/!*label="First Name"/>*!/*/}
-                {/*</li>*/}
-            {/*)}*/}
-        </ul>
-    );
+    renderPlayers({fields, meta: {touched, error, submitFailed}}) {
+        return (
+            <ul>
+                <li>
+                    <span>fld {fields.length} </span>
+                    <IconButton iconClassName="material-icons" tooltip="Add"
+                                tooltipPosition="top-right"
+                                onClick={                                    () => {
+                                    fields.push();
+                                }
+                                }
+                    >add_circle</IconButton>
+                    {/*{(touched || submitFailed) && error && <span>{error}</span>}*/}
+                </li>
+                {fields.map((member, index) =>
+                    <li key={index}>
+                        <div>hhhhhhhhhh</div>
+                        <button
+                            type="button"
+                            title="Remove Member"
+                            onClick={() => fields.remove(index)}/>
+                        {/*<h4>Member #{index + 1}</h4>*/}
+                        <Field
+                        name={`${member}.row`}
+                        component={::this.renderPlayer}
+                        label="First Name"/>
+                    </li>
+                )}
+            </ul>
+        );
+    }
 
     componentDidMount = () => {
         // const initData = {
@@ -128,7 +133,7 @@ class EditMatchForm extends React.Component {
     };
 
     render = () => {
-        const {pristine, handleSubmit, squads} = this.props;
+        const {pristine, handleSubmit, squads, disabled} = this.props;
         // const generalError = errors === undefined || errors.general === undefined || errors.length === 0
         //     ? '' : errors.general;
 
@@ -139,16 +144,16 @@ class EditMatchForm extends React.Component {
                       onSubmit={handleSubmit}>
                     <div className="top-section">
                         <Field component={::this.renderSelectField} name="team" label="Select team">
-                            {squads.map(squad =>
-                                <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
-                            }
+                            {/*{squads.map(squad =>*/}
+                                {/*<MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)*/}
+                            {/*}*/}
                         </Field>
                         <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
                                format={(v) => ((v === '') ? null : v)}/>
                         <Field component={::this.renderTextField} name="opposition" label="Opponents name"/>
                     </div>
                     <h3 className="players-section">Players</h3>
-                    <FieldArray name="playersPositions" component={::this.renderPlayers}/>
+                    <FieldArray name="playersPositions" component={::this.renderPlayers} disabled={disabled}/>
 
                     {/*<div className={getErrorClasses()}>*/}
                     {/*<span>{generalError}</span>*/}
