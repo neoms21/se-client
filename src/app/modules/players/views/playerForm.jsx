@@ -32,12 +32,14 @@ const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
     />
 );
 
-const renderSelectField = props => (
-    <SelectField
-        floatingLabelText={props.label}
-        errorText={props.touched && props.error}
-        {...props}>
-    </SelectField>
+const renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
+  <SelectField
+    floatingLabelText={label}
+    errorText={touched && error}
+    {...input}
+    onChange={(event, index, value) => input.onChange(value)}
+    children={children}
+    {...custom}/>
 )
 
 const playerForm = props => {
@@ -57,13 +59,12 @@ const playerForm = props => {
             <div>
                 <Field name="phone" component={renderTextField} label="Phone"/>
             </div>
-            <div>
+
                 <Field name="position" component={renderSelectField} label="Position">
                     <MenuItem value={'striker'} primaryText="Striker"/>
                     <MenuItem value={'goalKeeper'} primaryText="Goalkeeper"/>
                     <MenuItem value={'midFielder'} primaryText="MidFielder"/>
                 </Field>
-            </div>
             <div className="button-row">
                 <RaisedButton label="Add" primary={true} type="submit" disabled={submitting}/>
                 <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
