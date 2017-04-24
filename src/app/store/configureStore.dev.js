@@ -17,8 +17,8 @@ export default function configureStore(initialState) {
         user,
         squads,
         matches,
-        formReducer,
-        routing: routerReducer
+        routing: routerReducer,
+        formReducer
     };
 
     // get all reducers

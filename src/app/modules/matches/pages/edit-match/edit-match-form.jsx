@@ -26,30 +26,30 @@ class EditMatchForm extends React.Component {
 //     this.refs.form.updateInputsWithError(fieldErrors);
 // };
 
-    addPlayer = (e) => {
-        const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
-        let copyValues = {...this.state.values};
-        copyValues.players.push(newPlayer);
-
-        // now change it
-        this.setState({
-            nextId: this.state.nextId + 1,
-            values: copyValues
-        })
-    };
-
-    deletePlayer = (playerId) => {
-        let copyValues = {...this.state.values};
-        //let copyOfPlayers = this.state.values.players.concat();
-        const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
-        if (playerIndexToBeDeleted > -1) {
-            copyOfPlayers.splice(playerIndexToBeDeleted, 1);
-        }
-        // now we have trimmed it, update the state
-        this.setState({
-            values: copyValues
-        });
-    };
+    // addPlayer = (e) => {
+    //     const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
+    //     let copyValues = {...this.state.values};
+    //     copyValues.players.push(newPlayer);
+    //
+    //     // now change it
+    //     this.setState({
+    //         nextId: this.state.nextId + 1,
+    //         values: copyValues
+    //     })
+    // };
+    //
+    // deletePlayer = (playerId) => {
+    //     let copyValues = {...this.state.values};
+    //     //let copyOfPlayers = this.state.values.players.concat();
+    //     const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
+    //     if (playerIndexToBeDeleted > -1) {
+    //         copyOfPlayers.splice(playerIndexToBeDeleted, 1);
+    //     }
+    //     // now we have trimmed it, update the state
+    //     this.setState({
+    //         values: copyValues
+    //     });
+    // };
 
     reset = () => {
         this.refs.form.reset();
@@ -110,10 +110,10 @@ class EditMatchForm extends React.Component {
                             title="Remove Member"
                             onClick={() => fields.remove(index)}/>
                         {/*<h4>Member #{index + 1}</h4>*/}
-                        <Field
-                        name={`${member}.row`}
-                        component={::this.renderPlayer}
-                        label="First Name"/>
+                        {/*<Field*/}
+                        {/*name={`${member}.row`}*/}
+                        {/*component={::this.renderPlayer}*/}
+                        {/*label="First Name"/>*/}
                     </li>
                 )}
             </ul>
