@@ -1,6 +1,5 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import headerSass from './HeaderStyle.scss';
 import Logged from './logged';
 import Login from './login';
 import LeftHandMenu from "./LeftHandMenu";
@@ -16,7 +15,7 @@ export default class HeaderComponent extends React.Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.setState({isSignedIn: nextProps.currentUser !== null});
+        this.setState({isSignedIn: nextProps.currentUser !== undefined});
     };
 
     render = () => {

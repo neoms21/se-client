@@ -3,7 +3,7 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import loggedStyles from './loggedStyle.scss';
+import './loggedStyle.scss';
 
 export default class Logged extends React.Component {
     render() {
