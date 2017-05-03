@@ -10,6 +10,7 @@ import {rootEpic} from '../epics/rootEpics';
 import {routerMiddleware} from 'react-router-redux';
 import {browserHistory} from 'react-router';
 import { reducer as formReducer } from 'redux-form'
+import {persistState} from 'redux-localstorage';
 
 export default function configureStore(initialState) {
 
@@ -28,5 +29,6 @@ export default function configureStore(initialState) {
     const routingMiddleware = routerMiddleware(browserHistory);
 
     return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(
-        epicMiddleware, routingMiddleware, reduxImmutableStateInvariant())));
+        epicMiddleware, routingMiddleware, reduxImmutableStateInvariant()),
+        persistState()));
 }

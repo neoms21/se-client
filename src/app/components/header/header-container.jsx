@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import { Link, browserHistory } from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 
 const handleLeftIconClick = () => {
@@ -17,13 +17,11 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-const headerContainer = React.createClass({
-    render: function () {
-        return (
-            <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
-                    currentUser={this.props.currentUser}/>
-        );
-    },
-});
+const headerContainer = (props) => {
+    return (
+        <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
+                currentUser={props.currentUser}/>
+    );
+};
 
 export default connect(mapStateToProps)(headerContainer);

@@ -15,7 +15,9 @@ export default function userReducer(state = initialState, action) {
             let stateCopy = {...state};
             delete stateCopy.error;
             delete stateCopy.currentUser;
-            return {isLoading: true, ...stateCopy};
+            return {
+                isLoading: true, ...stateCopy, userHash: action.user
+            };
         case types.SIGNIN_USER_SUCCESS:
             return {...state, isLoading: false, ...{currentUser: action.user}};
         case types.SIGNIN_USER_FAILURE:
