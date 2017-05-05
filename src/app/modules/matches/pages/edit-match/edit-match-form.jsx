@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {RaisedButton, IconButton, MenuItem, TextField, SelectField, DatePicker} from 'material-ui';
 import './edit-match.scss';
 import PlayerSelectionComponent from "./player-seelction-component";
@@ -9,6 +10,10 @@ class EditMatchForm extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state =  {
+
+        }
     }
 
     getErrorClasses = () => {
@@ -51,6 +56,10 @@ class EditMatchForm extends React.Component {
     //     });
     // };
 
+    getAvailablePlayers = () => {
+      return [];
+    }
+
     reset = () => {
         this.refs.form.reset();
     };
@@ -84,7 +93,8 @@ class EditMatchForm extends React.Component {
 
     renderPlayer = ({input, label, type, meta: {touched, error}}) => (
         <div>
-            <PlayerSelectionComponent deletePlayer={::this.deletePlayer}/>
+            <PlayerSelectionComponent deletePlayer={::this.deletePlayer}
+              availablePlayers={::this.getAvailablePlayers()}/>
         </div>
     );
 
@@ -169,8 +179,8 @@ class EditMatchForm extends React.Component {
 }
 
 EditMatchForm.propTypes = {
-    handleSubmit: React.PropTypes.func,
-    errors: React.PropTypes.object
+    handleSubmit: PropTypes.func,
+    errors: PropTypes.object
 };
 
 const validate = values => {

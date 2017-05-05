@@ -9,26 +9,25 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {rootEpic} from '../epics/rootEpics';
 import {routerMiddleware} from 'react-router-redux';
 import {browserHistory} from 'react-router';
-import { reducer as formReducer } from 'redux-form'
-import {persistState} from 'redux-localstorage';
+import {reducer as formReducer} from 'redux-form'
+import persistState from 'redux-localstorage';
 
 export default function configureStore(initialState) {
 
-    const reducers = {
-        user,
-        squads,
-        matches,
-        routing: routerReducer,
-        formReducer
-    };
+  const reducers = {
+    user,
+    squads,
+    matches,
+    routing: routerReducer,
+    formReducer
+  };
 
-    // get all reducers
-    const reducer = combineReducers(reducers);
-    // get all epics
-    const epicMiddleware = createEpicMiddleware(rootEpic);
-    const routingMiddleware = routerMiddleware(browserHistory);
+  // get all reducers
+  const reducer = combineReducers(reducers);
+  // get all epics
+  const epicMiddleware = createEpicMiddleware(rootEpic);
+  const routingMiddleware = routerMiddleware(browserHistory);
 
-    return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(
-        epicMiddleware, routingMiddleware, reduxImmutableStateInvariant()),
-        persistState()));
+  return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware, routingMiddleware,
+    reduxImmutableStateInvariant()), persistState()));
 }
