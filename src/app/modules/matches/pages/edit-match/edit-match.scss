@@ -1,5 +1,4 @@
 .edit-match {
-
   .edit-match-form {
     .top-section {
       display: flex;
@@ -9,19 +8,29 @@
     }
 
     .players-section {
-      display: inline;
       padding: 0;
       //flex-direction: row;
       //justify-content: space-between;
+      > ul {
+        list-style-type: none;
+        -webkit-padding-start: 0;
+
+        > li {
+          display: inline-block;
+        }
+      }
 
       .player-card {
+        background-color: lightgray;
         border-width: 1px;
-        border-radius: 5px;
-        border-color: blue;
+        border-radius: 6px;
+        border-color: darkblue;
         padding: 8px;
-        max-width: 100px;
-        max-height: 32px;
-        display: inline;
+        color: blue;
+        margin: 5px;
+        // max-width: 100px;
+        // max-height: 32px;
+        display: inline-block;
       }
     }
   }
@@ -54,32 +63,33 @@
       opacity: 0;
     }
   }
-}
 
-.player-selection {
-  display: inline;
-  border-width: 1px;
-  border-radius: 5px;
-  border-color: blue;
-  padding: 8px;
+  .player-selection {
+    display: inline;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: blue;
+    padding: 8px;
 
-  .edit-player {
-    display: inline-block;
-    .player {
+    .edit-player {
       display: inline-block;
-      vertical-align: bottom;
+
+      .player {
+        display: inline-block;
+        vertical-align: bottom;
+      }
     }
-  }
 
-  .view-player {
-    display: inline;
-  }
+    .view-player {
+      display: inline;
+    }
 
-  .position {
-    display: inline;
-  }
+    .position {
+      display: inline;
+    }
 
-  .player {
-    display: inline;
+    .player {
+      display: inline;
+    }
   }
 }

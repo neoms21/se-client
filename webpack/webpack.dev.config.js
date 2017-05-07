@@ -14,14 +14,26 @@ const NODE_MODULES = path.resolve(__dirname, '../node_modules');
 //noinspection WebpackConfigHighlighting
 const config = {
   context: SRC_DIR,
-  entry: './app/index.jsx',
+  entry: [
+    'react-hot-loader/patch',
+    // activate HMR for React
+
+    'webpack-dev-server/client?http://localhost:8080',
+    // bundle the client for webpack-dev-server
+    // and connect to the provided endpoint
+
+    'webpack/hot/only-dev-server',
+    // bundle the client for hot reloading
+    // only- means to only hot reload for successful updates
+
+    './app/index.jsx'
+  ],
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
   },
   devtool: 'source-map',
   target: 'web',
-  //watch: true,
   module: {
     rules: [
       {
@@ -40,7 +52,17 @@ const config = {
         })
       }, {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        use: [
+          "style-loader",
+          "css-loader", {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function() {
+                return [require('autoprefixer')];
+              }
+            }
+          }
+        ]
       }, {
         test: /\.svg$/,
         include: SRC_DIR,
@@ -79,7 +101,6 @@ const config = {
       }
     ]
   },
-  // postcss: [autoprefixer],
   resolve: {
     extensions: [
       '.js', '.jsx', '.json'
@@ -89,33 +110,25 @@ const config = {
       "node_modules"
     ]
   },
-  // node: {
-  //     console: true,
-  //     fs: 'empty',
-  //     net: 'empty',
-  //     tls: 'empty'
-  // },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin({
+      filename: 'bundle.css',
+      allChunks: true,
+      disable: process.env.NODE_ENV !== 'production'
+    }),
     new HtmlWebpackPlugin({
       appMountId: 'app',
       template: path.resolve(__dirname, '../src/index_template.html')
     }),
-    new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')}),
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: 'src/assets/images/'
-    //   }, {
-    //     from: './src/favicon.ico'
-    //   }
-    // ])
+    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('development')})
   ],
   devServer: {
     proxy: { // proxy URLs to backend development server
       '/api': 'http://localhost:3000'
     },
-    //contentBase: path.join(__dirname, '../build'), // boolean | string | array, static file location
+    contentBase: path.join(__dirname, '../src'), // static file location
     compress: false, // enable gzip compression
     historyApiFallback: true, // true for index.html upon 404, object for multiple paths
     hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin

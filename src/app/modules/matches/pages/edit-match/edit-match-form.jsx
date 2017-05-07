@@ -12,7 +12,8 @@ class EditMatchForm extends React.Component {
         super(props);
 
         this.state =  {
-
+          nextId: 0,
+          playersPositions: []
         }
     }
 
@@ -31,32 +32,33 @@ class EditMatchForm extends React.Component {
 //     this.refs.form.updateInputsWithError(fieldErrors);
 // };
 
-    // addPlayer = (e) => {
-    //     const newPlayer = {id: this.state.nextId, position: '', isEditing: true};
-    //     let copyValues = {...this.state.values};
-    //     copyValues.players.push(newPlayer);
-    //
-    //     // now change it
-    //     this.setState({
-    //         nextId: this.state.nextId + 1,
-    //         values: copyValues
-    //     })
-    // };
-    //
-    // deletePlayer = (playerId) => {
-    //     let copyValues = {...this.state.values};
-    //     //let copyOfPlayers = this.state.values.players.concat();
-    //     const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
-    //     if (playerIndexToBeDeleted > -1) {
-    //         copyOfPlayers.splice(playerIndexToBeDeleted, 1);
-    //     }
-    //     // now we have trimmed it, update the state
-    //     this.setState({
-    //         values: copyValues
-    //     });
-    // };
+    addPlayer = (e) => {
+        const newPlayer = {id: this.state.nextId, position: '', player: '', isEditing: true};
+        let copyValues = this.state.playersPositions.concat();
+        copyValues.push(newPlayer);
+
+        // now change it
+        this.setState({
+            nextId: this.state.nextId + 1,
+            playersPositions: copyValues
+        })
+    };
+
+    deletePlayer = (playerId) => {
+        let copyValues = {...this.state.playersPositions};
+
+        const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
+        if (playerIndexToBeDeleted > -1) {
+            copyOfPlayers.splice(playerIndexToBeDeleted, 1);
+        }
+        // now we have trimmed it, update the state
+        this.setState({
+            playersPositions: copyValues
+        });
+    };
 
     getAvailablePlayers = () => {
+      let players = [];
       return [];
     }
 
@@ -98,35 +100,22 @@ class EditMatchForm extends React.Component {
         </div>
     );
 
-    renderPlayers({fields, meta: {touched, error, submitFailed}}) {
+    renderPlayers() {
         return (
+            <div className="players-section">
+              <span>Players</span>
+              <IconButton iconClassName="material-icons" tooltip="Add"
+                            tooltipPosition="top-right"
+                            onTouchTap={::this.addPlayer}>add_circle</IconButton>
             <ul>
-                <li>
-                    <span>fld {fields.length} </span>
-                    <IconButton iconClassName="material-icons" tooltip="Add"
-                                tooltipPosition="top-right"
-                                onClick={                                    () => {
-                                    fields.push();
-                                }
-                                }
-                    >add_circle</IconButton>
-                    {/*{(touched || submitFailed) && error && <span>{error}</span>}*/}
-                </li>
-                {fields.map((member, index) =>
-                    <li key={index}>
-                        <div>hhhhhhhhhh</div>
-                        <button
-                            type="button"
-                            title="Remove Member"
-                            onClick={() => fields.remove(index)}/>
-                        {/*<h4>Member #{index + 1}</h4>*/}
-                        {/*<Field*/}
-                        {/*name={`${member}.row`}*/}
-                        {/*component={::this.renderPlayer}*/}
-                        {/*label="First Name"/>*/}
+                {this.state.playersPositions.map((member, index) =>
+                    <li key={index} className="player-card">
+                        <span>hhhhhhhhhh</span>
+
                     </li>
                 )}
             </ul>
+            </div>
         );
     }
 
@@ -143,7 +132,7 @@ class EditMatchForm extends React.Component {
     };
 
     render = () => {
-        const {pristine, handleSubmit, squads, disabled} = this.props;
+        const {pristine, handleSubmit, squads, disabled, reset} = this.props;
         // const generalError = errors === undefined || errors.general === undefined || errors.length === 0
         //     ? '' : errors.general;
 
@@ -154,23 +143,22 @@ class EditMatchForm extends React.Component {
                       onSubmit={handleSubmit}>
                     <div className="top-section">
                         <Field component={::this.renderSelectField} name="team" label="Select team">
-                            {/*{squads.map(squad =>*/}
-                                {/*<MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)*/}
-                            {/*}*/}
+                            {squads.map(squad =>
+                                <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
+                            }
                         </Field>
                         <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
                                format={(v) => ((v === '') ? null : v)}/>
                         <Field component={::this.renderTextField} name="opposition" label="Opponents name"/>
                     </div>
-                    <h3 className="players-section">Players</h3>
-                    <FieldArray name="playersPositions" component={::this.renderPlayers} disabled={disabled}/>
+                    {::this.renderPlayers()}
 
                     {/*<div className={getErrorClasses()}>*/}
                     {/*<span>{generalError}</span>*/}
                     {/*</div>*/}
                     <div className="button-row">
                         <RaisedButton label="Save" primary={true} type="submit"/>
-                        <RaisedButton label="Clear Values" disabled={pristine} onClick={::this.reset}/>
+                        <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
                     </div>
                 </form>
             </section>
