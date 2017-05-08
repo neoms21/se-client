@@ -74,11 +74,10 @@ export default class PlayerSelectionComponent extends React.Component {
             values: valuesToUpdate,
             errors: errors
         });
-
     };
 
     render = () => {
-        const {player} = this.props;
+        const {item} = this.props;
 
         return (
             <div className="player-selection">
@@ -96,16 +95,14 @@ export default class PlayerSelectionComponent extends React.Component {
                             })}
                         </SelectField>
 
-                        <IconButton iconClassName="material-icons" tooltip="Close"
+                        <IconButton iconClassName="material-icons" tooltip="Done"
                                     tooltipPosition="top-right" onClick={::this.closePlayer}>close_circle</IconButton>
-                        <IconButton iconClassName="material-icons" tooltip="Remove"
-                                    tooltipPosition="top-right"
-                                    onClick={::this.deletePlayer}>delete_circle</IconButton>
+                
                     </div>
                     :
                     <div className="view-player">
-                        <span>Name {player.name}</span>
-                        <span>Position {player.position}</span>
+                        <span>Player {item.player}</span>
+                        <span>Position {item.position}</span>
                         <IconButton iconClassName="material-icons" tooltip="Edit"
                                     tooltipPosition="top-right"
                                     onClick={::this.editPlayer}>edit_circle</IconButton>
