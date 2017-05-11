@@ -94,7 +94,12 @@ class EditMatchForm extends React.Component {
         ...custom
     }) => (<SelectField floatingLabelText={label} errorText={touched && error} {...input} onChange={(event, index, value) => input.onChange(value)} children={children} {...custom}/>);
 
-    renderTextField = props => (<TextField hintText={props.label} floatingLabelText={props.label} errorText={props.touched && props.error} {...props.custom}/>);
+    renderTextField(props) {
+      return (
+      <TextField hintText={props.label} floatingLabelText={props.label}
+        errorText={props.touched && props.error} {...props.custom}/>
+      );
+    }
 
     renderDatePicker = ({
         input,
@@ -162,10 +167,10 @@ class EditMatchForm extends React.Component {
                         <Field component={:: this.renderSelectField} name="team" label="Select team">
                             {squads.map(squad => <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)}
                         </Field>
-                        <Field component={:: this.renderDatePicker} name="matchDate" label="Match date" format={(v) => ((v === '')
+                        <Field component={::this.renderDatePicker} name="matchDate" label="Match date" format={(v) => ((v === '')
                             ? null
                             : v)}/>
-                        <Field component={:: this.renderTextField} name="opposition" label="Opponents name"/>
+                        <Field component={::this.renderTextField} name="opposition" label="Opponents name"/>
                     </div>
                     {:: this.renderPlayers()}
 
@@ -187,19 +192,4 @@ EditMatchForm.propTypes = {
     errors: PropTypes.object
 };
 
-const validate = values => {
-    const errors = {};
-    const requiredFields = ['team', 'matchDate', 'opposition'];
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-            errors[field] = 'Required'
-        }
-    });
-
-    return errors;
-};
-
-export default reduxForm({
-    form: 'EditMatchForm', // a unique identifier for this form
-    validate
-})(EditMatchForm);
+export default EditMatchForm;
