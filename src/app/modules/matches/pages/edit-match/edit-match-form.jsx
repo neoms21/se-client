@@ -13,7 +13,7 @@ import {
 } from 'material-ui';
 import './edit-match.scss';
 import PlayerSelectionComponent from "./player-seelction-component";
-import {Field, FieldArray, reduxForm} from 'redux-form';
+import {Field, FieldArray, reduxForm, Form} from 'redux-form';
 import {DatePickerComponent} from '../../../../components/date-picker/date-picker';
 
 class EditMatchForm extends React.Component {
@@ -132,12 +132,13 @@ class EditMatchForm extends React.Component {
                     <span>Players</span>
                     <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={:: this.addPlayer}>add_circle</IconButton>
                 </div>
-                {this.state.playersPositions.map((member, index) => <div className="player-card" key={index}>
-                    <Chip>
-                        <Avatar icon={< FontIcon className = "material-icons" > perm_identity < /FontIcon>}/>
-                        <PlayerSelectionComponent deletePlayer={:: this.deletePlayer} availablePlayers={:: this.getAvailablePlayers()} item={member}/>
-                    </Chip>
-                </div>)}
+                {this.state.playersPositions.map((member, index) =>
+                    <div className="player-card" key={index}>
+                        <Chip>
+                            <Avatar icon={< FontIcon className = "material-icons" > perm_identity < /FontIcon>}/>
+                            <PlayerSelectionComponent deletePlayer={:: this.deletePlayer} availablePlayers={:: this.getAvailablePlayers()} item={member}/>
+                        </Chip>
+                    </div>)}
             </div>
         );
     }
@@ -155,14 +156,14 @@ class EditMatchForm extends React.Component {
     };
 
     render = () => {
-        const {pristine, handleSubmit, squads, disabled, reset} = this.props;
+        const {pristine, handleSubmit, squads, disabled, reset, errors} = this.props;
         // const generalError = errors === undefined || errors.general === undefined || errors.length === 0
         //     ? '' : errors.general;
 
         return (
             <section className="edit-match">
                 <h1>Create match</h1>
-                <form className="edit-match-form" onSubmit={handleSubmit}>
+                <Form className="edit-match-form" onSubmit={handleSubmit}>
                     <div className="top-section">
                         <Field component={:: this.renderSelectField} name="team" label="Select team">
                             {squads.map(squad => <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)}
@@ -181,7 +182,7 @@ class EditMatchForm extends React.Component {
                         <RaisedButton label="Save" primary={true} type="submit"/>
                         <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
                     </div>
-                </form>
+                </Form>
             </section>
         );
     };
