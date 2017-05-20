@@ -1,5 +1,5 @@
-import React from 'react'
-import DatePicker from 'material-ui/DatePicker'
+import React from 'react';
+import DatePicker from 'material-ui/DatePicker';
 //import {FieldType, registerType} from 'react-form';
 
 // const propTypes = {

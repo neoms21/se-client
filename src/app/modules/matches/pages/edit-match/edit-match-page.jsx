@@ -22,25 +22,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-const validate = values => {
-    const errors = {};
-    const requiredFields = ['team', 'matchDate', 'opposition'];
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-            errors[field] = 'Required'
-        }
-    });
-
-    return errors;
-};
-
-// now connect with redux
-//export default connect(mapStateToProps, mapDispatchToProps)(EditMatchForm);
-
-
 // do a redux subscription
-export default connect(mapStateToProps, mapDispatchToProps)(
-  reduxForm({
-    form: 'EditMatchForm',  // a unique identifier for this form
-    validate
-})(EditMatchForm));
+export default connect(mapStateToProps, mapDispatchToProps)(EditMatchForm);

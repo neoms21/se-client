@@ -2,11 +2,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
 import {FormsyText} from 'formsy-material-ui';
 import Formsy from 'formsy-react';
+import PropTypes from 'prop-types';
 
-let {Component, PropTypes} = React;
 
-
-export default class CreateSquadForm extends Component {
+export default class CreateSquadForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -58,4 +57,3 @@ export default class CreateSquadForm extends Component {
         );
     };
 }
-

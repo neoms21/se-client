@@ -1,12 +1,12 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default React.createClass({
-    render: function () {
+export default class About extends React.Component {
+    render() {
         return (
             <section>
                 <h1>About</h1>
             </section>
         );
     }
-});
-
+}
