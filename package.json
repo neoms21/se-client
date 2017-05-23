@@ -35,7 +35,6 @@
     "babel-preset-stage-2": "^6.24.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
-    "enzyme": "^2.8.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "formsy-material-ui": "^0.6.0",
@@ -72,6 +71,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "enzyme": "^2.8.2",
     "prop-types": "^15.5.8",
     "superagent": "^3.5.2"
   },

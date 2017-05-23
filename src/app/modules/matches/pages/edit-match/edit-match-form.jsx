@@ -4,8 +4,6 @@ import {
   RaisedButton,
   IconButton,
   MenuItem,
-  TextField,
-  SelectField,
   DatePicker,
   Chip,
   Avatar,
@@ -15,6 +13,7 @@ import './edit-match.scss';
 import PlayerSelectionComponent from "./player-seelction-component";
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { DatePickerComponent } from '../../../../components/date-picker/date-picker';
+import { TextField, SelectField } from '../../../../components/form';
 
 class EditMatchForm extends React.Component {
 
@@ -78,32 +77,6 @@ class EditMatchForm extends React.Component {
     this.refs.form.reset();
   };
 
-  renderSelectField = ({
-    input,
-    label,
-    meta: {
-      touched,
-      error
-    },
-    children,
-    ...custom
-  }) => (
-    <SelectField
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    onChange={(event, index, value) => input.onChange(value)}
-    children={children}
-    {...custom}/>
-  );
-
-  renderTextField(props) {
-    return (
-      <TextField hintText={props.label} floatingLabelText={props.label}
-      errorText={props.meta.touched && props.meta.error} {...props.input} {...props.custom}/>
-    );
-  }
-
   renderDatePicker = ({
     input,
     label,
@@ -114,22 +87,16 @@ class EditMatchForm extends React.Component {
     ...custom
   }) => (<DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true} {...custom}/>);
 
-  // renderPlayer = ({     input,     label,     type,     meta: {         touched,         error     } }) => (     <div>
-  // <PlayerSelectionComponent deletePlayer={:: this.deletePlayer} availablePlayers={:: this.getAvailablePlayers()}/>     </div> );
-
-  renderPlayers() {
+  renderPlayers2({ fields, meta: { touched, error, submitFailed } }) {
     return (
       <div className="players-section">
         <div>
           <span>Players</span>
-          <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={::this.addPlayer}>add_circle</IconButton>
+          <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={() => fields.push({})}>add_circle</IconButton>
         </div>
-        {this.state.playersPositions.map((member, index) =>
+        {fields.map((member, index) =>
           <div className="player-card" key={index}>
-            <Chip>
-              <Avatar icon={< FontIcon className = "material-icons">perm_identity</FontIcon>}/>
               <PlayerSelectionComponent deletePlayer={::this.deletePlayer} availablePlayers={:: this.getAvailablePlayers()} item={member}/>
-            </Chip>
           </div>)}
       </div>
     );
@@ -168,16 +135,16 @@ class EditMatchForm extends React.Component {
         <h1>Create match</h1>
         <form className="edit-match-form" onSubmit={handleSubmit}>
           <div className="top-section">
-            <Field component={::this.renderSelectField} name="team" label="Select team">
+            <Field component={SelectField} name="team" label="Select team">
                 {squads.map(squad =>
                     <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
                 }
             </Field>
             <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
                    format={(v) => ((v === '') ? null : v)}/>
-            <Field component={::this.renderTextField} name="opposition" label="Opponents name" validate={::this.required}/>
+            <Field component={TextField} name="opposition" label="Opponents name" />
           </div>
-          {}
+           <FieldArray name="members" component={::this.renderPlayers2}/>
           {/*<div className={getErrorClasses()}>*/}
           {/*<span>{generalError}</span>*/}
           {/*</div>*/}
@@ -210,5 +177,5 @@ const validate = values => {
 
 export default reduxForm({
   form: 'EditMatchForm',
-  //validate
+  validate
 })(EditMatchForm);
