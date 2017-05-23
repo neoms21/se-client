@@ -163,16 +163,97 @@ EditMatchForm.propTypes = {
   errors: PropTypes.object
 };
 
-const validate = values => {
-  const errors = {};
-  const requiredFields = ['team', 'matchDate', 'opposition'];
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
-    }
-  });
+renderDatePicker = ({
+  input,
+  label,
+  meta: {
+    touched,
+    error
+  },
+  ...custom
+}) => (<DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true} {...custom}/>);
 
-  return errors;
+// renderPlayer = ({
+//     input,
+//     label,
+//     type,
+//     meta: {
+//         touched,
+//         error
+//     }
+// }) => (
+//     <div>
+//         <PlayerSelectionComponent deletePlayer={:: this.deletePlayer} availablePlayers={:: this.getAvailablePlayers()}/>
+//     </div>
+// );
+
+renderPlayers() {
+return (
+  <div className="players-section">
+                <div>
+                    <span>Players</span>
+                    <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={:: this.addPlayer}>add_circle</IconButton>
+                </div>
+                {this.state.playersPositions.map((member, index) =>
+                    <div className="player-card" key={index}>
+                        <Chip>
+                            <Avatar icon={< FontIcon className = "material-icons" > perm_identity < /FontIcon>}/>
+                            <PlayerSelectionComponent deletePlayer={:: this.deletePlayer} availablePlayers={:: this.getAvailablePlayers()} item={member}/>
+                        </Chip>
+                    </div>)}
+            </div>
+);
+}
+});
+
+componentDidMount = () => {
+  // const initData = {
+  //     "firstName": this.props.currentUser.firstName,
+  //     "lastName": this.props.currentUser.lastName,
+  //     "sex": this.props.currentUser.sex,
+  //     "email": this.props.userEmail,
+  //     "phoneNumber": this.props.currentUser.phoneNumber
+  // };
+  //
+  // this.props.initialize(initData);
+};
+
+render = () => {
+  const { pristine, handleSubmit, squads, disabled, reset, errors } = this.props;
+  // const generalError = errors === undefined || errors.general === undefined || errors.length === 0
+  //     ? '' : errors.general;
+
+  return (
+    <section className="edit-match">
+                <h1>Create match</h1>
+                <Form className="edit-match-form" onSubmit={handleSubmit}>
+                    <div className="top-section">
+                        <Field component={:: this.renderSelectField} name="team" label="Select team">
+                            {squads.map(squad => <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)}
+                        </Field>
+                        <Field component={::this.renderDatePicker} name="matchDate" label="Match date" format={(v) => ((v === '')
+                            ? null
+                            : v)}/>
+                        <Field component={::this.renderTextField} name="opposition" label="Opponents name"/>
+                    </div>
+                    {:: this.renderPlayers()}
+
+                    {/*<div className={getErrorClasses()}>*/}
+                    {/*<span>{generalError}</span>*/}
+                    {/*</div>*/}
+                    <div className="button-row">
+                        <RaisedButton label="Save" primary={true} type="submit"/>
+                        <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
+                    </div>
+                </Form>
+            </section>
+  );
+};
+}
+
+EditMatchForm.propTypes = {
+  handleSubmit: PropTypes.func,
+  errors: PropTypes.object
 };
 
 export default reduxForm({
