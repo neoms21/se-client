@@ -92,37 +92,60 @@ export default class PlayerSelectionComponent extends React.Component {
     this.setState({ values: valuesToUpdate, errors: errors });
   };
 
+  getData = (arrayEle, name) => {
+
+  };
+
   render = () => {
-    const { item } = this.props;
+    const { item, availablePlayers, isEditing } = this.props;
 
     return (
-      <form className="player-selection">
-          {item.isEditing
-            ? <span className="edit-player">
-                <Field component={TextField} name="position"
-                  className="position" value={item.player}
-                  label="Starting position"/>
-                <Field component={SelectField} name="player"
-                  label="Select player"
-                  className="player">
-                  {this.props.availablePlayers.map(avail =>
-                      { <MenuItem key = {avail.id}
-                        value = {avail.code}
-                        primaryText = {avail.description} />
-                  })}
-                </Field>
+      <Card className="player-selection">
+        <span className="edit-player">
+            <Field component={TextField} name={`${item}.position`}
+              className="position" value={item.player}
+              label="Starting position"/>
+            <Field component={SelectField} name={`${item}.player`}
+              label="Select player"
+              className="player">
+              {availablePlayers.map(avail =>
+                  { <MenuItem key = {avail.id}
+                    value = {avail.code}
+                    primaryText = {avail.description} />
+              })}
+            </Field>
+            <IconButton iconClassName="material-icons" tooltip="Done" tooltipPosition="top-right"
+              onClick={::this.closePlayer}>done</IconButton>
+          </span>
+        </Card>
 
-                <IconButton iconClassName="material-icons" tooltip="Done" tooltipPosition="top-right" onClick={::this.closePlayer}>done</IconButton>
-              </span>
-            :
-            <Chip className="view-player">
-              <Avatar className="player-picture" icon={<FontIcon className = "material-icons">perm_identity</FontIcon>}/>
-              <span>Player {item.player}</span>
-              <span>Position {item.position}</span>
-              <IconButton iconClassName="material-icons" tooltip="Edit" tooltipPosition="top-right" onClick={::this.editPlayer}>edit_circle</IconButton>
-            </Chip>
-          }
-      </form>
+      //     {isEditing
+      //       ? <span className="edit-player">
+      //           <Field component={TextField} name={`${item}.position`}
+      //             className="position" value={item.player}
+      //             label="Starting position"/>
+      //           <Field component={SelectField} name={`${item}.player`}
+      //             label="Select player"
+      //             className="player">
+      //             {availablePlayers.map(avail =>
+      //                 { <MenuItem key = {avail.id}
+      //                   value = {avail.code}
+      //                   primaryText = {avail.description} />
+      //             })}
+      //           </Field>
+      //           <IconButton iconClassName="material-icons" tooltip="Done" tooltipPosition="top-right"
+      //             onClick={::this.closePlayer}>done</IconButton>
+      //         </span>
+      //       :
+      //       <Chip className="view-player">
+      //         <Avatar className="player-picture" icon={<FontIcon className = "material-icons">perm_identity</FontIcon>}/>
+      //         <span>Player ${item}</span>
+      //         <span>Position ${item}.position</span>
+      //         <IconButton iconClassName="material-icons" tooltip="Edit" tooltipPosition="top-right"
+      //           onClick={::this.editPlayer}>edit_circle</IconButton>
+      //       </Chip>
+      //     }
+      // </div>
     );
   }
 }
