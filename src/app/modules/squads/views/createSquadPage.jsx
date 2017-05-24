@@ -11,7 +11,7 @@ class CreateSquadPage extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors && nextProps.errors.length > 0) {
-            console.log(nextProps.errors);
+            //console.log(nextProps.errors);
             this.props.dispatch(stopSubmit('SquadForm', nextProps.errors[0]));
         } else if (nextProps.saved) {
             nextProps.router.push('squads');
@@ -19,6 +19,7 @@ class CreateSquadPage extends React.Component {
     }
 
     handleSubmit(data) {
+
         this.props.dispatch(createSquad(data)); // clear form: THIS works
         return false;
     }

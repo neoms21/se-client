@@ -99,6 +99,7 @@ const sendCommand = (name, payload) => {
 
     // send it
     try {
+        console.log('in send', command);
         socket.emit('command', command);
     }
     catch (err) {

@@ -13,7 +13,7 @@ class SquadsComponent extends React.Component {
     }
 
     addSquad = () => {
-        push('squad');
+        this.props.router.push('squad');
     };
 
     goToPlayers = (id) => {

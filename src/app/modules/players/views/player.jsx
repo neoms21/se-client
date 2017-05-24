@@ -33,24 +33,48 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PlayerForm from './playerForm'
+import {createPlayer} from '../actions/players-actions'
 
 
 class PlayerPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     submit = (values) => {
         // Do something with the form values
         console.log(values);
+        this.props.dispatch(createPlayer(values));
     };
+
+    handleSubmit(data) {
+        let player = Object.assign({}, data, {squadId: this.props.params.id});
+        console.log('in handle submit' + new Date());
+        this.props.dispatch(createPlayer(player)); // clear form: THIS works
+        //return false;
+    }
 
     render() {
         return (
-            <PlayerForm onSubmit={this.submit}/>
+            <PlayerForm onSubmit={::this.handleSubmit}/>
         );
     }
 
+
 }
 
-export default PlayerPage;
+
+const mapStateToProps = (state, ownProps) => {
+
+    return {
+        saved: state.squads.saved,
+        errors: state.squads.errors
+    }
+
+};
+
+export default connect(mapStateToProps)(PlayerPage)
 //
 // import ContactForm from './ContactForm';
 //
