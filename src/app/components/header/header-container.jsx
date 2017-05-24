@@ -21,13 +21,10 @@ class HeaderContainer extends React.Component {
     render() {
         return (
             <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
-                    currentUser={this.props.currentUser}/>
+                    currentUser={this.props.currentUser} />
         );
     }
 }
 
-// const headerContainer = React.createClass({
-//
-// });
 
 export default connect(mapStateToProps)(HeaderContainer);

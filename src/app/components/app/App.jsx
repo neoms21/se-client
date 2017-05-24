@@ -1,8 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import HeaderContainer from '../header/header-container';
+import {signinUser} from '../../modules/user/actions/user-actions';
 
 class App extends React.Component {
+
+    componentDidMount() {
+      // sign user in
+        this.props.dispatch(signinUser(this.props.userHash));
+    }
+
   render() {
     return (
       <div className='container'>
@@ -18,8 +25,11 @@ App.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  console.log('@@@ ', state.user.userHash);
+
   return {
     // loading: state.ajaxCallsInProgress > 0
+      userHash: state.user.userHash
   };
 }
 

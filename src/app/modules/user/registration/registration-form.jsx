@@ -104,10 +104,10 @@ export default class RegistrationForm extends React.Component {
     }
 }
 
-RegistrationForm.propTypes = {
-    handleSubmit: React.PropTypes.func,
-    error: React.PropTypes.string
-};
+// RegistrationForm.propTypes = {
+//     handleSubmit: React.PropTypes.func,
+//     error: React.PropTypes.string
+// };
 
 // const RegistrationForm = (props) => (
 //

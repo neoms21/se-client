@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
-import {shallow} from 'enzyme';
+import ReactTestUtils from 'react-dom/test-utils';
+import {shallow, mount} from 'enzyme';
 import RegistrationForm from './registration-form';
 
 

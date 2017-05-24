@@ -1,7 +1,9 @@
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import {shallow, mount} from 'enzyme';
 import SigninForm from './signin-form';
+//import {shallow} from 'react-test-renderer';
+
 
 
 describe('User Signin form', () => {
