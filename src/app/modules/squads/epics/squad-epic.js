@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 
 export const createSquadEpic = action$ => action$.ofType(ActionTypes.CREATE_SQUAD)
     .mergeMap(action => sendCommand('CreateSquad', action.squad)
-        .map(ev => ev.isFailure ? squadActions.createSquadFailure(ev.errors)
+        .map(ev => ev.errors && ev.errors.length > 0 ? squadActions.createSquadFailure(ev.errors)
             : squadActions.createSquadSuccess(action.squad)));
 
 export const fetchSquadsEpic = action$ => action$.ofType(ActionTypes.FETCH_SQUADS)

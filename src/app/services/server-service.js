@@ -90,7 +90,7 @@ const sendCommand = (name, payload) => {
     };
 
     // add the payload to the command
-    Object.assign(command, payload);
+    Object.assign(command, {payload: payload});
 
     // create observable for client
     let clientObserver = new Subject();
@@ -99,6 +99,7 @@ const sendCommand = (name, payload) => {
 
     // send it
     try {
+        console.log('in send', command);
         socket.emit('command', command);
     }
     catch (err) {
@@ -112,7 +113,7 @@ const sendCommand = (name, payload) => {
 const sendQuery = (name, payload) => {
 
     // need to give it a correlation id
-    let query = {properties:{queryName: name ,correlationId: uuid.v4()}, payload: payload};
+    let query = {properties: {queryName: name, correlationId: uuid.v4()}, payload: payload};
     // create observable for client
     let clientObserver = new Subject();
     // console.log( clientObserver.subscribe(console.log));
@@ -145,9 +146,9 @@ const processReceiveCommandEvent = (event) => {
 };
 
 const processReceiveQueryEvent = (event) => {
-    console.log(streamForQuery);
-    console.log(event);
-    if (event.query.properties.correlationId ) {
+    // console.log(streamForQuery);
+    // console.log(event);
+    if (event.query.properties.correlationId) {
         // happy days, find right observable
         streamForQuery[event.query.properties.correlationId].next(event); // pass it on
     } else {
