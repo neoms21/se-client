@@ -10,11 +10,13 @@ import {routerMiddleware} from 'react-router-redux';
 import {browserHistory} from 'react-router';
 import {persistState} from 'redux-localstorage';
 
+import { reducer as formReducer } from 'redux-form';
 export default function configureStore(initialState) {
 
     const reducers = {
         user,
         squads,
+        form: formReducer,
         routing: routerReducer
     };
 

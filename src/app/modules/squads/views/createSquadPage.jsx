@@ -1,35 +1,43 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Observable} from 'rxjs';
-import CreateSquadForm from './squadForm'
+import SquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
-import {getSquad} from '../selectors/getSquadSelector'
+import {stopSubmit} from 'redux-form';
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        //error: state.squads.error,
-        values: {squadName: 'abcd'},
-        squadName: getSquad(state, '58bf301b616e2a1e4a07724e').name
+class CreateSquadPage extends React.Component {
+    constructor(props) {
+        super(props);
     }
 
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        handleSubmit: (values) => {
-            console.log(values);
-            let squadDetails = {squadName: values.squadName};
-            dispatch(createSquad(squadDetails));
-        },
-        validate: (values) => {
-            const errors = {};
-            if (!values.squadName) {
-                errors.squadName = 'Required'
-            }
-            return errors;
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors && nextProps.errors.length > 0) {
+            //console.log(nextProps.errors);
+            this.props.dispatch(stopSubmit('SquadForm', nextProps.errors[0]));
+        } else if (nextProps.saved) {
+            nextProps.router.push('squads');
         }
     }
+
+    handleSubmit(data) {
+
+        this.props.dispatch(createSquad(data)); // clear form: THIS works
+        return false;
+    }
+
+    render() {
+        return (
+            <SquadForm onSubmit={::this.handleSubmit} id={this.props.params.id}/>
+        );
+    }
+}
+
+const mapStateToProps = (state, ownProps) => {
+
+    return {
+        saved: state.squads.saved,
+        errors: state.squads.errors
+    }
+
 };
 
-// do a redux subscription
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSquadForm);
+export default connect(mapStateToProps)(CreateSquadPage)
