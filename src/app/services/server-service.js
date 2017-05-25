@@ -90,7 +90,7 @@ const sendCommand = (name, payload) => {
     };
 
     // add the payload to the command
-    Object.assign(command, payload);
+    Object.assign(command, {payload: payload});
 
     // create observable for client
     let clientObserver = new Subject();
@@ -148,7 +148,7 @@ const processReceiveCommandEvent = (event) => {
 const processReceiveQueryEvent = (event) => {
     console.log(streamForQuery);
     console.log(event);
-    if (event.query.properties.correlationId) {
+    if (event.query.properties.correlationId ) {
         // happy days, find right observable
         const queryStream = streamForQuery[event.query.properties.correlationId];
         if (queryStream) {

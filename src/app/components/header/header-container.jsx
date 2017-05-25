@@ -17,11 +17,14 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-const headerContainer = (props) => {
-    return (
-        <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
-                currentUser={props.currentUser}/>
-    );
-};
+class HeaderContainer extends React.Component {
+    render() {
+        return (
+            <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
+                    currentUser={this.props.currentUser} />
+        );
+    }
+}
 
-export default connect(mapStateToProps)(headerContainer);
+
+export default connect(mapStateToProps)(HeaderContainer);
