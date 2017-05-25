@@ -6,7 +6,7 @@ import RegistrationPage from './modules/user/registration/registration-page';
 import SquadsComponent from './modules/squads/views/squads'
 import {Router, Route, IndexRoute} from 'react-router';
 import SigninPage from './modules/user/signin/signin-page';
-import CreateSquadComponent from './modules/squads/views/createSquadPage'
+import SquadFormContainer from './modules/squads/views/squadFormContainer'
 import PlayerComponent from './modules/players/views/player'
 import PlayersComponent from './modules/players/views/players'
 
@@ -16,7 +16,7 @@ export default (
         <IndexRoute component={Home}/>
         <Route path="/registration" component={RegistrationPage}/>
         <Route path="/squads" component={SquadsComponent}/>
-        <Route path="/squad" component={CreateSquadComponent}/>
+        <Route path="/squad" component={SquadFormContainer}/>
         <Route path="/squad/:id" component={CreateSquadComponent}/>
         <Route path="/squad/:id/players" component={PlayersComponent}/>
         <Route path="/squad/:id/player" component={PlayerComponent}/>

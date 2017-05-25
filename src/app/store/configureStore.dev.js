@@ -8,7 +8,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {rootEpic} from '../epics/rootEpics';
 import {routerMiddleware} from 'react-router-redux';
 import {browserHistory} from 'react-router';
-import {persistState} from 'redux-localstorage';
+import persistState from 'redux-localstorage';
 
 import { reducer as formReducer } from 'redux-form';
 export default function configureStore(initialState) {

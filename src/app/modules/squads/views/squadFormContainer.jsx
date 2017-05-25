@@ -4,7 +4,7 @@ import SquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
 import {stopSubmit} from 'redux-form';
 
-class CreateSquadPage extends React.Component {
+class SquadFormContainer extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -19,7 +19,6 @@ class CreateSquadPage extends React.Component {
     }
 
     handleSubmit(data) {
-
         this.props.dispatch(createSquad(data)); // clear form: THIS works
         return false;
     }
@@ -32,7 +31,6 @@ class CreateSquadPage extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-
     return {
         saved: state.squads.saved,
         errors: state.squads.errors
@@ -40,4 +38,4 @@ const mapStateToProps = (state, ownProps) => {
 
 };
 
-export default connect(mapStateToProps)(CreateSquadPage)
+export default connect(mapStateToProps)(SquadFormContainer)
