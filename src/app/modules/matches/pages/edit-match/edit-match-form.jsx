@@ -92,13 +92,13 @@ class EditMatchForm extends React.Component {
       <div className="players-section">
         <div>
           <span>Players</span>
-          <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={() => fields.push({})}>add_circle</IconButton>
+          <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={() => fields.push({isEditing: true})}>add_circle</IconButton>
         </div>
         {fields.map((member, index) => {
-
+            let item = fields.get(index);
           return (
               <div className="player-card" key={index}>
-                <PlayerSelectionComponent deletePlayer={::this.deletePlayer} availablePlayers={::this.getAvailablePlayers()} item={member}/>
+                <PlayerSelectionComponent deletePlayer={::this.deletePlayer} availablePlayers={::this.getAvailablePlayers()} item={item}/>
               </div>);
           })
         }
