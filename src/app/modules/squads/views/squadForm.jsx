@@ -2,14 +2,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 import {TextField} from 'material-ui'
-import {validateRequiredFields} from '../../../validations'
 import '../../../core.scss'
-import {connect} from 'react-redux'
-import {getSquad} from '../selectors/getSquadSelector'
+import {stopSubmit} from 'redux-form';
 
-const validate = values => {
-    return validateRequiredFields(values, ['squadName'])
-};
+import{Component, PropTypes} from 'react'
+
 
 const
     renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
@@ -21,40 +18,48 @@ const
         />
     );
 
-class SquadForm extends React.Component {
+class SquadForm extends Component {
+    mySubmit(values) {
+        return this.props.onSave(values);
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        console.log('in will', nextProps.errors);
+        if (nextProps.errors && nextProps.errors.length > 0) {
+            //console.log(nextProps.errors);
+            this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
+        } else if (nextProps.saved) {
+            nextProps.router.push('squads');
+        }
+    }
 
     render() {
-        const {handleSubmit, submitting, pristine, reset} = this.props;
         return (
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <Field name="squadName" component={renderTextField} label="Squad Name" {...name} />
-                </div>
-                <div className="button-row">
-                    <RaisedButton label="Register" primary={true} type="submit" disabled={submitting}/>
-                    <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
-                </div>
-            </form>
-        );
+
+            <div>
+                <form onSubmit={this.props.handleSubmit(this.mySubmit.bind(this))}>
+                    <div>
+                        <Field name="squadName" component={renderTextField}
+                               label="Squad Name" {...name} />
+                    </div>
+                    <div className="button-row">
+                        <RaisedButton label="Register" primary={true}
+                                      type="submit" disabled={this.props.submitting}/>
+                        <RaisedButton label="Clear Values" disabled={this.props.pristine} onClick={this.props.reset}/>
+                    </div>
+                </form>
+            </div>
+        )
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    //return {}
-    let squad = getSquad(state, ownProps.id);
-    return {
-        initialValues: {squadName: squad ? squad.name : ""}
-    }
-}
-
-SquadForm = reduxForm({
-    form: 'SquadForm',
-    validate,
-    enableReinitialize: true
-})(SquadForm);
-
-SquadForm = connect(
-    mapStateToProps,
-)(SquadForm);
+SquadForm.propTypes = {
+    onSave: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired
+};
 
 export default SquadForm
+
+

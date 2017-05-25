@@ -2,7 +2,8 @@ import * as types from '../actions/squad.actionTypes';
 
 const initialState = {
     squads: [],
-    saved: false
+    saved: false,
+    errors:[]
 };
 
 export default function squadReducer(state = initialState, action) {

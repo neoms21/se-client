@@ -17,7 +17,7 @@ export default (
         <Route path="/registration" component={RegistrationPage}/>
         <Route path="/squads" component={SquadsComponent}/>
         <Route path="/squad" component={SquadFormContainer}/>
-        <Route path="/squad/:id" component={CreateSquadComponent}/>
+        <Route path="/squad/:id" component={SquadFormContainer}/>
         <Route path="/squad/:id/players" component={PlayersComponent}/>
         <Route path="/squad/:id/player" component={PlayerComponent}/>
         <Route path="/signin" component={SigninPage}/>

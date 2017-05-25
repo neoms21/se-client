@@ -26,7 +26,7 @@ App.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-    console.log('@@@ ', state.user.userHash);
+    //console.log('@@@ ', state.user.userHash);
 
     return {
         // loading: state.ajaxCallsInProgress > 0
