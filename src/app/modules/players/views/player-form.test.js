@@ -49,7 +49,7 @@ describe("PlayerForm", () => {
     //Here we show we can test asychronous actions triggered by our form.
     it("calls reset after onSave", () => {
 
-         subject = buildSubject();
+         //subject = buildSubject();
          //console.log(subject.find('form'));
 
         // expect(onSave.callCount).to.equal(1)
