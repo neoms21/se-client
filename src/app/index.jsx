@@ -6,9 +6,13 @@ import {Provider} from 'react-redux';
 import {Router, browserHistory} from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import routes from './routes';
-import {globalSass} from '../assets/styles/global.scss';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
+import {AppContainer} from 'react-hot-loader'; // AppContainer is a necessary wrapper component for HMR
+
+import '../assets/fonts/roboto/roboto.scss';
+import '../assets/fonts/material/material-icons.css';
+import '../assets/styles/global.scss';
 
 const store = configureStore();
 injectTapEventPlugin();
@@ -16,14 +20,24 @@ injectTapEventPlugin();
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
 
-render(
+const appRender = () => {
+  render(
     <div>
-        <MuiThemeProvider>
-            <Provider store={store}>
-                <Router history={history} routes={routes}/>
-            </Provider>
-         </MuiThemeProvider>
-    </div>,
-    document.getElementById('app')
-);
+    <AppContainer>
+      <MuiThemeProvider>
+        <Provider store={store}>
+          <Router history={history} routes={routes}/>
+        </Provider>
+      </MuiThemeProvider>
+    </AppContainer>
+  </div>, document.getElementById('app'));
+};
 
+appRender(); // run it
+
+// Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept('./components/app/App', () => {
+    appRender();
+  });
+}

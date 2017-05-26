@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-
-class About extends React.Component {
+export default class About extends React.Component {
     render() {
         return (
             <section>
@@ -10,15 +10,3 @@ class About extends React.Component {
         );
     }
 }
-
-export default About;
-// export default React.createClass({
-//     render: function () {
-//         return (
-//             <section>
-//                 <h1>About</h1>
-//             </section>
-//         );
-//     }
-// });
-

@@ -99,7 +99,6 @@ const sendCommand = (name, payload) => {
 
     // send it
     try {
-        console.log('in send', command);
         socket.emit('command', command);
     }
     catch (err) {
@@ -139,18 +138,27 @@ const processReceiveEvent = (event) => {
 const processReceiveCommandEvent = (event) => {
     if (event.command.properties.correlationId) {
         // happy days, find right observable
-        streamForCommand[event.command.properties.correlationId].next(event); // pass it on
+        const stream = streamForCommand[event.command.properties.correlationId];
+        stream.next(event); // pass it on
     } else {
         console.log('Command event with no correlation id ', event.properties);
     }
 };
 
 const processReceiveQueryEvent = (event) => {
-    // console.log(streamForQuery);
-    // console.log(event);
-    if (event.query.properties.correlationId) {
+    console.log(streamForQuery);
+    console.log(event);
+    if (event.query.properties.correlationId ) {
         // happy days, find right observable
-        streamForQuery[event.query.properties.correlationId].next(event); // pass it on
+        const queryStream = streamForQuery[event.query.properties.correlationId];
+        if (queryStream) {
+            queryStream.next(event); // pass it on
+
+            // is it last response
+            // if (event.messageNum === event.totalMessages) {
+            //     queryStream.complete();
+            // }
+        }
     } else {
         console.log('Query event with no correlation id ', event.query.properties);
     }

@@ -14,7 +14,8 @@ import PlayersComponent from './modules/players/views/players'
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={Home}/>
-        <Route path="/registration" component={RegistrationPage}/>
+        {userRoutes}
+        {matchRoutes}
         <Route path="/squads" component={SquadsComponent}/>
         <Route path="/squad" component={SquadFormContainer}/>
         <Route path="/squad/:id" component={SquadFormContainer}/>
