@@ -38,6 +38,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state);
     let squad = getSquad(state, ownProps.routeParams.id);
     return {
         saved: state.squads.saved,
