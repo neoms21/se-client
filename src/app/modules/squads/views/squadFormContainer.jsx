@@ -12,15 +12,6 @@ class SquadFormContainer extends React.Component {
     constructor(props) {
         super(props);
     }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.errors && nextProps.errors.length > 0) {
-            //console.log(nextProps.errors);
-            this.props.dispatch(stopSubmit('SquadForm', nextProps.errors[0]));
-        } else if (nextProps.saved) {
-            nextProps.router.push('squads');
-        }
-    }
 }
 
 const validate = values => {
@@ -38,7 +29,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state);
+
     let squad = getSquad(state, ownProps.routeParams.id);
     return {
         saved: state.squads.saved,

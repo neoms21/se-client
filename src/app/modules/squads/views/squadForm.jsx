@@ -24,7 +24,6 @@ class SquadForm extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log('in will', nextProps.errors);
         if (nextProps.errors && nextProps.errors.length > 0) {
             //console.log(nextProps.errors);
             this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
@@ -38,7 +37,7 @@ class SquadForm extends Component {
 
             <div>
                 <form onSubmit={this.props.handleSubmit(this.mySubmit.bind(this))}>
-                    <div>
+                    <div >
                         <Field name="squadName" component={renderTextField}
                                label="Squad Name" {...name} />
                     </div>

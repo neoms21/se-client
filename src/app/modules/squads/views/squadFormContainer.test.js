@@ -10,59 +10,61 @@ import sinon from 'sinon'
 // form component to Redux and Redux-Form. To do that, we need to create the
 // simplest redux store possible that will work with Redux-Form.
 import {reducer as formReducer} from 'redux-form'
-import {createStore, combineReducers} from 'redux'
-import {Provider} from 'react-redux'
+import squadReducer from '../reducers/squad-reducer';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-describe("SquadFormContainer", () => {
+describe("SquadFormContainer for add operations", () => {
     let store;
     let onSave;
     let subject;
     beforeEach(() => {
         store = createStore(combineReducers({
-            form: formReducer, squads: {squads: [{name: 'abc', _id: '11'}]}
+            form: formReducer,
+            squads: squadReducer
+
         }));
         onSave = sinon.stub().returns(Promise.resolve());
         const props = {
             onSave,
+            routeParams: {id: '123'}
         };
         // With redux-form v5, we could do <ContactFormContainer store={store}/>.
         // However, with redux-form v6, the Field component we use is itself
         // connected to the redux store. Therefore, we must put the store into
         // context. To do that, we use <Provider/>.
-        subject = mount(
-            < Provider
-        store = {store} >
-            < SquadFormContainer
-        {...
-            props
-        }
-        />
-        </
-        Provider >
-        )
-    })
-    it("instantiated properly ", () => {
-        console.log(subject);
-        const input = subject.find('input').first()
-        // Our form component only shows error messages (help text) if the
-        // field has been touched. To mimic touching the field, we simulate a
-        // blur event, which means the input's onBlur method will run, which
-        // will call the onBlur method supplied by Redux-Form.
-        input.simulate('blur')
-        const firstNameHelpBlock = subject.find('.help-block')
-        // Ensure only one node is returned, otherwise our call to text() below will yell at us.
-        expect(firstNameHelpBlock).to.have.length.of(1)
-        expect(firstNameHelpBlock.text()).to.equal('Required')
-    })
+        subject = mount(<MuiThemeProvider><Provider
+            store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)
+    });
 
-    // it("calls onSave", () => {
-    //     const form = subject.find('form')
-    //     const input = subject.find('input').first()
-    //     // Our form, when connected to Redux-Form, won't submit unless it's
-    //     // valid. Thus, we type a first name here to make the form's inputs,
-    //     // and thus the form, valid.
-    //     input.simulate('change', { target: { value: 'Joe' } })
-    //     form.simulate('submit')
-    //     expect(onSave.callCount).to.equal(1)
-    // })
-})
+    it("instantiated properly ", () => {
+        expect(subject).to.not.be.undefined;
+    });
+
+    it('should show the error message if focus goes away from squad name element and squad name is empty', () => {
+        const props = {
+            onSave,
+            routeParams: {}
+        };
+        subject = mount(<MuiThemeProvider><Provider
+            store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)
+        const input = subject.find('input').first();
+        input.simulate('blur')
+        const errorDiv = subject.findWhere(n => n.text() === 'squadName is Required');
+        expect(errorDiv).to.exist;
+    });
+
+    it('should show the error message if submit is clicked without filling in the squad name', () => {
+        const props = {
+            onSave,
+            routeParams: {}
+        };
+        subject = mount(<MuiThemeProvider><Provider
+            store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)
+        const input = subject.find('input').first();
+        input.simulate('submit');
+        const errorDiv = subject.findWhere(n => n.text() === 'squadName is Required');
+        expect(errorDiv).to.exist;
+    })
+});
