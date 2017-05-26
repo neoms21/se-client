@@ -1,9 +1,8 @@
 import React from 'react';
-import {push} from 'react-router-redux';
 import {IconMenu, MenuItem, IconButton} from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
 
 export default class LeftHandMenu extends React.Component {
 
@@ -12,11 +11,11 @@ export default class LeftHandMenu extends React.Component {
     }
 
     handleMatchList() {
-        push('matches/list');
+        browserHistory.push('matchlist');
     }
 
     handleCreateMatch() {
-        push('matches/create');
+        browserHistory.push('/creatematch');
     }
 
     handleSquadsList() {
@@ -63,6 +62,5 @@ export default class LeftHandMenu extends React.Component {
         );
     }
 }
-
 
 LeftHandMenu.muiName = 'IconMenu';

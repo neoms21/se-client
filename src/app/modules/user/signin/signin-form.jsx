@@ -2,10 +2,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
 import {FormsyText} from 'formsy-material-ui';
 import Formsy from 'formsy-react';
-let {Component, PropTypes} = React;
+import PropTypes from 'prop-types';
 import './signin.scss';
 
-export default class SigninForm extends Component {
+export default class SigninForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -84,5 +84,3 @@ export default class SigninForm extends Component {
         );
     }
 }
-
-
