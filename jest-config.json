@@ -1,9 +1,9 @@
 {
   "transform": {
-    ".*": "./node_modules/webpack-babel-jest"
+    ".*": "../node_modules/webpack-babel-jest"
   },
-  "transformIgnorePatterns": [],
-  "rootDir": "/",
+  "transformIgnorePatterns":  ["/node_modules/"],
+  "rootDir": "src",
   "moduleNameMapper": {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "webpack/fileMock.js",
     "\\.(css|scss)$": "webpack/styleMock.js"
@@ -21,3 +21,4 @@
     "!/src/**/*.test.js"
   ]
 }
+

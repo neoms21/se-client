@@ -12,6 +12,8 @@ import { browserHistory } from 'react-router';
 import { reducer as formReducer } from 'redux-form';
 import persistState from 'redux-localstorage';
 
+
+
 export default function configureStore(initialState) {
 
   const reducers = {
@@ -21,6 +23,8 @@ export default function configureStore(initialState) {
     routing: routerReducer,
     form: formReducer
   };
+
+  console.log('%%%% ', persistState)
 
   // get all reducers
   const reducer = combineReducers(reducers);

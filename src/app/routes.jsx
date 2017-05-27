@@ -2,13 +2,14 @@ import React from 'react';
 import App from './components/app/App';
 import Home from './components/Home/Home';
 import About from './components/about/About';
-import RegistrationPage from './modules/user/registration/registration-page';
 import SquadsComponent from './modules/squads/views/squads'
 import {Router, Route, IndexRoute} from 'react-router';
 import SigninPage from './modules/user/signin/signin-page';
-import CreateSquadComponent from './modules/squads/views/createSquadPage'
-import PlayerComponent from './modules/players/views/player'
-import PlayersComponent from './modules/players/views/players'
+import CreateSquadComponent from './modules/squads/views/createSquadPage';
+import PlayerComponent from './modules/players/views/player';
+import PlayersComponent from './modules/players/views/players';
+import userRoutes from './modules/user/user-routes';
+import matchRoutes from './modules/matches/matches-routes';
 
 
 export default (
