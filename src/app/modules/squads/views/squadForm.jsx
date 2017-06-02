@@ -1,10 +1,10 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {Field} from 'redux-form'
 import {TextField} from 'material-ui'
 import '../../../core.scss'
-import {stopSubmit} from 'redux-form';
 
+import {stopSubmit} from 'redux-form';
 import{Component, PropTypes} from 'react'
 
 
@@ -19,17 +19,21 @@ const
     );
 
 class SquadForm extends Component {
+
     mySubmit(values) {
         return this.props.onSave(values);
     }
 
+    //
     componentWillReceiveProps(nextProps, nextContext) {
+
         if (nextProps.errors && nextProps.errors.length > 0) {
-            //console.log(nextProps.errors);
             this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
-        } else if (nextProps.saved) {
-            nextProps.router.push('squads');
         }
+    }
+
+    shouldComponentUpdate(props){
+       return false;
     }
 
     render() {
@@ -54,7 +58,7 @@ class SquadForm extends Component {
 
 SquadForm.propTypes = {
     onSave: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
+    // handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired
 };

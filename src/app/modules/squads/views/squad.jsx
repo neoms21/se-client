@@ -4,12 +4,14 @@ import './squad-item.scss'
 
 import FontIcon from 'material-ui/FontIcon';
 import {blue500, red500, greenA200} from 'material-ui/styles/colors';
-
+import {NavLink} from 'react-router-dom'
 export default function Squad(props) {
     const iconStyles = {
         marginRight: 10,
         cursor: 'hand'
     };
+    let playersUrl = 'squad/' + props.id + '/players';
+    let editUrl = 'squad/' + props.id;
     return (
         <div className="squad-container">
 
@@ -17,14 +19,17 @@ export default function Squad(props) {
           {props.name}
         </span>
 
-            <FontIcon style={iconStyles}
-                      className="material-icons"
-                      onClick={props.onSquadClick}
-                      color={blue500}>people_outline</FontIcon>
-            <FontIcon style={iconStyles}
-                      className="material-icons"
-                      color={greenA200}
-                      onClick={props.onEditClick}>edit</FontIcon>
+
+            <NavLink to={playersUrl}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={blue500}>people_outline</FontIcon>
+            </NavLink>
+            <NavLink to={editUrl}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={greenA200}>edit</FontIcon>
+            </NavLink>
         </div>
     )
 };

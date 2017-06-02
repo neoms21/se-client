@@ -3,6 +3,7 @@ import {registerUserEpic, signinUserEpic, signinUserSuccessEpic, registerUserSuc
 import {createPlayerEpic} from '../modules/players/epics/player-epic';
 import {createSquadEpic} from '../modules/squads/epics/squad-epic';
 import {fetchSquadsEpic} from '../modules/squads/epics/squad-epic';
+import {createSquadSuccessEpic} from '../modules/squads/epics/squad-epic';
 import * as AppEpics from './app-epics';
 
 // combine all epics into one
@@ -14,5 +15,6 @@ export const rootEpic = combineEpics(
     registerUserEpic,
     signinUserEpic,
     signinUserSuccessEpic,
-    registerUserSuccessEpic
+    registerUserSuccessEpic,
+    createSquadSuccessEpic
 );

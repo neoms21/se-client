@@ -49,8 +49,9 @@ class PlayerPage extends React.Component {
     };
 
     handleSubmit(data) {
-        let player = Object.assign({}, data, {squadId: this.props.params.id});
+        let player = Object.assign({}, data, {squadId: this.props.match.params.id});
         console.log('in handle submit' + new Date());
+
         this.props.dispatch(createPlayer(player)); // clear form: THIS works
         //return false;
     }
@@ -60,8 +61,6 @@ class PlayerPage extends React.Component {
             <PlayerForm onSubmit={::this.handleSubmit}/>
         );
     }
-
-
 }
 
 
