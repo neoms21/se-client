@@ -28,7 +28,7 @@ describe("SquadFormContainer for add operations", () => {
         onSave = sinon.stub().returns(Promise.resolve());
         const props = {
             onSave,
-            routeParams: {id: '123'}
+            match: {params:{id: '123'}}
         };
         // With redux-form v5, we could do <ContactFormContainer store={store}/>.
         // However, with redux-form v6, the Field component we use is itself
@@ -45,7 +45,7 @@ describe("SquadFormContainer for add operations", () => {
     it('should show the error message if focus goes away from squad name element and squad name is empty', () => {
         const props = {
             onSave,
-            routeParams: {}
+            match: {params:{}}
         };
         subject = mount(<MuiThemeProvider><Provider
             store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)
@@ -57,8 +57,7 @@ describe("SquadFormContainer for add operations", () => {
 
     it('should show the error message if submit is clicked without filling in the squad name', () => {
         const props = {
-            onSave,
-            routeParams: {}
+            onSave,match: {params:{}}
         };
         subject = mount(<MuiThemeProvider><Provider
             store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)
