@@ -6,12 +6,12 @@ class PlayersComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.params.id);
+       // console.log(props.params.id);
     }
 
 
     addPlayer = () => {
-        this.props.router.push(`squad/${this.props.params.id}/player`);
+        this.props.history.push(`/squad/${this.props.match.params.id}/player`);
     };
 
     render() {

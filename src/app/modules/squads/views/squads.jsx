@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux'
 import Squad from './squad'
 import './squad-list.scss'
-import {push} from 'react-router-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as squadActions from '../actions/squad-actions'
 
@@ -13,15 +12,16 @@ class SquadsComponent extends React.Component {
     }
 
     addSquad = () => {
-        this.props.router.push('squad');
+        console.log('in add');
+        this.props.history.push('/squad');
     };
 
     goToPlayers = (id) => {
-        this.props.router.push('squad/' + id + '/players');
+        this.props.history.push('squad/' + id + '/players');
     };
 
     editSquad = (squad) => {
-        this.props.router.push('squad/' + squad._id);
+        this.props.history.push('squad/' + squad._id);
     };
 
     render() {
@@ -31,15 +31,13 @@ class SquadsComponent extends React.Component {
                 <RaisedButton className="squad-list__button"
                               label="Add Squad" primary={true} onClick={this.addSquad}/>
                 {this.props.squads.map((squad, index) => {
-                    return <Squad key={index} name={squad.name} onSquadClick={() => this.goToPlayers(squad._id)}
+                    return <Squad key={index} id={squad._id} name={squad.name} onSquadClick={() => this.goToPlayers(squad._id)}
                                   onEditClick={() => this.editSquad(squad)}/>;
                 })}
 
             </div>
         );
     }
-
-
 }
 function mapStateToProps(state) {
     return {

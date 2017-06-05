@@ -1,17 +1,16 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import HeaderContainer from '../header/header-container';
 import {signinUser} from '../../modules/user/actions/user-actions';
-import PropTypes from 'prop-types';
 
 class App extends React.Component {
 
-  componentDidMount() {
-    // sign user in
-    if (this.props.userHash) {
-      this.props.dispatch(signinUser(this.props.userHash));
+    componentDidMount() {
+        // sign user in
+        if (this.props.userHash)
+            this.props.dispatch(signinUser(this.props.userHash));
     }
-  }
+
 
   render() {
     return (
@@ -22,9 +21,9 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-  children: PropTypes.object.isRequired
-};
+// App.propTypes = {
+//   children: PropTypes.object.isRequired
+// };
 
 function mapStateToProps(state, ownProps) {
   //console.log('@@@ ', state.user.userHash);
