@@ -3,7 +3,7 @@ import * as types from '../actions/squad.actionTypes';
 
 describe('Squad Reducer', () => {
     it('should return initial state', () => {
-        expect(SquadReducer(undefined, {})).toEqual({saved: false, squads: []});
+        expect(SquadReducer(undefined, {})).toEqual({errors: [], saved: false, squads: []});
     });
 
     it('should append the states when fetch squads is sent', () => {

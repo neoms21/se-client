@@ -1,14 +1,14 @@
 import React from 'react';
-import {Route} from 'react-router';
+import { Route } from 'react-router-dom';
 import RegistrationPage from './registration/registration-page';
 import SigninPage from './signin/signin-page';
 
 
 const userRoutes = (
-    <Route>
-        <Route path="/registration" component={RegistrationPage}/>
-        <Route path="/signin" component={SigninPage}/>
-    </Route>
+  <div>
+    <Route exact path="/registration" component={RegistrationPage}/>
+    <Route exact path="/signin" component={SigninPage}/>
+  </div>
 );
 
 export default userRoutes;

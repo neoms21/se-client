@@ -1,27 +1,27 @@
 import React from 'react';
+import { render } from 'react-dom';
 import App from './components/app/App';
 import Home from './components/Home/Home';
 import About from './components/about/About';
-import RegistrationPage from './modules/user/registration/registration-page';
-import SquadsComponent from './modules/squads/views/squads'
-import {Router, Route, IndexRoute} from 'react-router';
-import SigninPage from './modules/user/signin/signin-page';
-import CreateSquadComponent from './modules/squads/views/createSquadPage'
-import PlayerComponent from './modules/players/views/player'
-import PlayersComponent from './modules/players/views/players'
+import { Route, Switch } from 'react-router-dom';
+import matchesRoutes from './modules/matches/matches-routes';
+import userRoutes from './modules/user/user-routes';
+import squadsRoutes from './modules/squads/squads-routes';
+import playersRoutes from './modules/players/players-routes';
 
-
-export default (
-    <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
-        {userRoutes}
-        {matchRoutes}
-        <Route path="/squads" component={SquadsComponent}/>
-        <Route path="/squad" component={CreateSquadComponent}/>
-        <Route path="/squad/:id" component={CreateSquadComponent}/>
-        <Route path="/squad/:id/players" component={PlayersComponent}/>
-        <Route path="/squad/:id/player" component={PlayerComponent}/>
-        <Route path="/signin" component={SigninPage}/>
-        <Route path="/about" component={About}/>
-    </Route>
-);
+export default class Routes extends React.Component {
+  render() {
+    return (
+      <div>
+            <Route path="/" component={App}/>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/home" component={Home}/>
+            <Route exact path="/about" component={About}/>
+            {matchesRoutes}
+            {userRoutes}
+            {squadsRoutes}
+            {playersRoutes}
+        </div>
+    );
+  }
+}

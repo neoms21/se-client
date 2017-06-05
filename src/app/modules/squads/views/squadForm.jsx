@@ -1,65 +1,13 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
-import {Field, reduxForm} from 'redux-form'
+import {Field} from 'redux-form'
 import {TextField} from 'material-ui'
-import {validateRequiredFields} from '../../../validations'
 import '../../../core.scss'
-import {connect} from 'react-redux'
-import {getSquad} from '../selectors/getSquadSelector'
 
-// const validate = values => {
-//     return validateRequiredFields(values, ['squadName'])
-// };
-//
-// const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
-//     <TextField hintText={label}
-//                floatingLabelText={label}
-//                errorText={touched && error}
-//                {...input}
-//                {...custom}
-//     />
-// );
-//
-//
-// let SquadForm = props => {
-//     const {handleSubmit, pristine, reset, submitting} = props;
-//
-//     return (
-//         <form onSubmit={handleSubmit}>
-//             <div>
-//                 <Field name="squadName" component={renderTextField} label="Squad Name" {...name} />
-//             </div>
-//             <div className="button-row">
-//                 <RaisedButton label="Register" primary={true} type="submit" disabled={submitting}/>
-//                 <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
-//             </div>
-//         </form>
-//     );
-// };
-//
-//
-// // Decorate with reduxForm(). It will read the initialValues prop provided by connect()
-// SquadForm = reduxForm({
-//     form: 'SquadForm',
-//     enableReinitialize : true,
-//     validate// a unique identifier for this form
-// })(SquadForm);
-//
-// // You have to connect() to any reducers that you wish to connect to yourself
-// SquadForm = connect(
-//     state => {
-//         return (
-//             {
-//                 initialValues: getSquad(state, '58c06981eaef0b24e55fc90b') // pull initial values from account reducer
-//             })
-//     }            // bind account loading action creator
-// )(SquadForm);
-//
-// export default SquadForm
-//
-const validate = values => {
-    return validateRequiredFields(values, ['squadName'])
-};
+import {stopSubmit} from 'redux-form';
+import{Component, PropTypes} from 'react'
+
+
 const
     renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
         <TextField hintText={label}
@@ -70,41 +18,51 @@ const
         />
     );
 
+class SquadForm extends Component {
 
-class SquadForm extends React.Component {
+    mySubmit(values) {
+        return this.props.onSave(values);
+    }
+
+    //
+    componentWillReceiveProps(nextProps, nextContext) {
+
+        if (nextProps.errors && nextProps.errors.length > 0) {
+            this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
+        }
+    }
+
+    shouldComponentUpdate(props){
+       return false;
+    }
 
     render() {
-        const {handleSubmit, submitting, pristine, reset} = this.props;
         return (
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <Field name="squadName" component={renderTextField} label="Squad Name" {...name} />
-                </div>
-                <div className="button-row">
-                    <RaisedButton label="Register" primary={true} type="submit" disabled={submitting}/>
-                    <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
-                </div>
-            </form>
-        );
+
+            <div>
+                <form onSubmit={this.props.handleSubmit(this.mySubmit.bind(this))}>
+                    <div >
+                        <Field name="squadName" component={renderTextField}
+                               label="Squad Name" {...name} />
+                    </div>
+                    <div className="button-row">
+                        <RaisedButton label="Register" primary={true}
+                                      type="submit" disabled={this.props.submitting}/>
+                        <RaisedButton label="Clear Values" disabled={this.props.pristine} onClick={this.props.reset}/>
+                    </div>
+                </form>
+            </div>
+        )
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    //return {}
-    let squad = getSquad(state, ownProps.id);
-    return {
-        initialValues: {squadName: squad ? squad.name : ""}
-    }
-}
-
-SquadForm = reduxForm({
-    form: 'SquadForm',
-    validate,
-    enableReinitialize: true
-})(SquadForm);
-
-SquadForm = connect(
-    mapStateToProps,
-)(SquadForm);
+SquadForm.propTypes = {
+    onSave: PropTypes.func.isRequired,
+    // handleSubmit: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired
+};
 
 export default SquadForm
+
+
