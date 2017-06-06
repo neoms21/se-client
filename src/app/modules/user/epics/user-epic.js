@@ -33,3 +33,5 @@ export const registerUserSuccessEpic = action$ =>
     action$.ofType(ActionTypes.REGISTER_USER_SUCCESS)
         .mergeMap(action =>
             Observable.of(push('/'))); // change route to home on successful register
+
+            // no merge request. Trying again.
