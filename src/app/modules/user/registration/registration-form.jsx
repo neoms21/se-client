@@ -5,7 +5,7 @@ import {Field} from 'redux-form'
 
 import {stopSubmit} from 'redux-form';
 import {TextField} from 'material-ui'
-import{PropTypes} from 'react'
+import {PropTypes} from 'react'
 
 const
     renderTextField = ({input, label, password, meta: {touched, error}, ...custom}) => (
@@ -34,40 +34,12 @@ class RegistrationForm extends React.Component {
         return this.props.onSave(values);
     }
 
-    //
     componentWillReceiveProps(nextProps, nextContext) {
 
         if (nextProps.errors && nextProps.errors.length > 0) {
             this.props.dispatch(stopSubmit('registrationForm', nextProps.errors[0]));
         }
     }
-
-    // errorMessages = {
-    //     wordsError: "Please only use letters",
-    //     emailError: 'Please provide your email',
-    //     passwordError: 'The password must be minimum of 8 letters, numbers or symbols',
-    //     passwordConfirmError: 'The passwords must match',
-    // };
-
-    // handleChange = (e) => {
-    //     // remove error
-    //     this.setState({pristine: false, showError: false});
-    // };
-    //
-    // getErrorClasses = () => {
-    //     let classes = 'submission-errors ';
-    //     return classes + (this.state.showError ? 'visible' : 'hidden');
-    // };
-
-    // componentWillReceiveProps = (nextProps) => {
-    //     this.setState({
-    //         // set our state to control error display if we get a non field error
-    //         showError: nextProps.errors.general.length !== 0
-    //     });
-    //
-    //     let fieldErrors = Object.assign({}, nextProps.errors.specific);
-    //     this.refs.form.updateInputsWithError(fieldErrors);
-    // };
 
     reset = () => {
         this.refs.form.reset();

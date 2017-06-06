@@ -66,7 +66,6 @@ const login = (email, password) => {
             }
             else {
                 // error logging in
-                console.log('error ' + resp.text);
                 ret.error(resp.text);
             }
         })
