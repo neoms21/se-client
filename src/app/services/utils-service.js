@@ -1,14 +1,14 @@
-
 const convertErrorArrayToObject = (array) => {
-    let errorDescriptor =  {
+    let errorDescriptor = {
         general: [],
-        specific: {
-        }
+        specific: {}
     };
+    if (!array)
+        return errorDescriptor;
 
-    for(let i=0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         const error = array[i];
-        if(typeof(error) === 'object') {
+        if (typeof(error) === 'object') {
             const key = Object.keys(error)[0];
             errorDescriptor.specific[key] = Object.values(error)[0];
         } else {

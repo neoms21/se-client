@@ -8,6 +8,7 @@ export const registerUserEpic = action$ =>
         .mergeMap(action =>
             sendCommand('RegisterUser', action.user)
                 .map(ev => {
+                    console.log(ev);
                     return ev.properties.isFailure ? userActions.registerUserFailure(ev.errors)
                         : userActions.registerUserSuccess(ev.user);
                 }) // output success

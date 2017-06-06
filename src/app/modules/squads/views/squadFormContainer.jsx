@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import SquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
 import dispatch from 'react-redux';
-import {validateRequiredFields} from '../../../validations'
+import {validateRequiredFields} from '../../../validators/validations'
 import {reduxForm} from 'redux-form'
 import SquadFormComponent from './squadForm'
 
@@ -15,7 +15,6 @@ class SquadFormContainer extends React.Component {
         super(props);
     }
 }
-
 
 const validate = values => {
     return validateRequiredFields(values, ['squadName'])
