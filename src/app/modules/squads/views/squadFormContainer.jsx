@@ -8,7 +8,8 @@ import {reduxForm} from 'redux-form'
 import SquadFormComponent from './squadForm'
 
 import {stopSubmit} from 'redux-form';
-import {getSquad} from '../selectors/getSquadSelector'
+import {getSquad} from '../selectors/getSquadSelector';
+
 class SquadFormContainer extends React.Component {
 
     constructor(props) {

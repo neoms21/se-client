@@ -3,9 +3,9 @@ import EditMatchForm from './edit-match-form';
 import { registerMatch } from '../../actions/match-actions';
 import { connect } from 'react-redux';
 import { ServerService } from '../../../../services/server-service';
-import { sendQuery } from '../../../../services/server-service';
 import { reduxForm } from 'redux-form';
-import {validateRequiredFields} from '../../../validations'
+import {validateRequiredFields} from "../../../../validations";
+
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -18,6 +18,7 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleSubmit: (values) => {
+      console.log('saving match');
       dispatch(registerMatch(values));
     }
   }

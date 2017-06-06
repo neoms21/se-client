@@ -37,7 +37,6 @@ class SquadForm extends Component {
 
     render() {
         return (
-
             <div>
                 <form onSubmit={this.props.handleSubmit(this.mySubmit.bind(this))}>
                     <div >
