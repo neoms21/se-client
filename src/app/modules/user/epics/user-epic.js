@@ -8,6 +8,7 @@ export const registerUserEpic = action$ =>
         .mergeMap(action =>
             sendCommand('RegisterUser', action.user)
                 .map(ev => {
+                    console.log(ev);
                     return ev.properties.isFailure ? userActions.registerUserFailure(ev.errors)
                         : userActions.registerUserSuccess(ev.user);
                 }) // output success
@@ -32,3 +33,5 @@ export const registerUserSuccessEpic = action$ =>
     action$.ofType(ActionTypes.REGISTER_USER_SUCCESS)
         .mergeMap(action =>
             Observable.of(push('/'))); // change route to home on successful register
+
+            // no merge request. Trying again.
