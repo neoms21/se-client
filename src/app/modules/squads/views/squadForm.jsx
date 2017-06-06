@@ -8,8 +8,7 @@ import {stopSubmit} from 'redux-form';
 import{Component, PropTypes} from 'react'
 
 
-const
-    renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
+const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
         <TextField hintText={label}
                    floatingLabelText={label}
                    errorText={touched && error}

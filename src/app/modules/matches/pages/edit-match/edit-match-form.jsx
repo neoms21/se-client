@@ -117,12 +117,6 @@ class EditMatchForm extends React.Component {
     return true;
   }
 
-  required(value) {
-    return value ?
-      undefined :
-      'Required';
-  }
-
   render = () => {
     const {
       pristine,
@@ -167,17 +161,4 @@ EditMatchForm.propTypes = {
   errors: PropTypes.object
 };
 
-const validate = (values) => {
-  let errors = {};
-
-  if (values.opposition === undefined || values.opposition === '') {
-    errors.opposition = 'Opposition is required';
-  }
-
-  return errors;
-}
-
-export default reduxForm({
-  form: 'EditMatchForm',
-  validate
-})(EditMatchForm);
+export default EditMatchForm;

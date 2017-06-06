@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ServerService } from '../../../../services/server-service';
 import { sendQuery } from '../../../../services/server-service';
 import { reduxForm } from 'redux-form';
+import {validateRequiredFields} from '../../../validations'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -22,5 +23,14 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
+const validate = values => {
+  return validateRequiredFields(values, ['team', 'matchDate', 'opposition']);
+};
+
+let page = reduxForm({
+  form: 'EditMatchForm',
+  validate
+})(EditMatchForm);
+
 // do a redux subscription
-export default connect(mapStateToProps, mapDispatchToProps)(EditMatchForm);
+export default connect(mapStateToProps, mapDispatchToProps)(page);
