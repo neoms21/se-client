@@ -25,12 +25,14 @@ class SignInForm extends React.Component {
 
     getErrorClasses = () => {
         let classes = 'submission-errors ';
-        return classes + (this.state.showError ? 'visible' : 'hidden');
+        return classes + (this.props.errorMessage ? 'visible' : 'hidden');
     };
 
     submitForm(values) {
         return this.props.onSave(values);
     }
+
+
 
     reset = () => {
         this.refs.form.reset();
@@ -38,7 +40,7 @@ class SignInForm extends React.Component {
 
     render = () => {
         return (
-            <div>
+            <div className="signin-user">
                 {this.state.error}
                 <form onSubmit={this.props.handleSubmit(this.submitForm.bind(this))}>
                     <div >
@@ -46,7 +48,7 @@ class SignInForm extends React.Component {
                         <br/>
                         <Field component={textField} label="Password" name="password" password="true"/>
                     </div>
-                    <div className='submission-errors hidden'>
+                    <div className={::this.getErrorClasses()}>
                         <span>{this.props.errorMessage}</span>
                     </div>
                     <div className="button-row">

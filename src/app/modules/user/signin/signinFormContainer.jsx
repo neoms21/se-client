@@ -6,6 +6,7 @@ import {validateRequiredFields} from '../../../validators/validations'
 import emailValidator from '../../../validators/emailValidator';
 import {reduxForm} from 'redux-form'
 
+
 const validate = values => {
 
     return Object.assign({},
