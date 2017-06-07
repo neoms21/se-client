@@ -14,17 +14,22 @@ export const createPlayerSuccess = (squad) => (
         //squad: squad
     });
 
-// export const fetchSquadSuccess = (squads) => (
-//     {
-//         type: types.FETCH_SQUADS_SUCCESS,
-//         payload: squads
-//     });
-//
-// export const createSquadFailure = (errors) => ({
-//     type: types.CREATE_SQUAD_FAILURE,
-//     errors: errors
-// });
-// export const fetchSquadFailure = (errors) => ({
-//     type: types.FETCH_SQUADS_FAILURE,
-//     errors: errors
-// });
+export const fetchPlayers = (squadId) => ({
+    type: types.FETCH_PLAYERS,
+    payload: squadId
+});
+
+export const fetchPlayersSuccess = (squads) => (
+    {
+        type: types.FETCH_PLAYERS_SUCCESS,
+        payload: squads
+    });
+
+export const createPlayerFailure = (errors) => ({
+    type: types.CREATE_PLAYERS_FAILURE,
+    errors: errors
+});
+export const fetchPlayersFailure = (errors) => ({
+    type: types.FETCH_PLAYERS_FAILURE,
+    errors: errors
+});

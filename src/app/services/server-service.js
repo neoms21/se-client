@@ -98,6 +98,7 @@ const sendCommand = (name, payload) => {
 
     // send it
     try {
+        console.log('sending command ', command)
         socket.emit('command', command);
     }
     catch (err) {
@@ -109,7 +110,6 @@ const sendCommand = (name, payload) => {
 };
 
 const sendQuery = (name, payload) => {
-
     // need to give it a correlation id
     let query = {properties: {queryName: name, correlationId: uuid.v4()}, payload: payload};
     // create observable for client
@@ -119,6 +119,7 @@ const sendQuery = (name, payload) => {
 
     // send it
     try {
+        console.log('sending query ', query);
         socket.emit('query', query);
     }
     catch (err) {
@@ -146,13 +147,11 @@ const processReceiveCommandEvent = (event) => {
 
 const processReceiveQueryEvent = (event) => {
     // console.log(streamForQuery);
-    // console.log(event);
-    if (event.query.properties.correlationId ) {
+    if (event.query.properties.correlationId) {
         // happy days, find right observable
         const queryStream = streamForQuery[event.query.properties.correlationId];
         if (queryStream) {
             queryStream.next(event); // pass it on
-
             // is it last response
             // if (event.messageNum === event.totalMessages) {
             //     queryStream.complete();

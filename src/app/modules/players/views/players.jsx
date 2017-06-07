@@ -1,11 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as playerActions from '../actions/players-actions';
 
 class PlayersComponent extends React.Component {
 
     constructor(props) {
         super(props);
+        this.props.dispatch(playerActions.fetchPlayers(this.props.match.params.id));
        // console.log(props.params.id);
     }
 
