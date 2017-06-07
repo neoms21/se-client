@@ -10,6 +10,7 @@ export default function userReducer(state = initialState, action) {
         case types.REGISTER_USER_SUCCESS:
             return {...state, isLoading: false, message: action.message};
         case types.REGISTER_USER_FAILURE:
+
             return {...state, isLoading: false, errors: convertErrorArrayToObject(action.errors)};
         case types.SIGNIN_USER:
             let stateCopy = {...state};
@@ -21,7 +22,11 @@ export default function userReducer(state = initialState, action) {
         case types.SIGNIN_USER_SUCCESS:
             return {...state, isLoading: false, ...{currentUser: action.user}};
         case types.SIGNIN_USER_FAILURE:
-            return {...state, isLoading: false, error: action.error};
+            return Object.assign({}, state, {
+                isLoading: false,
+                errorMessage: action.error,
+                showError: true
+            });
         default:
             return state;
     }

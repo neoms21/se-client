@@ -1,11 +1,12 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
-import {FormsyText} from 'formsy-material-ui';
-import Formsy from 'formsy-react';
 import PropTypes from 'prop-types';
 import './signin.scss';
+import textField from '../../../elements/textField'
+import {Field} from 'redux-form'
+import './signin.scss';
 
-export default class SigninForm extends React.Component {
+class SignInForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -17,16 +18,6 @@ export default class SigninForm extends React.Component {
         };
     }
 
-    static propTypes = {
-        handleSubmit: PropTypes.func,
-        error: PropTypes.string
-    };
-
-    errorMessages = {
-        wordsError: "Please only use letters",
-        userNameError: 'Please provide your user name (your email)'
-    };
-
     handleChange = (e) => {
         // remove error
         this.setState({pristine: false, showError: false});
@@ -34,53 +25,48 @@ export default class SigninForm extends React.Component {
 
     getErrorClasses = () => {
         let classes = 'submission-errors ';
-        return classes + (this.state.showError ? 'visible' : 'hidden');
+        return classes + (this.props.errorMessage ? 'visible' : 'hidden');
     };
 
-    componentWillReceiveProps = (nextProps) => {
-        this.setState({
-            // set our state to control error display
-            showError: nextProps.error !== undefined
-        });
-    };
+    submitForm(values) {
+        return this.props.onSave(values);
+    }
+
+
 
     reset = () => {
-      this.refs.form.reset();
+        this.refs.form.reset();
     };
 
     render = () => {
-        const {error, handleSubmit} = this.props;
-
         return (
-            <Formsy.Form ref="form"
-                         onValidSubmit={handleSubmit}
-                         className="signin-user">
-                <FormsyText
-                    name="userName"
-                    validations="isEmail"
-                    validationError={this.errorMessages.emailError}
-                    required updateImmediately fullWidth={true}
-                    hintText="Enter your user name (usually email)"
-                    floatingLabelText="User Name"
-                    onChange={this.handleChange}
-                />
-                <FormsyText
-                    name="password"
-                    validations="isWords"
-                    validationError={this.errorMessages.wordsError}
-                    required updateImmediately fullWidth={true}
-                    hintText="Enter your password"
-                    floatingLabelText="Password"
-                    onChange={this.handleChange}
-                />
-                <div className={::this.getErrorClasses()}>
-                    <span>{error}</span>
-                </div>
-                <div className="button-row">
-                    <RaisedButton label="Sign in" primary={true} type="submit" disabled={this.state.isSubmitting}/>
-                    <RaisedButton label="Clear Values" disabled={this.state.pristine} onClick={this.reset}/>
-                </div>
-            </Formsy.Form>
+            <div className="signin-user">
+                {this.state.error}
+                <form onSubmit={this.props.handleSubmit(this.submitForm.bind(this))}>
+                    <div >
+                        <Field component={textField} label="User Name" name="userName"/>
+                        <br/>
+                        <Field component={textField} label="Password" name="password" password="true"/>
+                    </div>
+                    <div className={::this.getErrorClasses()}>
+                        <span>{this.props.errorMessage}</span>
+                    </div>
+                    <div className="button-row">
+                        <RaisedButton label="Sign in" primary={true} type="submit" disabled={this.state.isSubmitting}/>
+                        <RaisedButton label="Clear Values" disabled={this.state.pristine} onClick={this.reset}/>
+                    </div>
+                </form>
+            </div>
         );
     }
 }
+
+
+SignInForm.propTypes = {
+    onSave: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired
+};
+
+export default SignInForm

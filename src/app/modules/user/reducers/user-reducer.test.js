@@ -40,7 +40,7 @@ describe('User Reducer', () => {
 
     it('should alter state when register user failure', () => {
         let action = {type: types.SIGNIN_USER_FAILURE, error: 'Unable to find new club'};
-        const expectedState = {isLoading: false, error: 'Unable to find new club'};
+        const expectedState = {isLoading: false, errorMessage: 'Unable to find new club', showError: true};
         expect(UserReducer({isLoading: true}, action)).toEqual(expectedState);
     });
 });
