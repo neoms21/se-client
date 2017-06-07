@@ -9,7 +9,7 @@ import { validateRequiredFields } from '../../../../validations';
 
 function mapStateToProps(state, ownProps) {
   return {
-    errors: state.matches.errors.specific,
+    errors: state.matches.errors ? state.matches.errors.specific: {},
     squads: state.squads.squads,
     disabled: false
   };
