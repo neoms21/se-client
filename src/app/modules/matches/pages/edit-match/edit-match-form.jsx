@@ -1,19 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  RaisedButton,
-  IconButton,
-  MenuItem,
-  DatePicker,
-  Chip,
-  Avatar,
-  FontIcon
-} from 'material-ui';
+import { DatePicker, IconButton, MenuItem, RaisedButton } from 'material-ui';
 import './edit-match.scss';
-import PlayerSelectionComponent from "./player-seelction-component";
-import { Field, FieldArray, reduxForm } from 'redux-form';
-import { DatePickerComponent } from '../../../../components/date-picker/date-picker';
-import { TextField, SelectField } from '../../../../components/form';
+import PlayerSelectionComponent from './player-seelction-component';
+import { Field, FieldArray, stopSubmit } from 'redux-form';
+import { SelectField, TextField } from '../../../../components/form';
 
 class EditMatchForm extends React.Component {
 
@@ -23,14 +14,21 @@ class EditMatchForm extends React.Component {
     this.state = {
       nextId: 0,
       playersPositions: []
+    };
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    if (nextProps.errors && nextProps.errors.length > 0) {
+      this.props.dispatch(stopSubmit('EditMatchForm', nextProps.errors[0]));
     }
   }
 
   getErrorClasses = () => {
     let classes = 'submission-errors';
     return classes + (this.state.showError ?
-      'visible' :
-      'hidden');
+        'visible' :
+        'hidden');
   };
 
   // componentWillReceiveProps = (nextProps) => {     this.setState({         // set our state to control error display if we get a non field
@@ -52,7 +50,7 @@ class EditMatchForm extends React.Component {
     this.setState({
       nextId: this.state.nextId + 1,
       playersPositions: copyValues
-    })
+    });
   };
 
   deletePlayer = (playerId) => {
@@ -65,42 +63,40 @@ class EditMatchForm extends React.Component {
       copyOfPlayers.splice(playerIndexToBeDeleted, 1);
     }
     // now we have trimmed it, update the state
-    this.setState({ playersPositions: copyValues });
+    this.setState({playersPositions: copyValues});
   };
 
   getAvailablePlayers = () => {
     let players = [];
     return [];
-  }
+  };
 
   reset = () => {
     this.refs.form.reset();
   };
 
-  renderDatePicker = ({
-    input,
-    label,
-    meta: {
-      touched,
-      error
-    },
-    ...custom
-  }) => (<DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true} {...custom}/>);
+  renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) =>
+    (
+      <DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true}
+                  onChange={(event, value) => input.onChange(value)} {...custom}/>
+    );
 
-  renderPlayers({ fields, meta: { touched, error, submitFailed } }) {
+  renderPlayers({fields, meta: {touched, error, submitFailed}}) {
     return (
       <div className="players-section">
         <div>
           <span>Players</span>
-          <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right" onTouchTap={() => fields.push({isEditing: true})}>add_circle</IconButton>
+          <IconButton iconClassName="material-icons" tooltip="Add" tooltipPosition="top-right"
+                      onTouchTap={() => fields.push({isEditing: true})}>add_circle</IconButton>
         </div>
         {fields.map((member, index) => {
-            let item = fields.get(index);
+          let item = fields.get(index);
           return (
-              <div className="player-card" key={index}>
-                <PlayerSelectionComponent deletePlayer={::this.deletePlayer} availablePlayers={::this.getAvailablePlayers()} item={item}/>
-              </div>);
-          })
+            <div className="player-card" key={index}>
+              <PlayerSelectionComponent deletePlayer={::this.deletePlayer}
+                                        availablePlayers={::this.getAvailablePlayers()} item={item}/>
+            </div>);
+        })
         }
       </div>
     );
@@ -120,7 +116,7 @@ class EditMatchForm extends React.Component {
   render = () => {
     const {
       pristine,
-      handleSubmit,
+      onSave,
       squads,
       disabled,
       reset,
@@ -131,18 +127,18 @@ class EditMatchForm extends React.Component {
     return (
       <section className="edit-match">
         <h1>Create match</h1>
-        <form className="edit-match-form" onSubmit={handleSubmit}>
+        <form className="edit-match-form" onSubmit={this.props.handleSubmit(onSave)}>
           <div className="top-section">
             <Field component={SelectField} name="team" label="Select team">
-                {squads.map(squad =>
-                    <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
-                }
+              {squads.map(squad =>
+                <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
+              }
             </Field>
             <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
                    format={(v) => ((v === '') ? null : v)}/>
-            <Field component={TextField} name="opposition" label="Opponents name" />
+            <Field component={TextField} name="opposition" label="Opponents name"/>
           </div>
-           <FieldArray name="playerPositions" component={::this.renderPlayers}/>
+          <FieldArray name="playerPositions" component={::this.renderPlayers}/>
           {/*<div className={getErrorClasses()}>*/}
           {/*<span>{generalError}</span>*/}
           {/*</div>*/}

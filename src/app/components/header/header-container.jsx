@@ -1,16 +1,9 @@
 import React from 'react';
 import Header from './Header';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-const handleLeftIconClick = () => {
-  push('/');
-};
-
-const handleSignin = () => {
-  push('/signin');
-};
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -18,14 +11,27 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleSignin: () => {
+      dispatch(push('/signin'));
+    },
+    handleLeftIconClick: () => {
+      dispatch(push('/'));
+    }
+  };
+};
+
 class HeaderContainer extends React.Component {
+
   render() {
+    const {handleLeftIconClick, handleSignin} = this.props;
+
     return (
       <Header handleLeftIconClick={handleLeftIconClick} handleSignin={handleSignin}
-                    currentUser={this.props.currentUser} />
+              currentUser={this.props.currentUser}/>
     );
   }
 }
 
-
-export default connect(mapStateToProps)(HeaderContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

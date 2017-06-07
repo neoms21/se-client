@@ -15,7 +15,7 @@ export default class HeaderComponent extends React.Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.setState({isSignedIn: nextProps.currentUser !== undefined});
+        this.setState({isSignedIn: nextProps.currentUser !== undefined && nextProps.currentUser !== ''});
     };
 
     render = () => {

@@ -8,7 +8,6 @@ export const createMatchEpic = action$ =>
         .mergeMap(action =>
             sendCommand('CreateMatch', action.matchInfo)
                 .map(ev => {
-                    console.log(ev);
                     return ev.properties.isFailure ? matchActions.createMatchFailure(ev.errors)
                         : matchActions.createMatchSuccess(ev.user);
                 }) // output success
