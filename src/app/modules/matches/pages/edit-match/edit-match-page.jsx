@@ -6,10 +6,9 @@ import { ServerService } from '../../../../services/server-service';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../validations';
 
-
 function mapStateToProps(state, ownProps) {
   return {
-    errors: state.matches.errors ? state.matches.errors.specific: {},
+    errors: state.matches.errors.specific,
     squads: state.squads.squads,
     disabled: false
   };
@@ -18,7 +17,6 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSave: (values) => {
-      console.log('saving match');
       dispatch(createMatch(values));
     }
   };

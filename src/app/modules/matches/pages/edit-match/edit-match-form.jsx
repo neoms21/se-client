@@ -118,9 +118,8 @@ class EditMatchForm extends React.Component {
       pristine,
       onSave,
       squads,
-      disabled,
-      reset,
-      errors
+      submitting,
+      reset
     } = this.props;
     // const generalError = errors === undefined || errors.general === undefined || errors.length === 0     ? '' : errors.general;
 
@@ -135,7 +134,7 @@ class EditMatchForm extends React.Component {
               }
             </Field>
             <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
-                   format={(v) => ((v === '') ? null : v)}/>
+                   format={v => (v === '' || v === undefined ? new Date() : new Date(v))} />
             <Field component={TextField} name="opposition" label="Opponents name"/>
           </div>
           <FieldArray name="playerPositions" component={::this.renderPlayers}/>
@@ -143,7 +142,7 @@ class EditMatchForm extends React.Component {
           {/*<span>{generalError}</span>*/}
           {/*</div>*/}
           <div className="button-row">
-            <RaisedButton label="Save" primary={true} type="submit"/>
+            <RaisedButton label="Save" primary={true} type="submit" disabled={submitting}/>
             <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>
           </div>
         </form>
