@@ -8,6 +8,7 @@ export const registerUserEpic = action$ =>
         .mergeMap(action =>
             sendCommand('RegisterUser', action.user)
                 .map(ev => {
+                    console.log(ev);
                     return ev.properties.isFailure ? userActions.registerUserFailure(ev.errors)
                         : userActions.registerUserSuccess(ev.user);
                 }) // output success
@@ -19,16 +20,19 @@ export const signinUserEpic = action$ =>
         .mergeMap(action =>
             login(action.user.userName, action.user.password)
                 .map(resp => userActions.signinUserSuccess(resp))
-                .catch(err => Observable.of(userActions.signinUserFailure(err)))
+                .catch(err => {
+                   // console.log(err);
+                    return Observable.of(userActions.signinUserFailure(err))
+                })
         );
 
 // when sign in was successful, send action to go to home
 export const signinUserSuccessEpic = action$ =>
     action$.ofType(ActionTypes.SIGNIN_USER_SUCCESS)
         .mergeMap(action =>
-            Observable.of(push('/'))); // change route to home on successful signin
+            Observable.of(push('/squads'))); // change route to home on successful signin
 
 export const registerUserSuccessEpic = action$ =>
     action$.ofType(ActionTypes.REGISTER_USER_SUCCESS)
         .mergeMap(action =>
-            Observable.of(push('/'))); // change route to home on successful register
+            Observable.of(push('/squads'))); // change route to home on successful register

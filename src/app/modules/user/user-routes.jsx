@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import RegistrationPage from './registration/registration-page';
-import SigninPage from './signin/signin-page';
+import RegistrationPage from './registration/registrationFormContainer';
+import SigninPage from './signin/signinFormContainer';
 
 
 const userRoutes = (

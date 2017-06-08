@@ -31,10 +31,6 @@ class SquadForm extends Component {
         }
     }
 
-    shouldComponentUpdate(props){
-       return false;
-    }
-
     render() {
         return (
             <div>

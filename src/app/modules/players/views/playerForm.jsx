@@ -4,7 +4,7 @@ import {Field, reduxForm} from 'redux-form'
 import TextField from 'material-ui/TextField'
 import '../../../core.scss'
 import {connect} from 'react-redux'
-import {validateRequiredFields} from '../../../validations'
+import {validateRequiredFields} from '../../../validators/validations'
 
 // import asyncValidate from './asyncValidate'
 
