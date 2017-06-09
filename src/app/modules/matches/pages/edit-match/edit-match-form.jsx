@@ -67,7 +67,7 @@ class EditMatchForm extends React.Component {
     (
       <DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true}
                   onChange={(event, value) =>
-                    input.onChange(value)} {...custom}/>
+                    input.onChange(value)} {...custom} selected={input.value}/>
     );
 
   renderPlayers({fields, meta: {touched, error, submitFailed}}) {
