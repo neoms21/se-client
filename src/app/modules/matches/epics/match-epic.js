@@ -16,7 +16,7 @@ export const createMatchEpic = action$ =>
 export const createMatchSuccessEpic = action$ =>
     action$.ofType(ActionTypes.CREATE_MATCH_SUCCESS)
         .mergeMap(action =>
-            Observable.of(push('/createdmatch', action.message)));
+            Observable.of(push('/match-list', action.message)));
 
 export const fetchTeamsEpic = action$ =>
     action$.ofType(LOCATION_CHANGE)

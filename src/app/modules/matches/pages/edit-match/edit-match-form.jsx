@@ -10,11 +10,6 @@ class EditMatchForm extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      nextId: 0,
-      playersPositions: []
-    };
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -24,17 +19,10 @@ class EditMatchForm extends React.Component {
     }
   }
 
-  getErrorClasses = () => {
+  getErrorClasses = (errorMessage) => {
     let classes = 'submission-errors';
-    return classes + (this.state.showError ?
-        'visible' :
-        'hidden');
+    return classes + (errorMessage ? 'visible' : 'hidden');
   };
-
-  // componentWillReceiveProps = (nextProps) => {     this.setState({         // set our state to control error display if we get a non field
-  // error         showError: nextProps.errors.general.length !== 0     });
-  //
-  //     let fieldErrors = Object.assign({}, nextProps.errors.specific);     this.refs.form.updateInputsWithError(fieldErrors); };
 
   addPlayer = (e) => {
     const newPlayer = {
@@ -78,7 +66,8 @@ class EditMatchForm extends React.Component {
   renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) =>
     (
       <DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true}
-                  onChange={(event, value) => input.onChange(value)} {...custom}/>
+                  onChange={(event, value) =>
+                    input.onChange(value)} {...custom}/>
     );
 
   renderPlayers({fields, meta: {touched, error, submitFailed}}) {
@@ -102,45 +91,34 @@ class EditMatchForm extends React.Component {
     );
   }
 
-  componentDidMount = () => {
-    // const initData = {     "firstName": this.props.currentUser.firstName,     "lastName": this.props.currentUser.lastName,     "sex":
-    // this.props.currentUser.sex,     "email": this.props.userEmail,     "phoneNumber": this.props.currentUser.phoneNumber };
-    //
-    // this.props.initialize(initData);
-  };
-
-  shouldComponentUpdate(props) {
-    return true;
-  }
-
   render = () => {
     const {
       pristine,
       onSave,
       squads,
       submitting,
-      reset
+      reset,
+      errorMessage
     } = this.props;
-    // const generalError = errors === undefined || errors.general === undefined || errors.length === 0     ? '' : errors.general;
 
     return (
       <section className="edit-match">
         <h1>Create match</h1>
         <form className="edit-match-form" onSubmit={this.props.handleSubmit(onSave)}>
           <div className="top-section">
-            <Field component={SelectField} name="team" label="Select team">
+            <Field component={SelectField} name="squad" label="Select team">
               {squads.map(squad =>
                 <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
               }
             </Field>
             <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
-                   format={v => (v === '' || v === undefined ? new Date() : new Date(v))} />
+                   format={v => (v === '' || v === undefined ? new Date() : new Date(v))}/>
             <Field component={TextField} name="opposition" label="Opponents name"/>
           </div>
           <FieldArray name="playerPositions" component={::this.renderPlayers}/>
-          {/*<div className={getErrorClasses()}>*/}
-          {/*<span>{generalError}</span>*/}
-          {/*</div>*/}
+          <div className={::this.getErrorClasses()}>
+            <span>{errorMessage}</span>
+          </div>
           <div className="button-row">
             <RaisedButton label="Save" primary={true} type="submit" disabled={submitting}/>
             <RaisedButton label="Clear Values" disabled={pristine} onClick={reset}/>

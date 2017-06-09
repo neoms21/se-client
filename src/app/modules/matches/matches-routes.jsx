@@ -6,6 +6,7 @@ const matchesRoutes = (
   <div>
     <Route exact path="/creatematch" component={EditMatchPage}/>
     <Route exact path="/editmatch/:id" component={EditMatchPage}/>
+    <Route exact path="/match-list" component={MatchListPage}/>
   </div>
 );
 

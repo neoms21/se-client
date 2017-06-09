@@ -4,11 +4,11 @@ import { createMatch } from '../../actions/match-actions';
 import { connect } from 'react-redux';
 import { ServerService } from '../../../../services/server-service';
 import { reduxForm } from 'redux-form';
-import { validateRequiredFields } from '../../../../validations';
+import { validateRequiredFields } from '../../../../validators/validations';
 
 function mapStateToProps(state, ownProps) {
   return {
-    errors: state.matches.errors.specific,
+    errors: state.matches.errors,
     squads: state.squads.squads,
     disabled: false
   };
