@@ -89,27 +89,23 @@ export default class PlayerSelectionComponent extends React.Component {
 
     return (
       <div className="player-selection">
-        <Card className="edit-player">
-          <CardHeader>
-            <span>Player {item.player}</span>
-            <span>Position {item.position}</span>
-          </CardHeader>
-          <CardActions>
-            <IconButton iconClassName="material-icons" tooltip="Remove" tooltipPosition="top-right"
-                        onTouchTap={deletePlayer}>edit_circle</IconButton>
-          </CardActions>
-          <CardText expandable={true}>
-            <Field component={TextField} name={`pprow_${index}.position`} className="position" value={item.player}
-                   label="Starting position"/>
-            <Field component={SelectField} name={`pprow_${index}.player`} label="Select player" className="player">
-              {availablePlayers.map(avail => {
-                <MenuItem key={avail.id}
-                          value={avail.code}
-                          primaryText={avail.description}/>;
-              })}
-            </Field>
-          </CardText>
-
+          {/*<div className="selection-header">*/}
+            {/*<span>Player {item.player}</span>*/}
+            {/*<span>Position {item.position}</span>*/}
+              {/*<IconButton iconClassName="material-icons" tooltip="Remove" tooltipPosition="top-right"*/}
+                          {/*onTouchTap={deletePlayer}>edit_circle</IconButton>*/}
+          {/*</div>*/}
+          <div className="selection-body">
+              <Field component={TextField} name={`pprow_${index}.position`} className="position" value={item.player}
+                     label="Starting position"/>
+              <Field component={SelectField} name={`pprow_${index}.player`} label="Select player" className="player">
+                  {availablePlayers.map(avail => {
+                      <MenuItem key={avail.id}
+                                value={avail.code}
+                                primaryText={avail.description}/>;
+                  })}
+              </Field>
+          </div>
 
           {/*<CardHeader>*/}
           {/*<span>Player {item.player}</span>*/}
@@ -128,8 +124,7 @@ export default class PlayerSelectionComponent extends React.Component {
           {/*<IconButton iconClassName="material-icons" tooltip="Edit" tooltipPosition="top-right"*/}
           {/*onClick={:: this.editPlayer}>edit_circle</IconButton>*/}
           {/*</Chip>*/}
-        </Card>
-      </div>
+        </div>
     );
   };
 }

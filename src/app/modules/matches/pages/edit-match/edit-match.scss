@@ -18,7 +18,7 @@
       //     }
       // }
       .player-card {
-        padding: 4px;
+        //padding: 4px;
         margin: 4px;
         display: inline-block;
 
@@ -58,9 +58,14 @@
     }
 
     .player-selection {
-      .edit-player {
+      padding: 5px 15px 5px 15px;
+      border: 1px #000066;
+      background: rgba(183, 183, 183, 0.15);
+      border-radius: 10px;
+
+      .selection-body {
         display: inline-block;
-        padding: 10px;
+        //padding: 10px;
 
         .position {
           vertical-align: bottom;
@@ -72,13 +77,13 @@
         }
       }
 
-      .view-player {
-        display: inline;
-
-        .position {
-          display: inline;
-        }
-      }
+      //.view-player {
+      //  display: inline;
+      //
+      //  .position {
+      //    display: inline;
+      //  }
+      //}
     }
   }
 }
