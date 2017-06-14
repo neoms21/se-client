@@ -24,35 +24,35 @@ class EditMatchForm extends React.Component {
     return classes + (errorMessage ? 'visible' : 'hidden');
   };
 
-  addPlayer = (e) => {
-    const newPlayer = {
-      id: this.state.nextId,
-      position: '',
-      player: '',
-      isEditing: true
-    };
-    let copyValues = this.state.playersPositions.concat();
-    copyValues.push(newPlayer);
+  // addPlayer = (e) => {
+  //   const newPlayer = {
+  //     id: this.state.nextId,
+  //     position: '',
+  //     player: '',
+  //     isEditing: true
+  //   };
+  //   let copyValues = this.state.playersPositions.concat();
+  //   copyValues.push(newPlayer);
+  //
+  //   // now change it
+  //   this.setState({
+  //     nextId: this.state.nextId + 1,
+  //     playersPositions: copyValues
+  //   });
+  // };
 
-    // now change it
-    this.setState({
-      nextId: this.state.nextId + 1,
-      playersPositions: copyValues
-    });
-  };
-
-  deletePlayer = (playerId) => {
-    let copyValues = {
-      ...this.state.playersPositions
-    };
-
-    const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
-    if (playerIndexToBeDeleted > -1) {
-      copyOfPlayers.splice(playerIndexToBeDeleted, 1);
-    }
-    // now we have trimmed it, update the state
-    this.setState({playersPositions: copyValues});
-  };
+  // deletePlayer = (playerId) => {
+  //   let copyValues = {
+  //     ...this.state.playersPositions
+  //   };
+  //
+  //   const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
+  //   if (playerIndexToBeDeleted > -1) {
+  //     copyOfPlayers.splice(playerIndexToBeDeleted, 1);
+  //   }
+  //   // now we have trimmed it, update the state
+  //   this.setState({playersPositions: copyValues});
+  // };
 
   getAvailablePlayers = () => {
     let players = [];
@@ -82,7 +82,7 @@ class EditMatchForm extends React.Component {
           let item = fields.get(index);
           return (
             <div className="player-card" key={index}>
-              <PlayerSelectionComponent deletePlayer={::this.deletePlayer}
+              <PlayerSelectionComponent deletePlayer={() => fields.splice(index, 1)}
                                         availablePlayers={::this.getAvailablePlayers()} item={item}/>
             </div>);
         })

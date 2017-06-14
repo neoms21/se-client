@@ -2,7 +2,6 @@ import React from 'react';
 import EditMatchForm from './edit-match-form';
 import { createMatch } from '../../actions/match-actions';
 import { connect } from 'react-redux';
-import { ServerService } from '../../../../services/server-service';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../validators/validations';
 
@@ -23,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const validate = values => {
-  return validateRequiredFields(values, ['team', 'matchDate', 'opposition']);
+  return validateRequiredFields(values, ['squad', 'matchDate', 'opposition']);
 };
 
 let page = reduxForm({

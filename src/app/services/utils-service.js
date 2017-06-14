@@ -10,7 +10,7 @@ const convertErrorArrayToObject = (array) => {
     const error = array[i];
     if (typeof(error) === 'object') {
       const key = Object.keys(error)[0];
-      errorDescriptor.fieldErrors[key] = error;
+      errorDescriptor.fieldErrors[key] = error[key];
     } else {
       errorDescriptor.generalErrors.push(error);
     }
