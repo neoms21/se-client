@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     goSquads: () => dispatch(push('/squads')),
     goCreateSquad: () => dispatch(push('/squad')),
-    goMatchList: () => dispatch(push('/matchlist')),
+    goMatchList: () => dispatch(push('/match-list')),
     goCreateMatch: () => dispatch(push('/creatematch'))
   }
 };
