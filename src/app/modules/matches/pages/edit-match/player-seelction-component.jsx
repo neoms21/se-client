@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, CardActions, CardHeader, CardText, FlatButton } from 'material-ui';
+import { Card, CardActions, CardHeader, CardText, IconButton } from 'material-ui';
 import './edit-match.scss';
-import {Field} from 'redux-form';
+import { Field } from 'redux-form';
 import TextField from '../../../../components/form/text-field';
 import SelectField from '../../../../components/form/select-field';
 
@@ -85,24 +85,23 @@ export default class PlayerSelectionComponent extends React.Component {
   };
 
   render = () => {
-    const {item, availablePlayers, isEditing, deletePlayer} = this.props;
+    const {item, availablePlayers, isEditing, deletePlayer, index} = this.props;
 
     return (
       <div className="player-selection">
         <Card className="edit-player">
-          <CardHeader
-            title="Player ${item.player}"
-            subtitle="Subtitle"
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
+          <CardHeader>
+            <span>Player {item.player}</span>
+            <span>Position {item.position}</span>
+          </CardHeader>
           <CardActions>
-            <FlatButton label="Remove" onTouchTap={deletePlayer}/>
+            <IconButton iconClassName="material-icons" tooltip="Remove" tooltipPosition="top-right"
+                        onTouchTap={deletePlayer}>edit_circle</IconButton>
           </CardActions>
           <CardText expandable={true}>
-            <Field component={TextField} name={`${item}.position`} className="position" value={item.player}
+            <Field component={TextField} name={`pprow_${index}.position`} className="position" value={item.player}
                    label="Starting position"/>
-            <Field component={SelectField} name={`${item}.player`} label="Select player" className="player">
+            <Field component={SelectField} name={`pprow_${index}.player`} label="Select player" className="player">
               {availablePlayers.map(avail => {
                 <MenuItem key={avail.id}
                           value={avail.code}

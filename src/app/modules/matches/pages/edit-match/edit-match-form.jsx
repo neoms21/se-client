@@ -83,7 +83,7 @@ class EditMatchForm extends React.Component {
           return (
             <div className="player-card" key={index}>
               <PlayerSelectionComponent deletePlayer={() => fields.splice(index, 1)}
-                                        availablePlayers={::this.getAvailablePlayers()} item={item}/>
+                                        availablePlayers={::this.getAvailablePlayers()} item={item} index={index}/>
             </div>);
         })
         }
