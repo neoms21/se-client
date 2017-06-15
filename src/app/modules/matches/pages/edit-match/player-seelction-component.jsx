@@ -85,20 +85,16 @@ export default class PlayerSelectionComponent extends React.Component {
   };
 
   render = () => {
-    const {item, availablePlayers, isEditing, deletePlayer, index} = this.props;
+    const {item, availablePlayers, deletePlayer, member} = this.props;
 
     return (
       <div className="player-selection">
-          {/*<div className="selection-header">*/}
-            {/*<span>Player {item.player}</span>*/}
-            {/*<span>Position {item.position}</span>*/}
-              {/*<IconButton iconClassName="material-icons" tooltip="Remove" tooltipPosition="top-right"*/}
-                          {/*onTouchTap={deletePlayer}>edit_circle</IconButton>*/}
-          {/*</div>*/}
           <div className="selection-body">
-              <Field component={TextField} name={`pprow_${index}.position`} className="position" value={item.player}
+            <IconButton className="delete-button" iconClassName="material-icons" tooltip="Remove" tooltipPosition="top-right"
+              onTouchTap={deletePlayer}>delete</IconButton>
+              <Field component={TextField} name={`${member}Position`} className="position" value={item.player}
                      label="Starting position"/>
-              <Field component={SelectField} name={`pprow_${index}.player`} label="Select player" className="player">
+              <Field component={SelectField} name={`${member}Player`} label="Select player" className="player">
                   {availablePlayers.map(avail => {
                       <MenuItem key={avail.id}
                                 value={avail.code}
