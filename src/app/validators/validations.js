@@ -4,7 +4,7 @@ export const validateRequiredFields = (values, requiredFields) =>{
     // const requiredFields = ['squadName'];
     requiredFields.forEach(field => {
         if (!values[field]) {
-            errors[field] = field + ' is Required';
+            errors[field] = field + ' is required';
         }
     });
 

@@ -1,5 +1,5 @@
 import * as types from '../actions/actionTypes';
-import convertErrorArrayToObject from '../../../services/utils-service';
+import {convertErrorArrayToObject} from '../../../services/utils-service';
 
 const initialState = {};
 
