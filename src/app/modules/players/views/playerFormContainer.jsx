@@ -1,10 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PlayerForm from './playerForm'
+import PlayerFormComponent from './playerForm'
 import * as playerActions from '../actions/players-actions'
+import {reduxForm} from 'redux-form'
+import {validateRequiredFields} from '../../../validators/validations'
+import emailValidator from "../../../validators/emailValidator";
+import phoneNumberValidator from "../../../validators/phoneNumberValidator";
 
+const validate = values => {
+    let errors = {};
+    let requiredErrors = validateRequiredFields(values, ['playerName', 'age']); // find our how to combine with other validations
+    let emailErrors = emailValidator (values, ['email']); // find our how to combine with other validations
+    let phNumberErrors = phoneNumberValidator (values, ['phone']); // find our how to combine with other validations
+    let ageError = {};
+    if (values.age && values.age < 8) {
+        ageError.age = "Player's age must be greater than 8";
+    }
 
-class PlayerPage extends React.Component {
+    return Object.assign({}, requiredErrors, ageError, emailErrors, phNumberErrors);
+};
+
+class PlayerFormContainer extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,50 +30,29 @@ class PlayerPage extends React.Component {
         console.log('leaving player form');
         this.props.dispatch(playerActions.clearSelectedPlayer())
     }
-
-    submit = (values) => {
-        // Do something with the form values
-        console.log(values);
-        this.props.dispatch(playerActions.createPlayer(values));
-    };
-
-    handleSubmit(data) {
-        let player = Object.assign({}, data, {squadId: this.props.match.params.id});
-        console.log('in handle submit' + new Date());
-
-        this.props.dispatch(playerActions.createPlayer(player)); // clear form: THIS works
-        //return false;
-    }
-
-    render() {
-        return (
-            <PlayerForm onSubmit={::this.handleSubmit}/>
-        );
-    }
 }
 
 
 const mapStateToProps = (state, ownProps) => {
 
     return {
-        saved: state.squads.saved,
-        errors: state.squads.errors
+        initialValues: state.players.selectedPlayer
     }
 
 };
+const mapDispatchToProps = dispatch => {
+    return {
+        onSave: (values, squadId) => {
+            let player = Object.assign({}, values, {squadId: squadId});
+            dispatch(playerActions.createPlayer(player));
+        }
+    }
+};
 
-export default connect(mapStateToProps)(PlayerPage)
-//
-// import ContactForm from './ContactForm';
-//
-// class ContactPage extends React.Component {
-//     submit = (values) => {
-//         // Do something with the form values
-//         console.log(values);
-//     }
-//     render() {
-//         return (
-//             <ContactForm onSubmit={this.submit} />
-//         );
-//     }
-// }
+
+PlayerFormContainer = reduxForm({
+    form: 'playerForm',
+    validate: validate,
+})(PlayerFormComponent);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerFormContainer)

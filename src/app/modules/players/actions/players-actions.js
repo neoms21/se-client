@@ -1,17 +1,16 @@
 import * as types from './players.actionTypes';
 
 export const createPlayer = (player) => {
-    console.log(player);
     return {
         type: types.CREATE_PLAYER,
         payload: {player: player}
     }
 };
 // //
-export const createPlayerSuccess = (squad) => (
+export const createPlayerSuccess = (player) => (
     {
         type: types.CREATE_PLAYER_SUCCESS,
-        //squad: squad
+        squadId: player.squadId
     });
 
 export const fetchPlayers = (squadId) => ({
