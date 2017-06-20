@@ -65,9 +65,6 @@ class PlayerForm extends React.Component {
 // })(playerForm)
 
 function mapStateToProps(state, ownProps) {
-    //return {}
-    //let squad = getSquad(state, ownProps.id);
-    console.log(state.players.selectedPlayer);
     return {
         initialValues: state.players.selectedPlayer
     }

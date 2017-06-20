@@ -24,6 +24,10 @@ export const setSelectedPlayer = (player) => ({
     payload: player
 });
 
+export const clearSelectedPlayer = (player) => ({
+    type: types.CLEAR_SELECTED_PLAYER
+});
+
 export const fetchPlayersSuccess = (players) => (
     {
         type: types.FETCH_PLAYERS_SUCCESS,

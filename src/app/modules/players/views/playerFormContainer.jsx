@@ -12,7 +12,7 @@ class PlayerPage extends React.Component {
 
     componentWillUnmount() {
         console.log('leaving player form');
-        this.props.dispatch(playerActions.setSelectedPlayer({}))
+        this.props.dispatch(playerActions.clearSelectedPlayer())
     }
 
     submit = (values) => {

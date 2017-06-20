@@ -10,11 +10,6 @@ export default function Player(props) {
         marginRight: 10,
         cursor: 'hand'
     };
-    let editPlayerurl = 'players/' + props.id;
-
-    const handleClick = () => {
-        props.click(props.player);
-    };
 
     return (
         <div className="player-container">
@@ -23,14 +18,13 @@ export default function Player(props) {
           {props.name}
         </span>
 
-            <NavLink to={editPlayerurl}>
+            <a onClick={() => {
+                props.click(props.player);
+            }}>
                 <FontIcon style={iconStyles}
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
-            </NavLink>
-
-            <button onClick={handleClick}>Edit</button>
-
+            </a>
         </div>
     )
 };
