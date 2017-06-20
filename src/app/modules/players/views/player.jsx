@@ -13,7 +13,7 @@ export default function Player(props) {
     let editPlayerurl = 'players/' + props.id;
 
     const handleClick = () => {
-        props.click('hello');
+        props.click(props.player);
     };
 
     return (

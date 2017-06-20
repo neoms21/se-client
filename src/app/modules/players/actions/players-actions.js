@@ -19,6 +19,11 @@ export const fetchPlayers = (squadId) => ({
     payload: squadId
 });
 
+export const setSelectedPlayer = (player) => ({
+    type: types.SET_SELECTED_PLAYER,
+    payload: player
+});
+
 export const fetchPlayersSuccess = (players) => (
     {
         type: types.FETCH_PLAYERS_SUCCESS,

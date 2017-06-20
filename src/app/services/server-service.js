@@ -119,7 +119,6 @@ const sendQuery = (name, payload) => {
 
     // send it
     try {
-        console.log('sending query ', query);
         socket.emit('query', query);
     }
     catch (err) {

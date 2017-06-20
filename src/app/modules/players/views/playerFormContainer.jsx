@@ -1,39 +1,7 @@
-// import React from 'react';
-// import {connect} from 'react-redux';
-// import PlayerForm from './playerForm'
-//
-// const mapStateToProps = (state, ownProps) => {
-//     return {
-//         //error: state.squads.error,
-//         values: {},
-//     }
-// };
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         handleSubmit: (values) => {
-//             console.log(values);
-//
-//         },
-//         validate: (values) => {
-//             const errors = {};
-//             if (!values.name) {
-//                 errors.name = 'Required'
-//             }
-//             return errors;
-//         }
-//     }
-// };
-//
-// // do a redux subscription
-// export default connect(mapStateToProps, mapDispatchToProps)(PlayerForm);
-//
-
-
 import React from 'react';
 import {connect} from 'react-redux';
 import PlayerForm from './playerForm'
-import {createPlayer} from '../actions/players-actions'
+import * as playerActions from '../actions/players-actions'
 
 
 class PlayerPage extends React.Component {
@@ -42,17 +10,22 @@ class PlayerPage extends React.Component {
         super(props);
     }
 
+    componentWillUnmount() {
+        console.log('leaving player form');
+        this.props.dispatch(playerActions.setSelectedPlayer({}))
+    }
+
     submit = (values) => {
         // Do something with the form values
         console.log(values);
-        this.props.dispatch(createPlayer(values));
+        this.props.dispatch(playerActions.createPlayer(values));
     };
 
     handleSubmit(data) {
         let player = Object.assign({}, data, {squadId: this.props.match.params.id});
         console.log('in handle submit' + new Date());
 
-        this.props.dispatch(createPlayer(player)); // clear form: THIS works
+        this.props.dispatch(playerActions.createPlayer(player)); // clear form: THIS works
         //return false;
     }
 

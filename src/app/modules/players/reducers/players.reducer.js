@@ -12,6 +12,10 @@ export default function playersReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 players: action.payload
             });
+        case types.SET_SELECTED_PLAYER:
+            return Object.assign({}, state, {
+                selectedPlayer: action.payload
+            });
         default:
             return state;
     }
