@@ -1,0 +1,18 @@
+.player-container {
+  display: flex;
+  padding: 0.5em;
+  border: 1px solid #aeb4e7;
+  margin-bottom: 2px;
+  border-radius: 3px;
+}
+
+.player-container__name {
+  flex: 1;
+  margin-top: 0.4em;
+}
+
+.player-container__edit {
+  width: 24px;
+  height: 24px;
+  color: red;
+}

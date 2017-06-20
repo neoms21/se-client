@@ -146,7 +146,7 @@ const processReceiveCommandEvent = (event) => {
 };
 
 const processReceiveQueryEvent = (event) => {
-    // console.log(streamForQuery);
+    // console.log(event);
     if (event.query.properties.correlationId) {
         // happy days, find right observable
         const queryStream = streamForQuery[event.query.properties.correlationId];

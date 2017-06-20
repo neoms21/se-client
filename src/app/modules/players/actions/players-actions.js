@@ -19,10 +19,10 @@ export const fetchPlayers = (squadId) => ({
     payload: squadId
 });
 
-export const fetchPlayersSuccess = (squads) => (
+export const fetchPlayersSuccess = (players) => (
     {
         type: types.FETCH_PLAYERS_SUCCESS,
-        payload: squads
+        payload: players
     });
 
 export const createPlayerFailure = (errors) => ({
