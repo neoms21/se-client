@@ -4,20 +4,22 @@ import { SelectField } from 'material-ui';
 const renderSelectField = ({
                              input,
                              label,
-                             meta: {
-                               touched,
-                               error
-                             },
+                             meta: {touched, error, visited},
                              children,
                              ...custom
                            }) => (
   <SelectField
     floatingLabelText={label}
-    errorText={error}
+    errorText={visited && error}
     {...input}
-    onChange={(event, index, value) => input.onChange(value)}
+    onChange={(event, index, value) => {
+      input.onChange(value);
+      if (custom.onValueChange) custom.onValueChange(value);
+    }}
+    onBlur={() =>
+      touched = true}
     children={children}
-    {...custom}/>
+  />
 );
 
 export default renderSelectField;

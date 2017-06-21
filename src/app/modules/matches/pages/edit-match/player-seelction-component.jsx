@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActions, CardHeader, CardText, IconButton } from 'material-ui';
+import { IconButton, MenuItem } from 'material-ui';
 import './edit-match.scss';
 import { Field } from 'redux-form';
 import TextField from '../../../../components/form/text-field';
@@ -81,46 +81,44 @@ export default class PlayerSelectionComponent extends React.Component {
     this.setState({values: valuesToUpdate, errors: errors});
   };
 
-  getData = (arrayEle, name) => {
-  };
-
   render = () => {
     const {item, availablePlayers, deletePlayer, member} = this.props;
 
     return (
       <div className="player-selection">
-          <div className="selection-body">
-            <IconButton className="delete-button" iconClassName="material-icons" tooltip="Remove" tooltipPosition="top-right"
-              onTouchTap={deletePlayer}>delete</IconButton>
-              <Field component={TextField} name={`${member}Position`} className="position" value={item.player}
-                     label="Starting position"/>
-              <Field component={SelectField} name={`${member}Player`} label="Select player" className="player">
-                  {availablePlayers.map(avail => {
-                      <MenuItem key={avail.id}
-                                value={avail.code}
-                                primaryText={avail.description}/>;
-                  })}
-              </Field>
-          </div>
-
-          {/*<CardHeader>*/}
-          {/*<span>Player {item.player}</span>*/}
-          {/*<span>Position {item.position}</span>*/}
-          {/*</CardHeader>*/}
-
-
-          {/*<IconButton iconClassName="material-icons" tooltip="Done" tooltipPosition="top-right"*/}
-          {/*onClick={:: this.closePlayer}>done</IconButton>*/}
-          {/*</Card>*/}
-          {/*:*/}
-          {/*<Chip className="view-player">*/}
-          {/*<Avatar className="player-picture" icon={< FontIcon className="material-icons"> perm_identity*/}
-          {/*</FontIcon>}/>*/}
-
-          {/*<IconButton iconClassName="material-icons" tooltip="Edit" tooltipPosition="top-right"*/}
-          {/*onClick={:: this.editPlayer}>edit_circle</IconButton>*/}
-          {/*</Chip>*/}
+        <div className="selection-body">
+          <IconButton className="delete-button" iconClassName="material-icons" tooltip="Remove"
+                      tooltipPosition="top-right"
+                      onTouchTap={deletePlayer}>delete</IconButton>
+          <Field component={TextField} name={`${member}Position`} className="position" value={item.player}
+                 label="Starting position"/>
+          <Field component={SelectField} name={`${member}Player`} label="Select player" className="player">
+            {availablePlayers.map((avail, index) =>
+              <MenuItem key={index}
+                        value={avail.playerName}
+                        primaryText={avail.playerName}/>
+            )}
+          </Field>
         </div>
+
+        {/*<CardHeader>*/}
+        {/*<span>Player {item.player}</span>*/}
+        {/*<span>Position {item.position}</span>*/}
+        {/*</CardHeader>*/}
+
+
+        {/*<IconButton iconClassName="material-icons" tooltip="Done" tooltipPosition="top-right"*/}
+        {/*onClick={:: this.closePlayer}>done</IconButton>*/}
+        {/*</Card>*/}
+        {/*:*/}
+        {/*<Chip className="view-player">*/}
+        {/*<Avatar className="player-picture" icon={< FontIcon className="material-icons"> perm_identity*/}
+        {/*</FontIcon>}/>*/}
+
+        {/*<IconButton iconClassName="material-icons" tooltip="Edit" tooltipPosition="top-right"*/}
+        {/*onClick={:: this.editPlayer}>edit_circle</IconButton>*/}
+        {/*</Chip>*/}
+      </div>
     );
   };
 }
