@@ -1,12 +1,16 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import Player from './player';
+import {connect} from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import * as playerActions from '../actions/players-actions';
+import './players-list.scss';
 
 class PlayersComponent extends React.Component {
 
     constructor(props) {
         super(props);
-       // console.log(props.params.id);
+        this.props.dispatch(playerActions.fetchPlayers(this.props.match.params.id));
+        // console.log(props.params.id);
     }
 
 
@@ -14,12 +18,22 @@ class PlayersComponent extends React.Component {
         this.props.history.push(`/squad/${this.props.match.params.id}/player`);
     };
 
+    editPlayer = (p) => {
+        this.props.dispatch(playerActions.setSelectedPlayer(p));
+        this.props.history.push(`/squad/${this.props.match.params.id}/player`);
+    };
+
     render() {
         return (
             <div className="players-list">
 
-                <RaisedButton className="players-list--button"
+                <RaisedButton className="players-list__button"
                               label="Add Player" primary={true} onClick={this.addPlayer}/>
+                <br/>
+
+                {this.props.players.map((p, i) => {
+                    return <Player key={i} name={p.playerName} click={this.editPlayer} player={p}/>;
+                })}
             </div>
         );
     }
@@ -28,7 +42,7 @@ class PlayersComponent extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        squads: state.squads.squads
+        players: state.players.players ? state.players.players : []
     }
 }
 

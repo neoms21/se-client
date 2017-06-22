@@ -1,52 +1,42 @@
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
-import TextField from 'material-ui/TextField'
+import textField from '../../../elements/textField'
 import '../../../core.scss'
-import {connect} from 'react-redux'
-import {validateRequiredFields} from '../../../validators/validations'
-
-// import asyncValidate from './asyncValidate'
-
-const validate = values => {
-    let errors = {};
-    let requiredErrors = validateRequiredFields(values, ['playerName', 'age']); // find our how to combine with other validations
-    let ageError = {};
-    if (values.age && values.age < 8) {
-        ageError.age = "Player's age must be greater than 8";
-    }
-    let assign = Object.assign({}, requiredErrors, ageError);
-
-    return assign;
-};
-
-const renderTextField = ({input, label, meta: {touched, error}, ...custom}) => (
-    <TextField hintText={label}
-               floatingLabelText={label}
-               errorText={touched && error}
-               {...input}
-               {...custom}
-    />
-);
+import {stopSubmit} from 'redux-form';
 
 class PlayerForm extends React.Component {
+
+
+    mySubmit(values) {
+        console.log(this.props.match.params.id);
+        return this.props.onSave(values, this.props.match.params.id);
+    }
+
+    //
+    componentWillReceiveProps(nextProps, nextContext) {
+
+        if (nextProps.errors && nextProps.errors.length > 0) {
+            this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
+        }
+    }
 
     render() {
         const {handleSubmit, pristine, reset, submitting} = this.props;
 
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={this.props.handleSubmit(this.mySubmit.bind(this)) }>
                 <div>
-                    <Field name="playerName" component={renderTextField} label="Player Name"/>
+                    <Field name="playerName" component={textField} label="Player Name"/>
                 </div>
                 <div>
-                    <Field name="age" type="number" component={renderTextField} label="Age"/>
+                    <Field name="age" type="number" component={textField} label="Age"/>
                 </div>
                 <div>
-                    <Field name="email" component={renderTextField} label="Email"/>
+                    <Field name="email" component={textField} label="Email"/>
                 </div>
                 <div>
-                    <Field name="phone" component={renderTextField} label="Phone"/>
+                    <Field name="phone" component={textField} label="Phone"/>
                 </div>
                 <div className="button-row">
                     <RaisedButton label="Add" primary={true} type="submit" disabled={submitting}/>
@@ -56,33 +46,6 @@ class PlayerForm extends React.Component {
         );
     }
 }
-;
 
-
-// export default reduxForm({
-//     form: 'PlayerForm',  // a unique identifier for this form
-//     validate
-// })(playerForm)
-
-function mapStateToProps(state, ownProps) {
-    //return {}
-    //let squad = getSquad(state, ownProps.id);
-    return {
-        initialValues: {}
-    }
-}
-
-
-PlayerForm = reduxForm({
-    form: 'PlayerForm',
-    validate,
-    enableReinitialize: true
-})(PlayerForm);
-
-PlayerForm = connect(
-    mapStateToProps,
-)(PlayerForm);
 
 export default PlayerForm
-
-// }
