@@ -2,7 +2,6 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import './register-user.scss';
 import {Field} from 'redux-form'
-
 import {stopSubmit} from 'redux-form';
 import {TextField} from 'material-ui'
 import {PropTypes} from 'react'

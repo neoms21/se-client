@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import PlayerComponent from './views/player';
+import PlayerComponent from './views/playerFormContainer';
 import PlayersComponent from './views/players';
 
 const playersRoutes = (

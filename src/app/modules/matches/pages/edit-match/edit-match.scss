@@ -18,12 +18,35 @@
       //     }
       // }
       .player-card {
-        //padding: 4px;
-        margin: 4px;
+        padding: 4px;
+        margin: 2px;
         display: inline-block;
 
         .player-picture {
           vertical-align: middle;
+        }
+
+        .selection-body {
+          display: flex;
+          padding: 5px 15px 5px 15px;
+          border: 1px #000066;
+          background: rgba(183, 183, 183, 0.15);
+          border-radius: 10px;
+          align-items: flex-end;
+          align-content: space-around;
+          //padding: 10px;
+
+          .delete-button {
+
+          }
+          .position {
+            vertical-align: bottom;
+          }
+
+          .player {
+            //display: inline-block;
+            vertical-align: bottom;
+          }
         }
       }
     }
@@ -57,37 +80,6 @@
       }
     }
 
-    .player-selection {
-      padding: 5px 15px 5px 15px;
-      border: 1px #000066;
-      background: rgba(183, 183, 183, 0.15);
-      border-radius: 10px;
 
-      .selection-body {
-        display: inline;
-        max-width: 45%;
-        //padding: 10px;
-
-        .delete-button {
-          float: right;
-        }
-        .position {
-          vertical-align: bottom;
-        }
-
-        .player {
-          //display: inline-block;
-          vertical-align: bottom;
-        }
-      }
-
-      //.view-player {
-      //  display: inline;
-      //
-      //  .position {
-      //    display: inline;
-      //  }
-      //}
-    }
   }
 }

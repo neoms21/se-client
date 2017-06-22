@@ -31,8 +31,7 @@ class SquadsComponent extends React.Component {
                 <RaisedButton className="squad-list__button"
                               label="Add Squad" primary={true} onClick={this.addSquad}/>
                 {this.props.squads.map((squad, index) => {
-                    return <Squad key={index} id={squad._id} name={squad.name} onSquadClick={() => this.goToPlayers(squad._id)}
-                                  onEditClick={() => this.editSquad(squad)}/>;
+                    return <Squad key={index} id={squad._id} name={squad.name} />;
                 })}
 
             </div>

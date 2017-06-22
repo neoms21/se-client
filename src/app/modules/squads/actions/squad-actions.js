@@ -25,6 +25,7 @@ export const createSquadFailure = (errors) => ({
     type: types.CREATE_SQUAD_FAILURE,
     errors: errors
 });
+
 export const fetchSquadFailure = (errors) => ({
     type: types.FETCH_SQUADS_FAILURE,
     errors: errors

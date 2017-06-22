@@ -1,90 +1,30 @@
-// import React from 'react';
-// import {connect} from 'react-redux';
-// import PlayerForm from './playerForm'
-//
-// const mapStateToProps = (state, ownProps) => {
-//     return {
-//         //error: state.squads.error,
-//         values: {},
-//     }
-// };
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         handleSubmit: (values) => {
-//             console.log(values);
-//
-//         },
-//         validate: (values) => {
-//             const errors = {};
-//             if (!values.name) {
-//                 errors.name = 'Required'
-//             }
-//             return errors;
-//         }
-//     }
-// };
-//
-// // do a redux subscription
-// export default connect(mapStateToProps, mapDispatchToProps)(PlayerForm);
-//
-
-
 import React from 'react';
-import {connect} from 'react-redux';
-import PlayerForm from './playerForm'
-import {createPlayer} from '../actions/players-actions'
+import './player-item.scss'
 
+import FontIcon from 'material-ui/FontIcon';
+import {blue500, red500, greenA200} from 'material-ui/styles/colors';
+import {NavLink} from 'react-router-dom';
 
-class PlayerPage extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    submit = (values) => {
-        // Do something with the form values
-        console.log(values);
-        this.props.dispatch(createPlayer(values));
+export default function Player(props) {
+    const iconStyles = {
+        marginRight: 10,
+        cursor: 'hand'
     };
 
-    handleSubmit(data) {
-        let player = Object.assign({}, data, {squadId: this.props.match.params.id});
-        console.log('in handle submit' + new Date());
+    return (
+        <div className="player-container">
 
-        this.props.dispatch(createPlayer(player)); // clear form: THIS works
-        //return false;
-    }
+        <span className="player-container__name">
+          {props.name}
+        </span>
 
-    render() {
-        return (
-            <PlayerForm onSubmit={::this.handleSubmit}/>
-        );
-    }
-}
-
-
-const mapStateToProps = (state, ownProps) => {
-
-    return {
-        saved: state.squads.saved,
-        errors: state.squads.errors
-    }
-
+            <a onClick={() => {
+                props.click(props.player);
+            }}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={greenA200}>edit</FontIcon>
+            </a>
+        </div>
+    )
 };
-
-export default connect(mapStateToProps)(PlayerPage)
-//
-// import ContactForm from './ContactForm';
-//
-// class ContactPage extends React.Component {
-//     submit = (values) => {
-//         // Do something with the form values
-//         console.log(values);
-//     }
-//     render() {
-//         return (
-//             <ContactForm onSubmit={this.submit} />
-//         );
-//     }
-// }
