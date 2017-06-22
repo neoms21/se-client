@@ -64,9 +64,13 @@
       border-radius: 10px;
 
       .selection-body {
-        display: inline-block;
+        display: inline;
+        max-width: 45%;
         //padding: 10px;
 
+        .delete-button {
+          float: right;
+        }
         .position {
           vertical-align: bottom;
         }

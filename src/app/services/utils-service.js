@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 const convertErrorArrayToObject = (array) => {
   let errorDescriptor = {
     generalErrors: [],
@@ -19,4 +21,10 @@ const convertErrorArrayToObject = (array) => {
   return errorDescriptor;
 };
 
-export default convertErrorArrayToObject;
+const isNil = (source) => {
+  return _.isNil(source);
+};
+
+export { convertErrorArrayToObject, isNil };
+
+

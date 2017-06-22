@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import HeaderContainer from '../header/header-container';
 import {signinUser} from '../../modules/user/actions/user-actions';

@@ -4,7 +4,7 @@ import { DatePicker, IconButton, MenuItem, RaisedButton } from 'material-ui';
 import './edit-match.scss';
 import PlayerSelectionComponent from './player-seelction-component';
 import { Field, FieldArray, stopSubmit } from 'redux-form';
-import { SelectField, TextField } from '../../../../components/form';
+import { TextField, SelectField  } from '../../../../components/form';
 
 class EditMatchForm extends React.Component {
 
@@ -13,7 +13,6 @@ class EditMatchForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-
     if (nextProps.errors && nextProps.errors.length > 0) {
       this.props.dispatch(stopSubmit('EditMatchForm', nextProps.errors[0]));
     }
@@ -54,14 +53,29 @@ class EditMatchForm extends React.Component {
   //   this.setState({playersPositions: copyValues});
   // };
 
-  getAvailablePlayers = () => {
-    let players = [];
-    return [];
-  };
+  // getAvailablePlayers = (availablePlayers, fields) => {
+  //   let players = availablePlayers.filter(player => {
+  //     return fields.filter(field => {
+  //       return field.player === player.playerName;
+  //     });
+  //   });
+  //
+  //   return players;
+  // };
 
-  reset = () => {
-    this.refs.form.reset();
-  };
+  renderSquadSelect = (props) => (
+    <SelectField
+      floatingLabelText={props.label}
+      errorText={props.meta.touched && props.meta.error}
+      {...props.input}
+      onChange={(event, index, value) => {
+        props.input.onChange(value);
+        return this.props.getAvailablePlayers(value);
+      }}
+      onBlur={() => { touched = true}}
+      children={props.children}
+      {...props.custom}/>
+  );
 
   renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) =>
     (
@@ -82,8 +96,9 @@ class EditMatchForm extends React.Component {
           let item = fields.get(index);
           return (
             <div className="player-card" key={index}>
-              <PlayerSelectionComponent deletePlayer={() => fields.splice(index, 1)}
-                                        availablePlayers={::this.getAvailablePlayers()} item={item} index={index}/>
+              <PlayerSelectionComponent deletePlayer={() => fields.remove(index)}
+                                        availablePlayers={this.props.availablePlayers}
+                                        item={item} member={member}/>
             </div>);
         })
         }
@@ -98,7 +113,8 @@ class EditMatchForm extends React.Component {
       squads,
       submitting,
       reset,
-      errorMessage
+      errorMessage,
+      getAvailablePlayers
     } = this.props;
 
     return (
@@ -106,7 +122,7 @@ class EditMatchForm extends React.Component {
         <h1>Create match</h1>
         <form className="edit-match-form" onSubmit={this.props.handleSubmit(onSave)}>
           <div className="top-section">
-            <Field component={SelectField} name="squad" label="Select team">
+            <Field component={SelectField} name="squad" label="Select team" onValueChange={getAvailablePlayers}>
               {squads.map(squad =>
                 <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
               }
