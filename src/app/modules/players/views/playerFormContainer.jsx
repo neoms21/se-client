@@ -10,8 +10,8 @@ import phoneNumberValidator from "../../../validators/phoneNumberValidator";
 const validate = values => {
     let errors = {};
     let requiredErrors = validateRequiredFields(values, ['playerName', 'age']); // find our how to combine with other validations
-    let emailErrors = emailValidator (values, ['email']); // find our how to combine with other validations
-    let phNumberErrors = phoneNumberValidator (values, ['phone']); // find our how to combine with other validations
+    let emailErrors = emailValidator(values, ['email']); // find our how to combine with other validations
+    let phNumberErrors = phoneNumberValidator(values, ['phone']); // find our how to combine with other validations
     let ageError = {};
     if (values.age && values.age < 8) {
         ageError.age = "Player's age must be greater than 8";
@@ -36,7 +36,8 @@ class PlayerFormContainer extends React.Component {
 const mapStateToProps = (state, ownProps) => {
 
     return {
-        initialValues: state.players.selectedPlayer
+        initialValues: state.players.selectedPlayer,
+        errors: state.players.errors
     }
 
 };

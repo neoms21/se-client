@@ -33,10 +33,13 @@ export const fetchPlayersSuccess = (players) => (
         payload: players
     });
 
-export const createPlayerFailure = (errors) => ({
-    type: types.CREATE_PLAYERS_FAILURE,
-    errors: errors
-});
+export const createPlayerFailure = (errors) => {
+    console.log(errors);
+    return ({
+        type: types.CREATE_PLAYER_FAILURE,
+        errors: errors
+    })
+};
 export const fetchPlayersFailure = (errors) => ({
     type: types.FETCH_PLAYERS_FAILURE,
     errors: errors
