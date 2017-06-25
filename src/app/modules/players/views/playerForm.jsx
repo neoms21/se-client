@@ -15,9 +15,8 @@ class PlayerForm extends React.Component {
 
     //
     componentWillReceiveProps(nextProps, nextContext) {
-
         if (nextProps.errors && nextProps.errors.length > 0) {
-            this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
+            this.props.dispatch(stopSubmit('playerForm', nextProps.errors[0]));
         }
     }
 
