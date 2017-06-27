@@ -40,48 +40,48 @@ export default class PlayerSelectionComponent extends React.Component {
         this.props.deletePlayer(this.props.player.id);
     };
 
-    validate = (propertyToCheck) => {
-        let positionError,
-            playerError;
+    // validate = (propertyToCheck) => {
+    //     let positionError,
+    //         playerError;
+    //
+    //     if (propertyToCheck === undefined || propertyToCheck === 'position') {
+    //         if (this.ourValues.position.length === 0) {
+    //             positionError = 'Position is required';
+    //         } else {
+    //             if (this.ourValues.position.length < 3) {
+    //                 positionError = 'The position must be minimum of 2 letters, numbers or symbols';
+    //             }
+    //         }
+    //     }
+    //
+    //     if (propertyToCheck === undefined || propertyToCheck === 'player') {
+    //         if (this.ourValues.player == undefined || this.ourValues.player.length === 0) {
+    //             playerError = 'Player is required';
+    //         }
+    //     }
+    //
+    //     return {positionError, playerError};
+    // };
 
-        if (propertyToCheck === undefined || propertyToCheck === 'position') {
-            if (this.ourValues.position.length === 0) {
-                positionError = 'Position is required';
-            } else {
-                if (this.ourValues.position.length < 3) {
-                    positionError = 'The position must be minimum of 2 letters, numbers or symbols';
-                }
-            }
-        }
+    // handlePositionChange = (event) => {
+    //     this.ourValues.position = event.target.value;
+    //     const errors = this.validate();
+    //     const valuesToUpdate = {
+    //         ...this.ourValues
+    //     };
+    //
+    //     this.setState({values: valuesToUpdate, errors: errors});
+    // };
 
-        if (propertyToCheck === undefined || propertyToCheck === 'player') {
-            if (this.ourValues.player == undefined || this.ourValues.player.length === 0) {
-                playerError = 'Player is required';
-            }
-        }
-
-        return {positionError, playerError};
-    };
-
-    handlePositionChange = (event) => {
-        this.ourValues.position = event.target.value;
-        const errors = this.validate();
-        const valuesToUpdate = {
-            ...this.ourValues
-        };
-
-        this.setState({values: valuesToUpdate, errors: errors});
-    };
-
-    handlePlayerChange = (event, key, value) => {
-        this.ourValues.player = event.target.value;
-        const errors = this.validate();
-        const valuesToUpdate = {
-            ...this.ourValues
-        };
-
-        this.setState({values: valuesToUpdate, errors: errors});
-    };
+    // handlePlayerChange = (event, key, value) => {
+    //     this.ourValues.player = event.target.value;
+    //     const errors = this.validate();
+    //     const valuesToUpdate = {
+    //         ...this.ourValues
+    //     };
+    //
+    //     this.setState({values: valuesToUpdate, errors: errors});
+    // };
 
     render = () => {
         const {item, availablePlayers, deletePlayer, member, closePlayer} = this.props;
@@ -101,7 +101,7 @@ export default class PlayerSelectionComponent extends React.Component {
                                           primaryText={avail.playerName}/>
                             )}
                         </Field>
-                        <div>
+                        <div className="buttons">
                             <IconButton className="delete-button" iconClassName="material-icons" tooltip="Remove"
                                         tooltipPosition="top-right"
                                         onTouchTap={deletePlayer}>delete</IconButton>
@@ -111,7 +111,7 @@ export default class PlayerSelectionComponent extends React.Component {
                         </div>
                     </div>
                     :
-                    <div className="view-player-position">
+                    <div className="view-player-position" onClick={::this.editPlayer}>
                         Player {item.Player} Position {item.Position}
                     </div>
                 }

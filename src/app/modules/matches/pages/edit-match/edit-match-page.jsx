@@ -2,17 +2,18 @@ import React from 'react';
 import EditMatchForm from './edit-match-form';
 import { createMatch } from '../../actions/match-actions';
 import { connect } from 'react-redux';
-import { getFormValues, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../validators/validations';
 import * as utilsService from '../../../../services/utils-service';
 import { fetchPlayers } from '../../../players/actions/players-actions';
 
 
 function mapStateToProps(state, ownProps) {
-  const values = getFormValues('EditMatchForm')(state);
+  const errors = state.matches.errors ? state.matches.errors : {fieldErrors: {}, generalErrors: []};
 
   return {
-    errors: state.matches.errors,
+    errors: state.matches.fieldErrors || {},
+    errorMessages: state.matches.generalErrors || [],
     squads: state.squads.squads,
     availablePlayers: state.players.players || [],
     disabled: false
@@ -22,7 +23,7 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSave: (values) => {
-      dispatch(createMatch (values));
+      dispatch(createMatch(values));
     },
     getAvailablePlayers: (squadId) => {
       dispatch(fetchPlayers(squadId));
@@ -33,7 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const validate = values => {
   let error = validateRequiredFields(values, ['squad', 'matchDate', 'opposition']);
 
-  if(!utilsService.isNil(values) && !utilsService.isNil(values.playerPositions)) {
+  if (!utilsService.isNil(values) && !utilsService.isNil(values.playerPositions)) {
     error.playerPositions = [];
 
     // check values in array

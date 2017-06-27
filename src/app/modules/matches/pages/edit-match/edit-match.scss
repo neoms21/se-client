@@ -47,6 +47,16 @@
             //display: inline-block;
             vertical-align: bottom;
           }
+          .buttons {
+            display: inline;
+          }
+        }
+
+        .view-player-position {
+          padding: 5px 15px 5px 15px;
+          border: 1px #000066;
+          background: rgba(183, 183, 183, 0.1);
+          border-radius: 10px;
         }
       }
     }
