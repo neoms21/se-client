@@ -27,8 +27,7 @@ describe('Match Reducer', () => {
     let action = {type: types.CREATE_MATCH_FAILURE, errors: [{name: 'Unable to find server'}, 'general failure']};
     const expectedState = {
       isLoading: false,
-      errors: {name: 'Unable to find server'},
-      errorMessage: 'general failure'
+      errors: [{name: 'Unable to find server'}, 'general failure']
     };
     expect(matchReducer({isLoading: true}, action)).toEqual(expectedState);
   });

@@ -6,14 +6,14 @@ const initialState = {};
 export default function matchReducer(state = initialState, action) {
   switch (action.type) {
     case types.CREATE_MATCH:
-      return {isLoading: true, ...state, fieldErrors: {}, generalErrors: []};
+      return {isLoading: true, ...state, errors: {}};
 
     case types.CREATE_MATCH_SUCCESS:
-      return {...state, isLoading: false, message: action.message, fieldErrors: {}, generalErrors: []};
+      return {...state, isLoading: false, message: action.message, errors: {}};
 
     case types.CREATE_MATCH_FAILURE:
       const errorDef = convertErrorArrayToObject(action.errors);
-      return {...state, isLoading: false, fieldErrors: errorDef.fieldErrors, generalErrors: errorDef.generalErrors};
+      return {...state, isLoading: false, errors: action.errors};
 
     default:
       return state;
