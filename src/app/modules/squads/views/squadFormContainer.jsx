@@ -1,18 +1,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import SquadForm from './squadForm'
 import {createSquad} from '../actions/squad-actions'
-import dispatch from 'react-redux';
 import {validateRequiredFields} from '../../../validators/validations'
 import {reduxForm} from 'redux-form'
 import SquadFormComponent from './squadForm'
+import {push, go} from 'react-router-redux';
+import {getSquad} from '../selectors/getSquadSelector';
 
 import {stopSubmit} from 'redux-form';
-import {getSquad} from '../selectors/getSquadSelector'
 class SquadFormContainer extends React.Component {
 
     constructor(props) {
         super(props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
     }
 }
 
@@ -27,6 +30,14 @@ const mapDispatchToProps = dispatch => {
             console.log('Now running onSave action');
             dispatch(createSquad(squadFormValues));
         },
+        onReceiveProps: (changedProps) => {
+            if (changedProps.saved) {
+                dispatch(push('/squads'));
+            }
+            if (changedProps.errors && changedProps.errors.length > 0) {
+                dispatch(stopSubmit('squadForm', changedProps.errors[0]));
+            }
+        }
 
     }
 };

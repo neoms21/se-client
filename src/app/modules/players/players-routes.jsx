@@ -2,11 +2,12 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import PlayerComponent from './views/playerFormContainer';
 import PlayersComponent from './views/players';
+import PrivateRoute from "../../privateRoute";
 
 const playersRoutes = (
   <div>
-    <Route exact path = "/squad/:id/players" component = { PlayersComponent } />
-    <Route exact path = "/squad/:id/player" component = { PlayerComponent } />
+    <PrivateRoute exact path = "/squad/:id/players" component = { PlayersComponent } />
+    <PrivateRoute exact path = "/squad/:id/player" component = { PlayerComponent } />
   </div>
 );
 

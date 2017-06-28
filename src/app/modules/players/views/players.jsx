@@ -9,8 +9,12 @@ class PlayersComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.props.dispatch(playerActions.fetchPlayers(this.props.match.params.id));
+
         // console.log(props.params.id);
+    }
+
+    componentWillMount() {
+        this.props.dispatch(playerActions.fetchPlayers(this.props.match.params.id));
     }
 
 

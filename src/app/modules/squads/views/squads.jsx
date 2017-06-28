@@ -6,8 +6,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import * as squadActions from '../actions/squad-actions'
 
 class SquadsComponent extends React.Component {
+
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount(){
+
         this.props.dispatch(squadActions.fetchSquads());
     }
 
