@@ -5,16 +5,14 @@ import textField from '../../../elements/textField'
 import '../../../core.scss'
 import {stopSubmit} from 'redux-form';
 import {SelectField, MenuItem} from 'material-ui'
-
 const items = [
-    <MenuItem key={1} value={1} primaryText="Never"/>,
-    <MenuItem key={2} value={2} primaryText="Every Night"/>,
-    <MenuItem key={3} value={3} primaryText="Weeknights"/>,
-    <MenuItem key={4} value={4} primaryText="Weekends"/>,
-    <MenuItem key={5} value={5} primaryText="Weekly"/>,
+    <MenuItem value='defender' primaryText="Defender"/>,
+    <MenuItem value='forward' primaryText="Forward"/>,
+    <MenuItem value='goalkeeper' primaryText="Goalkeeper"/>,
+    <MenuItem value='midfielder' primaryText="Midfielder"/>,
 ];
 
-const renderSelectField = ({ input, label, meta: { touched, error }, children }) => (
+const renderSelectField = ({input, label, meta: {touched, error}, children}) => (
     <SelectField
         floatingLabelText={label}
         errorText={touched && error}
@@ -62,9 +60,7 @@ class PlayerForm extends React.Component {
                 <div>
 
                     <Field name="position" component={renderSelectField} label="Position">
-                        <MenuItem value={'ff0000'} primaryText="Red"/>
-                        <MenuItem value={'00ff00'} primaryText="Green"/>
-                        <MenuItem value={'0000ff'} primaryText="Blue"/>
+                        {items}
                     </Field>
                 </div>
                 <div className="button-row">
