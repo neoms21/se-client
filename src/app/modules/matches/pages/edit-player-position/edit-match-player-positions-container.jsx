@@ -1,5 +1,5 @@
 import React from 'react';
-import EditMatchForm from './edit-match-form';
+import EditMatchForm from '../edit-match-old/edit-match-form';
 import { createMatch } from '../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
@@ -54,7 +54,7 @@ const validate = values => {
 };
 
 let page = reduxForm({
-  form: 'EditMatchForm',
+  form: 'EditMatchPlayerPositionForm',
   validate
 })(EditMatchForm);
 

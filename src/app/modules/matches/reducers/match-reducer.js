@@ -1,5 +1,4 @@
 import * as types from '../actions/actionTypes';
-import {convertErrorArrayToObject} from '../../../services/utils-service';
 
 const initialState = {};
 
@@ -9,10 +8,12 @@ export default function matchReducer(state = initialState, action) {
       return {isLoading: true, ...state, errors: {}};
 
     case types.CREATE_MATCH_SUCCESS:
-      return {...state, isLoading: false, message: action.message, errors: {}};
+      return {
+        ...state, isLoading: false, message: action.message, errors: {},
+        matchId: action.match.matchId
+      };
 
     case types.CREATE_MATCH_FAILURE:
-      const errorDef = convertErrorArrayToObject(action.errors);
       return {...state, isLoading: false, errors: action.errors};
 
     default:

@@ -8,12 +8,12 @@ export const createMatchEpic = action$ =>
     .mergeMap(action =>
       sendCommand('CreateMatch', action.matchInfo)
         .map(ev => ev.properties.isFailure ? matchActions.createMatchFailure(ev.errors)
-          : matchActions.createMatchSuccess(ev.user)
-        ).dispose() // output success
+          : matchActions.createMatchSuccess(ev.payload)
+        ) // output success
     );
 
 export const createMatchSuccessEpic = action$ =>
   action$.ofType(ActionTypes.CREATE_MATCH_SUCCESS)
     .mergeMap(action =>
-      Observable.of(push('/match-list', action.message)));
+      Observable.of(push(`/match/${action.match.matchId}/selection-list`, action.message)));
 

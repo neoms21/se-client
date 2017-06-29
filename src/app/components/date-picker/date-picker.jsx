@@ -1,14 +1,5 @@
 import React from 'react';
 import DatePicker from 'material-ui/DatePicker';
-//import {FieldType, registerType} from 'react-form';
-
-// const propTypes = {
-//     ...FieldType.propTypes
-// };
-
-const defaultProps = {
-
-};
 
 export default class DatePickerComponent extends React.Component {
 
@@ -35,10 +26,3 @@ export default class DatePickerComponent extends React.Component {
     }
 }
 
-//DatePickerComponent.propTypes = propTypes;
-DatePickerComponent.defaultProps = defaultProps;
-
-// registerType({
-//     type: 'date-picker',
-//     component: DatePickerComponent
-// })

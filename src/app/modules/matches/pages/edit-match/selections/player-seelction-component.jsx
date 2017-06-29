@@ -1,9 +1,9 @@
 import React from 'react';
 import {IconButton, MenuItem} from 'material-ui';
-import './edit-match.scss';
+import '../edit-match-old/edit-match.scss';
 import {Field} from 'redux-form';
-import TextField from '../../../../components/form/text-field';
-import SelectField from '../../../../components/form/select-field';
+import TextField from '../../../../../components/form/text-field';
+import SelectField from '../../../../../components/form/select-field';
 
 export default class PlayerSelectionComponent extends React.Component {
 

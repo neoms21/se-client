@@ -10,14 +10,12 @@ const renderSelectField = ({
                            }) => (
   <SelectField
     floatingLabelText={label}
-    errorText={visited && error}
+    errorText={error}
     {...input}
     onChange={(event, index, value) => {
       input.onChange(value);
       if (custom.onValueChange) custom.onValueChange(value);
     }}
-    onBlur={() =>
-      touched = true}
     children={children}
   />
 );

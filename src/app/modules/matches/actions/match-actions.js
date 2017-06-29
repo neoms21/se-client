@@ -5,9 +5,9 @@ export const createMatch = (matchInfo) => ({
     matchInfo: matchInfo
 });
 
-export const createMatchSuccess = (match) => ({
+export const createMatchSuccess = (payload) => ({
     type: types.CREATE_MATCH_SUCCESS,
-    match: match
+    match: payload
 });
 
 export const createMatchFailure = (errors) => ({

@@ -1,0 +1,19 @@
+.match-selection-list {
+  .match-info {
+
+  }
+
+  .selection-item {
+    display: flex;
+    padding: 0.5em;
+    border: 1px solid #aeb4e7;
+    margin-bottom: 2px;
+    border-radius: 3px;
+
+    .description {
+      flex: 1;
+      margin-top: 0.4em;
+    }
+  }
+
+}
