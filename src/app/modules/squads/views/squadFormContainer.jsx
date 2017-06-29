@@ -31,9 +31,6 @@ const mapDispatchToProps = dispatch => {
             dispatch(createSquad(squadFormValues));
         },
         onReceiveProps: (changedProps) => {
-            if (changedProps.saved) {
-                dispatch(push('/squads'));
-            }
             if (changedProps.errors && changedProps.errors.length > 0) {
                 dispatch(stopSubmit('squadForm', changedProps.errors[0]));
             }

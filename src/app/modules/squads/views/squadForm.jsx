@@ -23,7 +23,6 @@ class SquadForm extends Component {
         return this.props.onSave(values);
     }
 
-    //
     componentWillReceiveProps(nextProps, nextContext) {
         this.props.onReceiveProps(nextProps)
     }

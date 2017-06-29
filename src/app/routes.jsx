@@ -18,14 +18,16 @@ export default class Routes extends React.Component {
 
         return (
             <div>
-                <Route path="/" component={App}/>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/home" component={Home}/>
-                <Route exact path="/about" component={About}/>
-                {userRoutes}
-                {squadsRoutes}
-                {matchesRoutes}
-                {playersRoutes}
+                {/*<Switch>*/}
+                    <Route path="/" component={App}/>
+                    <Route exact path="/" component={Home}/>
+                    <Route exact path="/home" component={Home}/>
+                    <Route exact path="/about" component={About}/>
+                    {userRoutes}
+                    {squadsRoutes}
+                    {matchesRoutes}
+                    {playersRoutes}
+                {/*</Switch>*/}
             </div>
         );
     }
