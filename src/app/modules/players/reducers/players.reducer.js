@@ -20,6 +20,10 @@ export default function playersReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 selectedPlayer: {}
             });
+        case types.CREATE_PLAYER_FAILURE:
+            return Object.assign({}, state, {
+                errors: action.errors
+            });
         default:
             return state;
     }

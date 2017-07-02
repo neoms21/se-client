@@ -4,6 +4,22 @@ import {Field, reduxForm} from 'redux-form'
 import textField from '../../../elements/textField'
 import '../../../core.scss'
 import {stopSubmit} from 'redux-form';
+import {SelectField, MenuItem} from 'material-ui'
+const items = [
+    <MenuItem value='defender' primaryText="Defender"/>,
+    <MenuItem value='forward' primaryText="Forward"/>,
+    <MenuItem value='goalkeeper' primaryText="Goalkeeper"/>,
+    <MenuItem value='midfielder' primaryText="Midfielder"/>,
+];
+
+const renderSelectField = ({input, label, meta: {touched, error}, children}) => (
+    <SelectField
+        floatingLabelText={label}
+        errorText={touched && error}
+        {...input}
+        onChange={(event, index, value) => input.onChange(value)}
+        children={children}/>
+)
 
 class PlayerForm extends React.Component {
 
@@ -13,11 +29,14 @@ class PlayerForm extends React.Component {
         return this.props.onSave(values, this.props.match.params.id);
     }
 
+    componentWillUnmount() {
+        this.props.onUnmount();
+    }
+
     //
     componentWillReceiveProps(nextProps, nextContext) {
-
         if (nextProps.errors && nextProps.errors.length > 0) {
-            this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
+            this.props.dispatch(stopSubmit('playerForm', nextProps.errors[0]));
         }
     }
 
@@ -37,6 +56,12 @@ class PlayerForm extends React.Component {
                 </div>
                 <div>
                     <Field name="phone" component={textField} label="Phone"/>
+                </div>
+                <div>
+
+                    <Field name="position" component={renderSelectField} label="Position">
+                        {items}
+                    </Field>
                 </div>
                 <div className="button-row">
                     <RaisedButton label="Add" primary={true} type="submit" disabled={submitting}/>

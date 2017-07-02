@@ -1,14 +1,18 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import SquadsComponent from './views/squads';
 import SquadFormContainer from './views/squadFormContainer';
+import PrivateRoute from "../../privateRoute";
+
 
 const squadsRoutes = (
-  <div>
-    <Route exact path="/squads" component={SquadsComponent}/>
-    <Route exact path="/squad" component = { SquadFormContainer } />
-    <Route exact path="/squad/:id" component = { SquadFormContainer } />
-  </div>
+    <div>
+        <Switch>
+            <PrivateRoute exact path="/squads" component={SquadsComponent}/>
+            <PrivateRoute exact path="/squad" component={ SquadFormContainer }/>
+            <PrivateRoute exact path="/squad/:id" component={ SquadFormContainer }/>
+        </Switch>
+    </div>
 );
 
 export default squadsRoutes;

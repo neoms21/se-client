@@ -4,7 +4,6 @@ import {Field} from 'redux-form'
 import {TextField} from 'material-ui'
 import '../../../core.scss'
 
-import {stopSubmit} from 'redux-form';
 import{Component, PropTypes} from 'react'
 
 
@@ -23,12 +22,8 @@ class SquadForm extends Component {
         return this.props.onSave(values);
     }
 
-    //
     componentWillReceiveProps(nextProps, nextContext) {
-
-        if (nextProps.errors && nextProps.errors.length > 0) {
-            this.props.dispatch(stopSubmit('squadForm', nextProps.errors[0]));
-        }
+        this.props.onReceiveProps(nextProps)
     }
 
     render() {

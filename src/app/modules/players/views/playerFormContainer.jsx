@@ -6,18 +6,20 @@ import {reduxForm} from 'redux-form'
 import {validateRequiredFields} from '../../../validators/validations'
 import emailValidator from "../../../validators/emailValidator";
 import phoneNumberValidator from "../../../validators/phoneNumberValidator";
+import {SelectField} from 'material-ui';
+
 
 const validate = values => {
     let errors = {};
-    let requiredErrors = validateRequiredFields(values, ['playerName', 'age']); // find our how to combine with other validations
-    let emailErrors = emailValidator (values, ['email']); // find our how to combine with other validations
-    let phNumberErrors = phoneNumberValidator (values, ['phone']); // find our how to combine with other validations
+    let requiredErrors = validateRequiredFields(values, ['playerName', 'age', 'email', 'position']); // find our how to combine with other validations
+    let emailErrors = emailValidator(values, ['email']); // find our how to combine with other validations
+    let phNumberErrors = phoneNumberValidator(values, ['phone']); // find our how to combine with other validations
     let ageError = {};
     if (values.age && values.age < 8) {
         ageError.age = "Player's age must be greater than 8";
     }
 
-    return Object.assign({}, requiredErrors, ageError, emailErrors, phNumberErrors);
+    return Object.assign({}, ageError, emailErrors, phNumberErrors, requiredErrors);
 };
 
 class PlayerFormContainer extends React.Component {
@@ -27,8 +29,7 @@ class PlayerFormContainer extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log('leaving player form');
-        this.props.dispatch(playerActions.clearSelectedPlayer())
+
     }
 }
 
@@ -36,7 +37,8 @@ class PlayerFormContainer extends React.Component {
 const mapStateToProps = (state, ownProps) => {
 
     return {
-        initialValues: state.players.selectedPlayer
+        initialValues: state.players.selectedPlayer,
+        errors: state.players.errors
     }
 
 };
@@ -45,6 +47,9 @@ const mapDispatchToProps = dispatch => {
         onSave: (values, squadId) => {
             let player = Object.assign({}, values, {squadId: squadId});
             dispatch(playerActions.createPlayer(player));
+        },
+        onUnmount: () => {
+            dispatch(playerActions.clearSelectedPlayer())
         }
     }
 };

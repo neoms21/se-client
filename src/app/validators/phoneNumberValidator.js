@@ -1,5 +1,8 @@
 const phoneNumberValidator = (values, field) => {
     const errors = {};
+    if (!values[field])
+        return errors;
+
     const expr = /^(([0]{1})|([\+][4]{2}))([1]|[2]|[3]|[7]){1}\d{8,9}$/;
 
     if (!expr.test(values[field])) {
