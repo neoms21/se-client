@@ -5,13 +5,6 @@ import { Field } from 'redux-form';
 import SelectField from '../../../../../components/form/select-field';
 import lodash from 'lodash';
 
-const items = [
-  <MenuItem key="defender" value='defender' primaryText="Defender"/>,
-  <MenuItem key='forward' value='forward' primaryText="Forward"/>,
-  <MenuItem key='goalkeeper'value='goalkeeper' primaryText="Goalkeeper"/>,
-  <MenuItem key='midfielder' value='midfielder' primaryText="Midfielder"/>,
-];
-
 export default class MatchEditSelectionForm extends React.Component {
 
   constructor(props) {
@@ -19,18 +12,34 @@ export default class MatchEditSelectionForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.errors && nextProps.errors.length > 0) {
+      this.props.dispatch(stopSubmit('MatchEditSelectionForm', nextProps.errors[0]));
+    }
   }
 
   getEditType = (selectedMatch) => {
     return lodash.isNil(selectedMatch.selectionId) ? 'Create' : 'Edit';
   };
 
+  getErrorClasses = () => {
+    let classes = 'submission-errors ';
+    return classes + (this.props.generalErrors.length > 0 ? 'visible' : 'hidden');
+  };
+
   onClose = () => {
-    this.context.history.goBack();
+    this.props.history.goBack();
   };
 
   render = () => {
-    const {availablePlayers, positions, selectedMatch, onSave, onClose} = this.props;
+    const {
+      availablePlayers,
+      positions,
+      selectedMatch,
+      onSave,
+      handleSubmit,
+      submitting,
+      generalErrors
+    } = this.props;
 
     return (
       <div className="match-edit-selection">
@@ -39,16 +48,12 @@ export default class MatchEditSelectionForm extends React.Component {
         </div>
         {availablePlayers.length === 0 ?
           <div className="error">There are no players available for that team
-          </div> : <br/>
+          </div> : <span/>
         }
 
-        <form onSubmit={this.props.handleSubmit(onSave)}>
-          <div className="buttons">
-            <RaisedButton label="Save" primary={true} />
-            <RaisedButton label="Close" onTouchTap={::this.onClose}/>
-          </div>
+        <form onSubmit={handleSubmit(onSave)}>
           <div className="selection-body">
-            <Field component={SelectField} name="Player" label="Select player"
+            <Field component={SelectField} name="player" label="Select player"
                    className="player">
               {availablePlayers.map((avail, index) =>
                 <MenuItem key={index}
@@ -56,15 +61,23 @@ export default class MatchEditSelectionForm extends React.Component {
                           primaryText={avail.playerName}/>
               )}
             </Field>
-            <Field component={SelectField} name="Position" className="position"
+            <Field component={SelectField} name="position" className="position"
                    label="Starting position">
-              {/*{positions.map((position) =>*/}
-                {/*<MenuItem key={position.value}*/}
-                          {/*value={position.value}*/}
-                          {/*primaryText={position.description}/>*/}
-              {/*)}*/}
-              {items}
+              {positions.map((position) =>
+                <MenuItem key={position.value}
+                          value={position.value}
+                          primaryText={position.description}/>
+              )}
             </Field>
+          </div>
+          <div className={::this.getErrorClasses()}>
+            {generalErrors.map((errorMsg, index) =>
+              <span key={index}>{errorMsg}</span>
+            )}
+          </div>
+          <div className="buttons">
+            <RaisedButton label="Save" primary={true} type="submit" disabled={submitting} />
+            <RaisedButton label="Close" onTouchTap={::this.onClose}/>
           </div>
         </form>
       </div>

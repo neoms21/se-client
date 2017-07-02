@@ -22,70 +22,7 @@ class EditMatchForm extends React.Component {
     return classes + (this.props.generalErrors.length > 0 ? 'visible' : 'hidden');
   };
 
-  // addPlayer = (e) => {
-  //   const newPlayer = {
-  //     id: this.state.nextId,
-  //     position: '',
-  //     player: '',
-  //     isEditing: true
-  //   };
-  //   let copyValues = this.state.playersPositions.concat();
-  //   copyValues.push(newPlayer);
-  //
-  //   // now change it
-  //   this.setState({
-  //     nextId: this.state.nextId + 1,
-  //     playersPositions: copyValues
-  //   });
-  // };
-
-  // deletePlayer = (playerId) => {
-  //   let copyValues = {
-  //     ...this.state.playersPositions
-  //   };
-  //
-  //   const playerIndexToBeDeleted = copyOfValues.players.findIndex((copyPlayer) => copyPlayer.id === playerId);
-  //   if (playerIndexToBeDeleted > -1) {
-  //     copyOfPlayers.splice(playerIndexToBeDeleted, 1);
-  //   }
-  //   // now we have trimmed it, update the state
-  //   this.setState({playersPositions: copyValues});
-  // };
-
-  // getAvailablePlayers = (availablePlayers, fields) => {
-  //   let players = availablePlayers.filter(player => {
-  //     return fields.filter(field => {
-  //       return field.player === player.playerName;
-  //     });
-  //   });
-  //
-  //   return players;
-  // };
-
-  // isAddDisabled = (fields) => {
-  //   if (!fields) return true;
-  //   // are there any fields that are editing
-  //   const fieldsEditing = fields.getAll().filter(field => field.isEditing);
-  //   return fieldsEditing.length > 0;
-  // };
-  //
-  // renderSquadSelect = (props) => (
-  //   <SelectField
-  //     floatingLabelText={props.label}
-  //     errorText={props.meta.touched && props.meta.error}
-  //     {...props.input}
-  //     onChange={(event, index, value) => {
-  //       props.input.onChange(value);
-  //       return this.props.getAvailablePlayers(value);
-  //     }}
-  //     onBlur={() => {
-  //       touched = true;
-  //     }}
-  //     children={props.children}
-  //     {...props.custom}/>
-  // );
-
-  renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) =>
+  renderDatePicker = ({ input, label, meta: { touched, error }, ...custom }) =>
     (
       <DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true}
                   onChange={(event, value) =>

@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../../validators/validations';
 import { convertErrorArrayToObject } from '../../../../../services/utils-service';
-import { goBack } from 'react-router-redux';
+import { push } from 'react-router-redux';
 
 function mapStateToProps(state, ownProps) {
   const errorDef = convertErrorArrayToObject(state.matchSelections.errors);
 
   return {
     availablePlayers: state.players.players || [],
-    positions: state.players.positions || [],
+    positions: state.matchSelections.positions || [],
     selectedMatch: state.matches.selectedMatch,
     errors: errorDef.fieldErrors,
     generalErrors: errorDef.generalErrors
@@ -22,11 +22,7 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSave: (values) => {
-      dispatch(createMatchSelection(values));
-      push('')
-    },
-    onClose: () => {
-      goBack();
+      dispatch(createMatchSelection(values, ownProps.selectedMatch.matchId));
     }
   };
 };

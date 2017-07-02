@@ -1,8 +1,8 @@
-import {combineEpics} from 'redux-observable';
-import {registerUserEpic, signinUserEpic, signinUserSuccessEpic, registerUserSuccessEpic} from '../modules/user/epics/user-epic';
-import {createSquadEpic} from '../modules/squads/epics/squad-epic';
-import {fetchSquadsEpic} from '../modules/squads/epics/squad-epic';
-import {createSquadSuccessEpic} from '../modules/squads/epics/squad-epic';
+import { combineEpics } from 'redux-observable';
+import { registerUserEpic, signinUserEpic, signinUserSuccessEpic, registerUserSuccessEpic } from '../modules/user/epics/user-epic';
+import { createSquadEpic } from '../modules/squads/epics/squad-epic';
+import { fetchSquadsEpic } from '../modules/squads/epics/squad-epic';
+import { createSquadSuccessEpic } from '../modules/squads/epics/squad-epic';
 import * as AppEpics from './app-epics';
 import * as MatchEpics from '../modules/matches/epics/match-epic';
 import * as PlayerEpics from '../modules/players/epics/player-epic';
@@ -19,6 +19,8 @@ export const rootEpic = combineEpics(
   createSquadSuccessEpic,
   MatchEpics.createMatchEpic,
   MatchEpics.createMatchSuccessEpic,
+  MatchEpics.createMatchSelectionEpic,
+  MatchEpics.createMatchSelectionSuccessEpic,
   PlayerEpics.createPlayerEpic,
   PlayerEpics.fetchPlayersForSquadsEpic
 );

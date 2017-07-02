@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Routes from './routes';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { routerReducer, ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader'; // AppContainer is a necessary wrapper component for HMR
 import createHistory from 'history/createBrowserHistory';
 import { Route, Switch } from 'react-router-dom';
