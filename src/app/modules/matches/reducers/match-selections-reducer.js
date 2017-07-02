@@ -2,23 +2,22 @@ import * as types from '../actions/actionTypes';
 
 const initialState = {};
 
-export default function matchReducer(state = initialState, action) {
+export default function matchSelectionsReducer(state = initialState, action) {
   switch (action.type) {
-    case types.CREATE_MATCH:
-      return {isLoading: true, ...state, errors: {}, selectedMatch: {}};
+    case types.CREATE_MATCH_SELECTION:
+      return {isLoading: true, ...state, errors: {}, matchSelection: {}};
 
-    case types.CREATE_MATCH_SUCCESS:
+    case types.CREATE_MATCH_SELECTION_SUCCESS:
       return {
         ...state, isLoading: false, message: action.message, errors: {},
-        selectedMatch: {
-          id: action.match.matchId,
-          squadName: action.match.squadName,
-          matchDate: action.match.matchDate,
-          position: action.match.position
+        matchSelection: {
+          matchSelectionId: action.matchSelection.matchSelectionId,
+          playerId: action.matchSelection.playerId,
+          positionId: action.matchSelection.positionId
         }
       };
 
-    case types.CREATE_MATCH_FAILURE:
+    case types.CREATE_MATCH_SELECTION_FAILURE:
       return {...state, isLoading: false, errors: action.errors};
 
     default:

@@ -92,10 +92,6 @@ class EditMatchForm extends React.Component {
                     input.onChange(value)} {...custom} />
     );
 
-  formSubmit = (values) => {
-    this.props.onSave(values);
-  };
-
   render = () => {
     const {
       onSave,
@@ -109,7 +105,8 @@ class EditMatchForm extends React.Component {
         <h1>Create match</h1>
         <form className="edit-match-form" onSubmit={this.props.handleSubmit(onSave)}>
           <div className="top-section">
-            <Field component={SelectField} name="squad" label="Select team">
+            <Field component={SelectField} name="squad" label="Select team"
+                   onValueChange={(value) => this.props.getAvailablePlayers(value)}>
               {squads.map(squad =>
                 <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
               }

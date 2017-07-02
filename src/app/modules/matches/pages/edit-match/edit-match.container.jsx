@@ -4,11 +4,12 @@ import { createMatch } from '../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../validators/validations';
-import {convertErrorArrayToObject} from '../../../../services/utils-service';
+import { convertErrorArrayToObject } from '../../../../services/utils-service';
+import { fetchPlayers } from '../../../players/actions/players-actions';
 
 
 function mapStateToProps(state, ownProps) {
-        const errorDef = convertErrorArrayToObject( state.matches.errors);
+  const errorDef = convertErrorArrayToObject(state.matches.errors);
 
   return {
     errors: errorDef.fieldErrors,
@@ -23,6 +24,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSave: (values) => {
       dispatch(createMatch(values));
+    },
+    getAvailablePlayers: (squadId) => {
+      dispatch(fetchPlayers(squadId));
     }
   };
 };

@@ -1,28 +1,32 @@
 import React from 'react';
-import EditMatchForm from './edit-match-form';
-import { createMatch } from '../../actions/match-actions';
+import MatchEditSelectionForm from './match-edit-selection-form';
+import { createMatchSelection } from '../../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { validateRequiredFields } from '../../../../validators/validations';
-import {convertErrorArrayToObject} from '../../../../services/utils-service';
-
+import { validateRequiredFields } from '../../../../../validators/validations';
+import { convertErrorArrayToObject } from '../../../../../services/utils-service';
+import { goBack } from 'react-router-redux';
 
 function mapStateToProps(state, ownProps) {
-        const errorDef = convertErrorArrayToObject( state.matches.errors);
+  const errorDef = convertErrorArrayToObject(state.matchSelections.errors);
 
   return {
-    errors: errorDef.fieldErrors,
-    generalErrors: errorDef.generalErrors,
-    squads: state.squads.squads,
     availablePlayers: state.players.players || [],
-    disabled: false
+    positions: state.players.positions || [],
+    selectedMatch: state.matches.selectedMatch,
+    errors: errorDef.fieldErrors,
+    generalErrors: errorDef.generalErrors
   };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onSave: (values) => {
-      dispatch(createMatch(values));
+      dispatch(createMatchSelection(values));
+      push('')
+    },
+    onClose: () => {
+      goBack();
     }
   };
 };
@@ -32,9 +36,9 @@ const validate = values => {
 };
 
 let page = reduxForm({
-  form: 'EditMatchForm',
+  form: 'MatchEditSelectionForm',
   validate
-})(EditMatchForm);
+})(MatchEditSelectionForm);
 
 // do a redux subscription
 export default connect(mapStateToProps, mapDispatchToProps)(page);
