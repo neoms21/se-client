@@ -20,7 +20,7 @@ const
 class SquadForm extends Component {
 
     mySubmit(values) {
-        return this.props.onSave(values);
+        return this.props.onSave(Object.assign({}, values, {userId: this.props.userId}));
     }
 
     componentWillReceiveProps(nextProps, nextContext) {

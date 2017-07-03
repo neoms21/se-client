@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 import convertErrorArrayToObject from '../../../services/utils-service';
 
-const initialState = {};
+const initialState = {currentUser: {}};
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
@@ -16,11 +16,13 @@ export default function userReducer(state = initialState, action) {
             let stateCopy = {...state};
             delete stateCopy.error;
             delete stateCopy.currentUser;
+
             return {
                 isLoading: true, ...stateCopy, userHash: action.user
             };
         case types.SIGNIN_USER_SUCCESS:
-            return {...state, isLoading: false, ...{currentUser: action.user}};
+            console.log(action.user);
+            return {...state, isLoading: false, userHash: {}, ...{currentUser: action.user}};
         case types.SIGNIN_USER_FAILURE:
             return Object.assign({}, state, {
                 isLoading: false,

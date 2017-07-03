@@ -30,5 +30,8 @@ export default function configureStore(history, initialState) {
     const routingMiddleware = routerMiddleware(history);
 
     return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware, routingMiddleware,
-        reduxImmutableStateInvariant()), persistState()));
+        reduxImmutableStateInvariant()), persistState(['user'])));
+
+    // return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware, routingMiddleware,
+    //     reduxImmutableStateInvariant())));
 }
