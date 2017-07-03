@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 import convertErrorArrayToObject from '../../../services/utils-service';
 
-const initialState = {};
+const initialState = {currentUser: {}};
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {

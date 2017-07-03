@@ -3,15 +3,15 @@ import * as types from '../actions/actionTypes';
 
 describe('User Reducer', () => {
     it('should return initial state when action empty', () => {
-        expect(UserReducer(undefined, {})).toEqual({});
+        expect(UserReducer(undefined, {})).toEqual({"currentUser": {}});
     });
 
     it('should return initial state when action type not set', () => {
-        expect(UserReducer(undefined, {type: undefined})).toEqual({});
+        expect(UserReducer(undefined, {type: undefined})).toEqual({"currentUser": {}});
     });
 
     it('should alter state when register user', () => {
-        expect(UserReducer(undefined, {type: types.REGISTER_USER})).toEqual({isLoading: true});
+        expect(UserReducer(undefined, {type: types.REGISTER_USER})).toEqual({isLoading: true, "currentUser": {}});
     });
 
     it('should alter state when register user success', () => {
@@ -34,7 +34,11 @@ describe('User Reducer', () => {
 
     it('should alter state when register user success', () => {
         let action = {type: types.SIGNIN_USER_SUCCESS, user: {name: 'Frank Lampard', email: 'frank@chelseafc.com'}};
-        const expectedState = {isLoading: false, currentUser: {name: 'Frank Lampard', email: 'frank@chelseafc.com'}};
+        const expectedState = {
+            isLoading: false,
+            currentUser: {name: 'Frank Lampard', email: 'frank@chelseafc.com'},
+            userHash: {}
+        };
         expect(UserReducer({isLoading: true}, action)).toEqual(expectedState);
     });
 

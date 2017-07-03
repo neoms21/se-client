@@ -41,7 +41,6 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state, ownProps) => {
 
     let squad = getSquad(state, ownProps.match.params.id);
-
     return {
         saved: state.squads.saved,
         errors: state.squads.errors,
