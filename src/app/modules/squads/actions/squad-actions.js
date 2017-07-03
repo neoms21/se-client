@@ -1,7 +1,8 @@
 import * as types from './squad.actionTypes';
 
-export const fetchSquads = (squadInfo) => ({
+export const fetchSquads = (userId) => ({
     type: types.FETCH_SQUADS,
+    payload: userId
 });
 
 export const createSquad = (squadInfo) => ({
@@ -10,16 +11,16 @@ export const createSquad = (squadInfo) => ({
 });
 //
 export const createSquadSuccess = (squad) => (
-{
-    type: types.CREATE_SQUAD_SUCCESS,
-    squad: squad
-});
+    {
+        type: types.CREATE_SQUAD_SUCCESS,
+        squad: squad
+    });
 
 export const fetchSquadSuccess = (squads) => (
-{
-    type: types.FETCH_SQUADS_SUCCESS,
-    payload: squads
-});
+    {
+        type: types.FETCH_SQUADS_SUCCESS,
+        payload: squads
+    });
 
 export const createSquadFailure = (errors) => ({
     type: types.CREATE_SQUAD_FAILURE,
