@@ -29,3 +29,20 @@ export const signinUserFailure = (error) => ({
     type: types.SIGNIN_USER_FAILURE,
     error: error
 });
+
+export const verifyToken = (token) => ({
+    type: types.VERIFY_TOKEN,
+    payload: token
+});
+
+export const verifyTokenSuccess = () => ({
+    type: types.VERIFY_TOKEN_SUCCESS
+});
+
+export const verifyTokenFailure = (error) => ({
+    type: types.VERIFY_TOKEN_FAILURE,
+    error: error
+});
+export const signOutUser = () => ({
+    type: types.SIGNOUT_USER
+})

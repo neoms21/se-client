@@ -12,21 +12,11 @@ class SquadsComponent extends React.Component {
     }
 
     componentWillMount() {
-        console.log('in will mount', this.props.userId);
         this.props.dispatch(squadActions.fetchSquads(this.props.userId));
     }
 
     addSquad = () => {
-        console.log('in add');
         this.props.history.push('/squad');
-    };
-
-    goToPlayers = (id) => {
-        this.props.history.push('squad/' + id + '/players');
-    };
-
-    editSquad = (squad) => {
-        this.props.history.push('squad/' + squad._id);
     };
 
     render() {

@@ -14,7 +14,7 @@ export default function userReducer(state = initialState, action) {
             return {...state, isLoading: false, errors: convertErrorArrayToObject(action.errors)};
         case types.SIGNIN_USER:
             let stateCopy = {...state};
-            delete stateCopy.error;
+            delete stateCopy.errorMessage;
             delete stateCopy.currentUser;
 
             return {
@@ -29,6 +29,14 @@ export default function userReducer(state = initialState, action) {
                 errorMessage: action.error,
                 showError: true
             });
+
+        case types.VERIFY_TOKEN_FAILURE:
+            return Object.assign({}, state, {
+                errorMessage: action.error
+            });
+        case types.SIGNOUT_USER:
+            return initialState;
+
         default:
             return state;
     }

@@ -30,6 +30,11 @@ export default function Squad(props) {
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
             </NavLink>
+            <NavLink to={editUrl}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={red500}>delete</FontIcon>
+            </NavLink>
         </div>
     )
 };
