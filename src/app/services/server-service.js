@@ -102,7 +102,7 @@ const sendCommand = (name, payload) => {
         socket.emit('command', command);
     }
     catch (err) {
-        clientObserver.error(err);
+        clientObserver.error([err]);
     }
 
     // let consumer have it
@@ -122,7 +122,6 @@ const sendQuery = (name, payload) => {
         socket.emit('query', query);
     }
     catch (err) {
-        console.log(err);
         clientObserver.error(err);
     }
 

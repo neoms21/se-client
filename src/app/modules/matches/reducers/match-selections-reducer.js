@@ -1,18 +1,6 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-  positions: [
-    {
-      value: "defender",
-      description: "Defender"
-  },
-    { value: 'forward', description: 'Forward' },
-    { value: 'goalkeeper', description: 'Goalkeeper' },
-    {
-      value: 'midfielder',
-      description: "Midfielder"
-  }
-]
 };
 
 export default function matchSelectionsReducer(state = initialState, action) {

@@ -11,10 +11,9 @@ export default function matchReducer(state = initialState, action) {
       return {
         ...state, isLoading: false, message: action.message, errors: {},
         selectedMatch: {
-          id: action.match.matchId,
+          matchId: action.match.matchId,
           squadName: action.match.squadName,
-          matchDate: action.match.matchDate,
-          position: action.match.position
+          matchDate: action.match.matchDate
         }
       };
 

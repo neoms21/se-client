@@ -22,12 +22,15 @@ export default class MatchEditSelectionForm extends React.Component {
   };
 
   getErrorClasses = () => {
-    let classes = 'submission-errors ';
-    return classes + (this.props.generalErrors.length > 0 ? 'visible' : 'hidden');
+    return (this.props.generalErrors.length > 0 ? 'error' : '');
   };
 
   onClose = () => {
     this.props.history.goBack();
+  };
+
+  onSave = (values) => {
+    this.props.onSave(values, this.props.selectedMatch.matchId);
   };
 
   render = () => {
@@ -51,7 +54,7 @@ export default class MatchEditSelectionForm extends React.Component {
           </div> : <span/>
         }
 
-        <form onSubmit={handleSubmit(onSave)}>
+        <form onSubmit={handleSubmit(::this.onSave)}>
           <div className="selection-body">
             <Field component={SelectField} name="player" label="Select player"
                    className="player">

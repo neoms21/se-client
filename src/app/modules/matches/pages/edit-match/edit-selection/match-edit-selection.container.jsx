@@ -5,14 +5,20 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../../validators/validations';
 import { convertErrorArrayToObject } from '../../../../../services/utils-service';
-import { push } from 'react-router-redux';
+
+const tempPositions = [
+  {value: 'defender', description: 'Defender'},
+  {value: 'forward', description: 'Forward'},
+  {value: 'goalkeeper', description: 'Goalkeeper'},
+  {value: 'midfielder', description: 'Midfielder'}
+];
 
 function mapStateToProps(state, ownProps) {
   const errorDef = convertErrorArrayToObject(state.matchSelections.errors);
 
   return {
     availablePlayers: state.players.players || [],
-    positions: state.matchSelections.positions || [],
+    positions: tempPositions, //state.matchSelections.positions || [],
     selectedMatch: state.matches.selectedMatch,
     errors: errorDef.fieldErrors,
     generalErrors: errorDef.generalErrors
@@ -21,8 +27,8 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onSave: (values) => {
-      dispatch(createMatchSelection(values, ownProps.selectedMatch.matchId));
+    onSave: (values, matchId) => {
+      dispatch(createMatchSelection(values, matchId));
     }
   };
 };
