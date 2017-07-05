@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes';
 import convertErrorArrayToObject from '../../../services/utils-service';
 
-const initialState = {currentUser: {}};
+const initialState = {};
 
 export default function userReducer(state = initialState, action) {
     switch (action.type) {
@@ -31,7 +31,7 @@ export default function userReducer(state = initialState, action) {
             });
 
         case types.VERIFY_TOKEN_FAILURE:
-            return Object.assign({}, state, {
+            return Object.assign({}, initialState, {
                 errorMessage: action.error
             });
         case types.SIGNOUT_USER:

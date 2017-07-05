@@ -12,7 +12,8 @@ class SquadsComponent extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(squadActions.fetchSquads(this.props.userId));
+        if (this.props.userId)
+            this.props.dispatch(squadActions.fetchSquads(this.props.userId));
     }
 
     addSquad = () => {

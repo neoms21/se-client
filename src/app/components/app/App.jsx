@@ -7,7 +7,7 @@ class App extends React.Component {
 
     componentWillMount() {
         // sign user in
-        if (this.props.currentUser) {
+        if (this.props.currentUser && this.props.currentUser.token) {
             this.props.dispatch(verifyToken(this.props.currentUser.token));
         }
     }

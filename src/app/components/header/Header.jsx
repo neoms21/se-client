@@ -7,9 +7,8 @@ import LeftHandMenu from "./LeftHandMenu";
 
 const Header = ({handleLeftIconClick, handleSignin, onLogout, currentUser}) => (
 
-   // console.log(currentUser, onLogout, handleLeftIconClick, handleSignin),
     <AppBar title='Sports Editor' onLeftIconButtonTouchTap={handleLeftIconClick}
-            iconElementLeft={<LeftHandMenu />}
+            iconElementLeft={currentUser ? <LeftHandMenu /> : ''}
             iconElementRight={currentUser
                 ? <Logged currentUser={currentUser} logout={onLogout}/>
                 : <Login handleSignin={handleSignin}/>}>
