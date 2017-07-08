@@ -12,9 +12,8 @@ const matchesRoutes = (
       <PrivateRoute exact path="/creatematch" component={EditMatchPage}/>
       <PrivateRoute exact path="/editmatch/:id" component={EditMatchPage}/>
       <PrivateRoute exact path="/match-list" component={MatchListPage}/>
-      <PrivateRoute exact path="/match/:id/selection-list" component={MatchSelectionListPage}/>
-      <PrivateRoute exact path="/match/:id/edit-selection" component={MatchEditSelectionPage}/>
-      <PrivateRoute exact path="/match/:matchId/edit-selection/:selectionId" component={MatchEditSelectionPage}/>
+      <PrivateRoute exact path="/match/:matchId/selection-list" component={MatchSelectionListPage}/>
+      <PrivateRoute exact path="/match/:matchId/edit-selection/:selectionId?" component={MatchEditSelectionPage}/>
     </Switch>
   </div>
 );

@@ -1,10 +1,18 @@
 import * as types from '../actions/actionTypes';
 
-const initialState = {
-};
+const initialState = {};
 
 export default function matchSelectionsReducer(state = initialState, action) {
   switch (action.type) {
+    case types.CREATE_MATCH:
+      return { ...state, selections: []};
+
+    case types.ADD_SELECTION:
+      return { ...state, selections: state.selections ? [...state.selections, {...action.matchSelection}] : []};
+
+    case types.DELETE_SELECTION:
+      return { ...state, selections: state.selections.filter(sel => sel.selectionId !== action.selectionId)};
+
     case types.CREATE_MATCH_SELECTION:
       return { isLoading: true, ...state, errors: {}, matchSelection: {} };
 
@@ -14,11 +22,12 @@ export default function matchSelectionsReducer(state = initialState, action) {
         isLoading: false,
         message: action.message,
         errors: {},
-        matchSelection: {
-          matchSelectionId: action.matchSelection.matchSelectionId,
-          playerId: action.matchSelection.playerId,
-          positionId: action.matchSelection.positionId
-        }
+        selections: []
+        // matchSelection: {
+        //   matchSelectionId: action.matchSelection.matchSelectionId,
+        //   playerId: action.matchSelection.playerId,
+        //   positionId: action.matchSelection.positionId
+        // }
       };
 
     case types.CREATE_MATCH_SELECTION_FAILURE:

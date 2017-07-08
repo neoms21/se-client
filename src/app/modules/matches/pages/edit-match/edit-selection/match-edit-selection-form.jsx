@@ -4,6 +4,7 @@ import './match-edit-selection.scss';
 import { Field } from 'redux-form';
 import SelectField from '../../../../../components/form/select-field';
 import lodash from 'lodash';
+import PropTypes from 'prop-types';
 
 export default class MatchEditSelectionForm extends React.Component {
 
@@ -26,11 +27,12 @@ export default class MatchEditSelectionForm extends React.Component {
   };
 
   onClose = () => {
-    this.props.history.goBack();
+    //this.props.history.push(this.props.history.location.pathname.replace('edit-selection', 'selection-list'));
   };
 
   onSave = (values) => {
     this.props.onSave(values, this.props.selectedMatch.matchId);
+    //this.props.history.push(this.props.history.location.pathname.replace('edit-selection', 'selection-list'));
   };
 
   render = () => {
@@ -38,7 +40,6 @@ export default class MatchEditSelectionForm extends React.Component {
       availablePlayers,
       positions,
       selectedMatch,
-      onSave,
       handleSubmit,
       submitting,
       generalErrors
@@ -79,7 +80,7 @@ export default class MatchEditSelectionForm extends React.Component {
             )}
           </div>
           <div className="buttons">
-            <RaisedButton label="Save" primary={true} type="submit" disabled={submitting} />
+            <RaisedButton label="Save" primary={true} type="submit" disabled={submitting}/>
             <RaisedButton label="Close" onTouchTap={::this.onClose}/>
           </div>
         </form>
@@ -87,3 +88,8 @@ export default class MatchEditSelectionForm extends React.Component {
     );
   };
 }
+
+// ask for `router` from context
+MatchEditSelectionForm.contextTypes = {
+  router: PropTypes.object
+};

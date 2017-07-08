@@ -1,8 +1,7 @@
 {
   "presets": [
-    "react",
-    "env",
-    "stage-1"
+    ["env", {"modules": false}],
+    "react"
   ],
   "plugins": [
     "transform-function-bind",

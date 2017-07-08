@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './match-selections.scss';
-import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
-import { greenA200 } from 'material-ui/styles/colors';
+import { FontIcon, IconButton, RaisedButton } from 'material-ui';
+import { greenA200, redA200 } from 'material-ui/styles/colors';
 import { NavLink } from 'react-router-dom';
+import { createMatchSelection, deleteSelection } from '../../../actions/match-actions';
 
 const iconStyles = {
   marginRight: 10,
@@ -16,18 +16,35 @@ class MatchSelectionsListComponent extends React.Component {
     super(props);
   }
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.errors && nextProps.errors.length === 0) {
+      this.close();
+    }
+  }
+
   addSelection = () => {
     this.props.history.push('edit-selection');
+  };
+
+  getEditUrl(selectionId) {
+    return this.props.history.location.pathname.replace('selection-list', 'edit-selection') + '/' + selectionId;
+  }
+
+  close = () => {
+    this.props.history.push(this.props.history.location.pathname.replace('selection-list', ''));
+  };
+
+  deleteSelection = () => {
+    this.props.onDelete();
   };
 
   render() {
 
     const {
       selections,
-      matchId
+      onSave,
+      onDelete
     } = this.props;
-
-    let editUrl = `match/${matchId}/edit-selection`;
 
     return (
       <div className="match-selection-list">
@@ -35,17 +52,29 @@ class MatchSelectionsListComponent extends React.Component {
         <div className="match-info">
         </div>
         <RaisedButton label="Add" primary={true} onClick={this.addSelection}/>
+        <RaisedButton label="Save" primary={true} onClick={onSave}/>
+        <RaisedButton label="Close" primary={false} onClick={this.close}/>
+
         {selections.map((selection, index) => {
           return (
-            <div className="selection-item">
+            <div key={index} className="selection-item">
               <span className="description">
-          {selection.name}
-        </span>
-              <NavLink to={editUrl}>
+                {selection.player}
+              </span>
+              <span className="description">
+                {selection.position}
+              </span>
+
+              <NavLink to={::this.getEditUrl(selection.selectionId)}>
                 <FontIcon style={iconStyles}
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
               </NavLink>
+              <IconButton onClick={onDelete(selection.selectionId)}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={redA200}>delete</FontIcon>
+              </IconButton>
             </div>
           );
         })}
@@ -53,11 +82,24 @@ class MatchSelectionsListComponent extends React.Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
-    selections: state.matches.selections || [],
+    selections: state.matchSelections.selections || [],
     matchId: state.matches.matchId
   };
 }
 
-export default connect(mapStateToProps)(MatchSelectionsListComponent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSave: (values, matchId) => {
+      dispatch(createMatchSelection(values, matchId));
+      this.close();
+    },
+    onDelete: (matchSelectionId) => {
+      dispatch(deleteSelection(matchSelectionId));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MatchSelectionsListComponent);

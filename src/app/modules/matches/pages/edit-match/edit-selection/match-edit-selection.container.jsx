@@ -1,10 +1,12 @@
 import React from 'react';
 import MatchEditSelectionForm from './match-edit-selection-form';
-import { createMatchSelection } from '../../../actions/match-actions';
+import { addSelection } from '../../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../../validators/validations';
 import { convertErrorArrayToObject } from '../../../../../services/utils-service';
+import { push } from 'react-router-redux';
+import * as uuid from 'uuid';
 
 const tempPositions = [
   {value: 'defender', description: 'Defender'},
@@ -13,7 +15,7 @@ const tempPositions = [
   {value: 'midfielder', description: 'Midfielder'}
 ];
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   const errorDef = convertErrorArrayToObject(state.matchSelections.errors);
 
   return {
@@ -26,9 +28,12 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const location = ownProps.location;
+
   return {
-    onSave: (values, matchId) => {
-      dispatch(createMatchSelection(values, matchId));
+    onSave: (values) => {
+      dispatch(addSelection({...values, selectionId: uuid.v4()}));
+      push(location.pathname.replace('edit-selection', 'selection-list'));
     }
   };
 };

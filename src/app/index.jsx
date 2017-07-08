@@ -9,11 +9,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { ConnectedRouter } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader'; // AppContainer is a necessary wrapper component for HMR
 import createHistory from 'history/createBrowserHistory';
-import { Route, Switch } from 'react-router-dom';
 
 import '../assets/fonts/roboto/roboto.scss';
 import '../assets/fonts/material/material-icons.css';
 import '../assets/styles/global.scss';
+import App from './components/app/App';
 
 const history = createHistory();
 const store = configureStore(history);
@@ -26,13 +26,13 @@ const appRender = () => {
   render(
     <div>
       <AppContainer>
-          <MuiThemeProvider>
-              <Provider store={store}>
-                <ConnectedRouter history={history}>
-                  <Routes />
-                </ConnectedRouter>
-              </Provider>
-          </MuiThemeProvider>
+        <MuiThemeProvider>
+          <Provider store={store}>
+            <ConnectedRouter history={history}>
+              <Routes />
+            </ConnectedRouter>
+          </Provider>
+        </MuiThemeProvider>
       </AppContainer>
     </div>,
     document.getElementById('app'));
@@ -43,6 +43,6 @@ appRender(); // run it
 // Hot Module Replacement API
 if (module.hot) {
   module.hot.accept('./components/app/App', () => {
-    appRender();
+    appRender(App);
   });
 }

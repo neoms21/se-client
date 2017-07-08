@@ -22,9 +22,10 @@ class EditMatchForm extends React.Component {
     return classes + (this.props.generalErrors.length > 0 ? 'visible' : 'hidden');
   };
 
-  renderDatePicker = ({ input, label, meta: { touched, error }, ...custom }) =>
+  renderDatePicker = ({input, label, meta: {touched, error}, ...custom}) =>
     (
-      <DatePicker errorText={touched && error} hintText={label} floatingLabelText={label} autoOk={true}
+      <DatePicker errorText={touched && error} hintText={label}
+                  floatingLabelText={label} autoOk={true}
                   onChange={(event, value) =>
                     input.onChange(value)} {...custom} />
     );
