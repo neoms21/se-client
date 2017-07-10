@@ -31,3 +31,8 @@ export const createMatchSelectionSuccessEpic = action$ =>
   action$.ofType(ActionTypes.CREATE_MATCH_SELECTION_SUCCESS)
     .mergeMap(action =>
       Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`, action.message)));
+
+export const addSelectionEpic = action$ =>
+  action$.ofType(ActionTypes.ADD_SELECTION)
+    .mergeMap(action =>
+      Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`, action.message)));

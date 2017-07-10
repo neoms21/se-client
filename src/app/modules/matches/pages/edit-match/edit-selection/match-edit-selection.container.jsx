@@ -31,9 +31,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const location = ownProps.location;
 
   return {
-    onSave: (values) => {
-      dispatch(addSelection({...values, selectionId: uuid.v4()}));
-      push(location.pathname.replace('edit-selection', 'selection-list'));
+    onSave: (values, matchId) => {
+      dispatch(addSelection({...values, selectionId: uuid.v4(), matchId}));
     }
   };
 };

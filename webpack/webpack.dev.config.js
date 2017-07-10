@@ -8,21 +8,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BUILD_DIR = path.resolve(__dirname, '../build');
 const APP_DIR = path.resolve(__dirname, '../src/app');
 const SRC_DIR = path.resolve(__dirname, '../src');
-const ROOT_DIR = path.resolve(__dirname, '..');
 const NODE_MODULES = path.resolve(__dirname, '../node_modules');
 
 //noinspection WebpackConfigHighlighting
 const config = {
   context: SRC_DIR,
   entry: [
+    //'babel-polyfill',
     'react-hot-loader/patch',
-    // activate HMR for React
-    'webpack-dev-server/client?http://localhost:7000',
-    // bundle the client for webpack-dev-server
-    // and connect to the provided endpoint
-    'webpack/hot/only-dev-server',
-    // bundle the client for hot reloading
-    // only- means to only hot reload for successful updates
 
     // the entry point of our app
     './app/index.jsx'
@@ -32,18 +25,15 @@ const config = {
     filename: 'bundle.js',
     publicPath: '/',
   },
-  devtool: 'source-map-inline',
+  devtool: 'inline-source-map',
   target: 'web',
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: NODE_MODULES,
-        loader: 'babel-loader',
-        include: APP_DIR,
-        plugins: [
-          'react-hot-loader/babel'
-        ]
+        use: ['react-hot-loader', 'babel-loader'],
+        include: APP_DIR
       }, {
         test: /\.scss$/,
         exclude: NODE_MODULES,

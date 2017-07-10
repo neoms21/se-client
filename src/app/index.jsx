@@ -38,7 +38,7 @@ const appRender = () => {
     document.getElementById('app'));
 };
 
-appRender(); // run it
+appRender(App); // run it
 
 // Hot Module Replacement API
 if (module.hot) {
