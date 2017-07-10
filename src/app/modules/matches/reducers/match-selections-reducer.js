@@ -5,7 +5,7 @@ const initialState = {};
 export default function matchSelectionsReducer(state = initialState, action) {
   switch (action.type) {
     case types.CREATE_MATCH:
-      return { ...state, selections: []};
+      return { ...state, selections: [], errors: {}};
 
     case types.ADD_SELECTION:
       return { ...state, selections: state.selections ? [...state.selections, {...action.matchSelection}] : []};

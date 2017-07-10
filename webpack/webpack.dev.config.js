@@ -32,7 +32,7 @@ const config = {
       {
         test: /\.jsx?$/,
         exclude: NODE_MODULES,
-        use: ['react-hot-loader', 'babel-loader'],
+        use: ['babel-loader'],
         include: APP_DIR
       }, {
         test: /\.scss$/,

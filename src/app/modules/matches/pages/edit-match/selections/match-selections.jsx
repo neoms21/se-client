@@ -34,8 +34,8 @@ class MatchSelectionsListComponent extends React.Component {
     this.props.history.push(this.props.history.location.pathname.replace('selection-list', ''));
   };
 
-  deleteSelection = () => {
-    this.props.onDelete();
+  onDelete = (selection) => {
+    this.props.onDelete(selection.selectionId);
   };
 
   render() {
@@ -51,11 +51,13 @@ class MatchSelectionsListComponent extends React.Component {
         <h1>Match selections</h1>
         <div className="match-info">
         </div>
-        <RaisedButton label="Add" primary={true} onClick={this.addSelection}/>
+        <RaisedButton label="Add" primary={true} onClick={::this.addSelection}/>
         <RaisedButton label="Save" primary={true} onClick={onSave}/>
-        <RaisedButton label="Close" primary={false} onClick={this.close}/>
+        <RaisedButton label="Close" primary={false} onClick={::this.close}/>
 
         {selections.map((selection, index) => {
+          const deleteFunc = onDelete.bind(this, selection);
+
           return (
             <div key={index} className="selection-item">
               <span className="description">
@@ -70,7 +72,7 @@ class MatchSelectionsListComponent extends React.Component {
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
               </NavLink>
-              <IconButton onClick={onDelete(selection.selectionId)}>
+              <IconButton onTouchTap={deleteFunc}>
                 <FontIcon style={iconStyles}
                           className="material-icons"
                           color={redA200}>delete</FontIcon>
