@@ -11,7 +11,7 @@ export default function matchSelectionsReducer(state = initialState, action) {
       return { ...state, selections: state.selections ? [...state.selections, {...action.matchSelection}] : []};
 
     case types.DELETE_SELECTION:
-      return { ...state, selections: state.selections.filter(sel => sel.selectionId !== action.selectionId)};
+      return { ...state, selections: state.selections.filter(sel => sel.selectionId !== action.matchSelection.selectionId)};
 
     case types.CREATE_MATCH_SELECTION:
       return { isLoading: true, ...state, errors: {}, matchSelection: {} };

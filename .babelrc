@@ -1,7 +1,8 @@
 {
   "presets": [
-    ["env", {"modules": false}],
-    "react"
+    "react",
+    ["es2015", { loose: true, modules: false }],
+    "stage-2"
   ],
   "plugins": [
     "transform-function-bind",

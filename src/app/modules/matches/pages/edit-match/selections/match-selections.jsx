@@ -51,9 +51,9 @@ class MatchSelectionsListComponent extends React.Component {
         <h1>Match selections</h1>
         <div className="match-info">
         </div>
-        <RaisedButton label="Add" primary={true} onClick={::this.addSelection}/>
-        <RaisedButton label="Save" primary={true} onClick={onSave}/>
-        <RaisedButton label="Close" primary={false} onClick={::this.close}/>
+        <RaisedButton label="Add" primary={true} className="toolbar-button" onClick={::this.addSelection}/>
+        <RaisedButton label="Save" primary={true} className="toolbar-button" onClick={onSave}/>
+        <RaisedButton label="Close" primary={false} className="toolbar-button" onClick={::this.close}/>
 
         {selections.map((selection, index) => {
           const deleteFunc = onDelete.bind(this, selection);
@@ -72,11 +72,9 @@ class MatchSelectionsListComponent extends React.Component {
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
               </NavLink>
-              <IconButton onTouchTap={deleteFunc}>
-                <FontIcon style={iconStyles}
+                <FontIcon style={iconStyles} onTouchTap={deleteFunc}
                           className="material-icons"
                           color={redA200}>delete</FontIcon>
-              </IconButton>
             </div>
           );
         })}
