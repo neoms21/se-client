@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './match-selections.scss';
-import { FontIcon, IconButton, RaisedButton } from 'material-ui';
+import { FontIcon, RaisedButton } from 'material-ui';
 import { greenA200, redA200 } from 'material-ui/styles/colors';
 import { NavLink } from 'react-router-dom';
-import { createMatchSelection, deleteSelection } from '../../../actions/match-actions';
+import { addMatchSelection, deleteMatchSelection } from '../../../actions/match-actions';
 
 const iconStyles = {
   marginRight: 10,
@@ -39,7 +39,6 @@ class MatchSelectionsListComponent extends React.Component {
   };
 
   render() {
-
     const {
       selections,
       onSave,
@@ -72,9 +71,9 @@ class MatchSelectionsListComponent extends React.Component {
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
               </NavLink>
-                <FontIcon style={iconStyles} onTouchTap={deleteFunc}
-                          className="material-icons"
-                          color={redA200}>delete</FontIcon>
+              <FontIcon style={iconStyles} onTouchTap={deleteFunc}
+                        className="material-icons"
+                        color={redA200}>delete</FontIcon>
             </div>
           );
         })}
@@ -83,21 +82,26 @@ class MatchSelectionsListComponent extends React.Component {
   }
 }
 
+const validate = (selections) => {
+  @@@@@@@@@@@@@@@@@@@@@
+};
+
 function mapStateToProps(state) {
   return {
     selections: state.matchSelections.selections || [],
-    matchId: state.matches.matchId
+    matchId: state.matches.matchId,
+    errors: validate(state.selections)
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onSave: (values, matchId) => {
-      dispatch(createMatchSelection(values, matchId));
+      dispatch(addMatchSelection(values, matchId));
       this.close();
     },
     onDelete: (matchSelectionId) => {
-      dispatch(deleteSelection(matchSelectionId));
+      dispatch(deleteMatchSelection(matchSelectionId));
     }
   };
 };

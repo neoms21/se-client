@@ -1,6 +1,6 @@
 import React from 'react';
 import EditMatchForm from './edit-match-form';
-import { createMatch } from '../../actions/match-actions';
+import { addMatchInfo } from '../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../validators/validations';
@@ -16,14 +16,14 @@ function mapStateToProps(state, ownProps) {
     generalErrors: errorDef.generalErrors,
     squads: state.squads.squads,
     availablePlayers: state.players.players || [],
-    disabled: false
+    matchInfo: state.matches.matchInfo
   };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onSave: (values) => {
-      dispatch(createMatch(values));
+    onAddEdit: (values) => {
+      dispatch(addMatchInfo(values));
     },
     getAvailablePlayers: (squadId) => {
       dispatch(fetchPlayers(squadId));

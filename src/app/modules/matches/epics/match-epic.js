@@ -17,22 +17,27 @@ export const createMatchSuccessEpic = action$ =>
     .mergeMap(action =>
       Observable.of(push(`/match/${action.match.matchId}/selection-list`, action.message)));
 
-export const createMatchSelectionEpic = action$ =>
-  action$.ofType(ActionTypes.CREATE_MATCH_SELECTION)
-    .mergeMap(action =>
-      sendCommand('SaveMatchSelection', {...action.selectionInfo, matchId: action.matchId})
-        .map(ev => ev.properties.isFailure ? matchActions.createMatchSelectionFailure(ev.errors) :
-            matchActions.createMatchSelectionSuccess(ev.payload),
-          (err) =>
-            matchActions.createMatchSelectionFailure(['Unable to send command'])) // output success
-    );
+// export const createMatchSelectionEpic = action$ =>
+//   action$.ofType(ActionTypes.CREATE_MATCH_SELECTION)
+//     .mergeMap(action =>
+//       sendCommand('SaveMatchSelection', {...action.selectionInfo, matchId: action.matchId})
+//         .map(ev => ev.properties.isFailure ? matchActions.createMatchSelectionFailure(ev.errors) :
+//             matchActions.createMatchSelectionSuccess(ev.payload),
+//           (err) =>
+//             matchActions.createMatchSelectionFailure(['Unable to send command'])) // output success
+//     );
+//
+// export const createMatchSelectionSuccessEpic = action$ =>
+//   action$.ofType(ActionTypes.CREATE_MATCH_SELECTION_SUCCESS)
+//     .mergeMap(action =>
+//       Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`, action.message)));
 
-export const createMatchSelectionSuccessEpic = action$ =>
-  action$.ofType(ActionTypes.CREATE_MATCH_SELECTION_SUCCESS)
+export const addMatchSelectionEpic = action$ =>
+  action$.ofType(ActionTypes.ADD_MATCH_SELECTION)
     .mergeMap(action =>
       Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`, action.message)));
 
-export const addSelectionEpic = action$ =>
-  action$.ofType(ActionTypes.ADD_SELECTION)
+export const addInfoEpic = action$ =>
+  action$.ofType(ActionTypes.ADD_MATCH_INFO)
     .mergeMap(action =>
       Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`, action.message)));

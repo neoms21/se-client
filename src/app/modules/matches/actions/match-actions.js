@@ -15,28 +15,18 @@ export const createMatchFailure = (errors) => ({
   errors: errors
 });
 
-export const addSelection = (selectionInfo) => ({
+export const addMatchSelection = (selectionInfo) => ({
   type: types.ADD_SELECTION,
   matchSelection: selectionInfo
 });
 
-export const deleteSelection = (selectionInfo) => ({
+export const deleteMatchSelection = (selectionInfo) => ({
   type: types.DELETE_SELECTION,
   matchSelection: selectionInfo
 });
 
-export const createMatchSelection = (selectionInfo, matchId) => ({
-  type: types.CREATE_MATCH_SELECTION,
-  selectionInfo: selectionInfo,
-  matchId: matchId
+export const addMatchInfo = (info) => ({
+  type: types.ADD_MATCH_INFO,
+  info: info
 });
 
-export const createMatchSelectionSuccess = (payload) => ({
-  type: types.CREATE_MATCH_SELECTION_SUCCESS,
-  matchSelection: payload
-});
-
-export const createMatchSelectionFailure = (errors) => ({
-  type: types.CREATE_MATCH_SELECTION_FAILURE,
-  errors: errors
-});

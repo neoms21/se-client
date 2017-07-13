@@ -26,13 +26,19 @@ class EditMatchForm extends React.Component {
     (
       <DatePicker errorText={touched && error} hintText={label}
                   floatingLabelText={label} autoOk={true}
+                  {...input}
+                  format={v => (v === '' || v === undefined ? new Date() : new Date(v))}
                   onChange={(event, value) =>
                     input.onChange(value)} {...custom} />
     );
 
+  getEditText = () => {
+    return this.props.matchInfo.matchId ? 'Edit' : 'Add';
+  };
+
   render = () => {
     const {
-      onSave,
+      onAddEdit,
       squads,
       submitting,
       generalErrors
@@ -41,17 +47,20 @@ class EditMatchForm extends React.Component {
     return (
       <section className="edit-match">
         <h1>Create match</h1>
-        <form className="edit-match-form" onSubmit={this.props.handleSubmit(onSave)}>
+        <form className="edit-match-form" onSubmit={this.props.handleSubmit(onAddEdit)}>
           <div className="top-section">
             <Field component={SelectField} name="squad" label="Select team"
+                   fullWidth={true}
                    onValueChange={(value) => this.props.getAvailablePlayers(value)}>
               {squads.map(squad =>
                 <MenuItem key={squad._id} value={squad._id} primaryText={squad.name}/>)
               }
             </Field>
             <Field component={::this.renderDatePicker} name="matchDate" label="Match date"
-                   format={v => (v === '' || v === undefined ? new Date() : new Date(v))}/>
-            <Field component={TextField} name="opposition" label="Opponents name"/>
+                   fullWidth={true}
+            />
+            <Field component={TextField} name="opposition" fullWidth={true}
+                   label="Opponents name"/>
           </div>
 
           <div className={::this.getErrorClasses()}>
@@ -59,8 +68,9 @@ class EditMatchForm extends React.Component {
               <span key={index}>{errorMsg}</span>
             )}
           </div>
+
           <div className="button-row">
-            <RaisedButton label="Save" primary={true} type="submit" disabled={submitting}/>
+            <RaisedButton label={::this.getEditText} primary={true} type="submit" disabled={submitting}/>
           </div>
         </form>
       </section>
