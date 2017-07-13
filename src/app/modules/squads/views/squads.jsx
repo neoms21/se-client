@@ -4,6 +4,7 @@ import Squad from './squad'
 import './squad-list.scss'
 import RaisedButton from 'material-ui/RaisedButton';
 import * as squadActions from '../actions/squad-actions'
+import {deleteSquad} from "../actions/squad-actions";
 
 class SquadsComponent extends React.Component {
 
@@ -20,6 +21,11 @@ class SquadsComponent extends React.Component {
         this.props.history.push('/squad');
     };
 
+    delete = (id) => {
+        console.log(id, 'deleting squad');
+        this.props.dispatch(deleteSquad(id))
+    };
+
     render() {
         return (
             <div className="squad-list">
@@ -27,7 +33,7 @@ class SquadsComponent extends React.Component {
                 <RaisedButton className="squad-list__button"
                               label="Add Squad" primary={true} onClick={this.addSquad}/>
                 {this.props.squads.map((squad, index) => {
-                    return <Squad key={index} id={squad._id} name={squad.name}/>;
+                    return <Squad key={index} id={squad._id} name={squad.name} deleteSquad={this.delete}/>;
                 })}
 
             </div>

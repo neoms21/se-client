@@ -9,6 +9,12 @@ export const createSquad = (squadInfo) => ({
     type: types.CREATE_SQUAD,
     squad: squadInfo
 });
+
+export const deleteSquad = (id) => ({
+    type: types.DELETE_SQUAD,
+    payload: id
+});
+
 //
 export const createSquadSuccess = (squad) => (
     {
@@ -30,4 +36,12 @@ export const createSquadFailure = (errors) => ({
 export const fetchSquadFailure = (errors) => ({
     type: types.FETCH_SQUADS_FAILURE,
     errors: errors
+});
+export const deleteSquadFailure = (errors) => ({
+    type: types.DELETE_SQUAD_FAILURE,
+    errors: errors
+});
+
+export const deleteSquadSuccess = () => ({
+    type: types.DELETE_SQUAD_SUCCESS
 });
