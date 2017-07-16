@@ -28,12 +28,21 @@ class EditMatchForm extends React.Component {
                   floatingLabelText={label} autoOk={true}
                   {...input}
                   format={v => (v === '' || v === undefined ? new Date() : new Date(v))}
+                  value = {input.value !== ''? new Date(input.value) : null}
                   onChange={(event, value) =>
                     input.onChange(value)} {...custom} />
     );
 
+//     const renderDatePicker = ({ input, defaultValue, meta: { touched, error } }) => (
+//     <DatePicker
+//         errorText = {touched && error}
+//         {...input}
+//         value = {input.value !== ''? new Date(input.value) : null}
+//         onChange = {(event, value) => {console.log(value); input.onChange(value)}} />
+// )
+
   getEditText = () => {
-    return this.props.matchInfo.matchId ? 'Edit' : 'Add';
+    return this.props.matchInfo ? 'Edit' : 'Add';
   };
 
   render = () => {
@@ -70,7 +79,7 @@ class EditMatchForm extends React.Component {
           </div>
 
           <div className="button-row">
-            <RaisedButton label={::this.getEditText} primary={true} type="submit" disabled={submitting}/>
+            <RaisedButton label={::this.getEditText()} primary={true} type="submit" disabled={submitting}/>
           </div>
         </form>
       </section>

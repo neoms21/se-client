@@ -32,7 +32,7 @@ export default class MatchEditSelectionForm extends React.Component {
 
   onSave = (values) => {
     this.props.onSave(values, this.props.selectedMatch.matchId);
-    this.props.history.push(this.props.history.location.pathname.replace('edit-selection', 'selection-list'));
+    //this.props.history.push(this.props.history.location.pathname.replace('edit-selection', 'selection-list'));
   };
 
   render = () => {
@@ -80,7 +80,7 @@ export default class MatchEditSelectionForm extends React.Component {
             )}
           </div>
           <div className="buttons">
-            <RaisedButton label="Save" primary={true} type="submit" disabled={submitting}/>
+            <RaisedButton label="Add" primary={true} type="submit" disabled={submitting}/>
             <RaisedButton label="Close" onTouchTap={::this.onClose}/>
           </div>
         </form>

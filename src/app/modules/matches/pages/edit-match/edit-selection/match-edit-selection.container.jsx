@@ -1,6 +1,6 @@
 import React from 'react';
 import MatchEditSelectionForm from './match-edit-selection-form';
-import { addSelection } from '../../../actions/match-actions';
+import { addMatchSelection } from '../../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../../validators/validations';
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
   return {
     onSave: (values, matchId) => {
-      dispatch(addSelection({...values, selectionId: uuid.v4(), matchId}));
+      dispatch(addMatchSelection({...values, selectionId: uuid.v4(), matchId}));
     }
   };
 };

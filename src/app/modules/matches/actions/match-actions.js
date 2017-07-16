@@ -1,4 +1,5 @@
 import * as types from './actionTypes';
+import * as uuid from "uuid";
 
 export const createMatch = (matchInfo) => ({
   type: types.CREATE_MATCH,
@@ -15,18 +16,18 @@ export const createMatchFailure = (errors) => ({
   errors: errors
 });
 
-export const addMatchSelection = (selectionInfo) => ({
-  type: types.ADD_SELECTION,
-  matchSelection: selectionInfo
+export const addMatchSelection = (selectionInfo, matchId) => ({
+  type: types.ADD_MATCH_SELECTION,
+  matchSelection: {...selectionInfo, selectionId: uuid.v4(), matchId}
 });
 
 export const deleteMatchSelection = (selectionInfo) => ({
-  type: types.DELETE_SELECTION,
+  type: types.DELETE_MATCH_SELECTION,
   matchSelection: selectionInfo
 });
 
 export const addMatchInfo = (info) => ({
   type: types.ADD_MATCH_INFO,
-  info: info
+  info: {...info, matchId: uuid.v4()}
 });
 

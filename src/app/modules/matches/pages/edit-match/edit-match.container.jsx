@@ -22,8 +22,8 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onAddEdit: (values) => {
-      dispatch(addMatchInfo(values));
+    onAddEdit: (values, matchId) => {
+      dispatch(addMatchInfo(values, matchId));
     },
     getAvailablePlayers: (squadId) => {
       dispatch(fetchPlayers(squadId));
