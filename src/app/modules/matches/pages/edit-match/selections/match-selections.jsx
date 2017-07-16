@@ -5,7 +5,8 @@ import {FontIcon, RaisedButton} from 'material-ui';
 import {greenA200, redA200} from 'material-ui/styles/colors';
 import {NavLink} from 'react-router-dom';
 import {addMatchSelection, deleteMatchSelection} from '../../../actions/match-actions';
-import 'rxjs/operator/groupBy';
+import {Observable, from, groupBy} from 'rxjs/Rx';
+import * as _ from 'lodash';
 
 const iconStyles = {
     marginRight: 10,
@@ -64,7 +65,7 @@ class MatchSelectionsListComponent extends React.Component {
                           <span className="description">
                             {selection.player}
                           </span>
-                          <span className="description">{selection.position}</span>
+                            <span className="description">{selection.position}</span>
 
                             <NavLink to={::this.getEditUrl(selection.selectionId)}>
                                 <FontIcon style={iconStyles}
@@ -77,7 +78,7 @@ class MatchSelectionsListComponent extends React.Component {
                         </div>
                     );
                 })}
-                <div className="">
+                <div className="error-section">
                     {errors.map((err, index) => <span key={index} className="error">{err}</span>)}
                 </div>
             </div>
@@ -89,22 +90,19 @@ const validate = (selections) => {
     let errors = [];
 
     // check for duplicates
-    if(selections) {
-        const gropued = Observable.from(selections).groupBy((item) => item.player);
+    if (selections) {
+        const duplicates = _.groupBy(selections, (item) => item.player);
 
-        // const duplicates = selections.reduce(function (acc, el, i, arr) {
-        //     if (arr.indexOf(el.player) !== i && acc.indexOf(el.player) < 0) acc.push(el.player);
-        //     return acc;
-        // }, []);
-        //
-        // duplicates.forEach(dup => {
-        //     errors.push(`You have duplicated ${dup}`);
-        // });
+        if (Object.keys(duplicates).length > 0) {
+            for (const key in duplicates) {
+                if (duplicates[key].length > 1) {
+                    errors.push(`You have duplicated ${key}`);
+                }
+            }
+        }
     }
-
     return errors;
 };
-
 
 function mapStateToProps(state) {
     return {
