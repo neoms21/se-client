@@ -11,9 +11,9 @@ class SquadsComponent extends React.Component {
         super(props);
     }
 
-    componentWillMount(){
-
-        this.props.dispatch(squadActions.fetchSquads());
+    componentWillMount() {
+        console.log('in will mount', this.props.userId);
+        this.props.dispatch(squadActions.fetchSquads(this.props.userId));
     }
 
     addSquad = () => {
@@ -36,7 +36,7 @@ class SquadsComponent extends React.Component {
                 <RaisedButton className="squad-list__button"
                               label="Add Squad" primary={true} onClick={this.addSquad}/>
                 {this.props.squads.map((squad, index) => {
-                    return <Squad key={index} id={squad._id} name={squad.name} />;
+                    return <Squad key={index} id={squad._id} name={squad.name}/>;
                 })}
 
             </div>
@@ -45,7 +45,8 @@ class SquadsComponent extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        squads: state.squads.squads
+        squads: state.squads.squads,
+        userId: state.user.currentUser._id
     }
 }
 

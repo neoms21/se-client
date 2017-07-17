@@ -11,6 +11,7 @@ import sinon from 'sinon'
 // simplest redux store possible that will work with Redux-Form.
 import {reducer as formReducer} from 'redux-form'
 import squadReducer from '../reducers/squad-reducer';
+import userReducer from '../../user/reducers/user-reducer';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -22,13 +23,15 @@ describe("SquadFormContainer for add operations", () => {
     beforeEach(() => {
         store = createStore(combineReducers({
             form: formReducer,
-            squads: squadReducer
+            squads: squadReducer,
+            user: userReducer
 
         }));
         onSave = sinon.stub().returns(Promise.resolve());
         const props = {
             onSave,
-            match: {params:{id: '123'}}
+            match: {params: {id: '123'}},
+            user: {currentUser: {_id: '123'}}
         };
         // With redux-form v5, we could do <ContactFormContainer store={store}/>.
         // However, with redux-form v6, the Field component we use is itself
@@ -45,19 +48,20 @@ describe("SquadFormContainer for add operations", () => {
     it('should show the error message if focus goes away from squad name element and squad name is empty', () => {
         const props = {
             onSave,
-            match: {params:{}}
+            match: {params: {}},
+            user: {currentUser: {_id: 'a1'}}
         };
         subject = mount(<MuiThemeProvider><Provider
             store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)
         const input = subject.find('input').first();
-        input.simulate('blur')
+        input.simulate('blur');
         const errorDiv = subject.findWhere(n => n.text() === 'squadName is Required');
         expect(errorDiv).to.exist;
     });
 
     it('should show the error message if submit is clicked without filling in the squad name', () => {
         const props = {
-            onSave,match: {params:{}}
+            onSave, match: {params: {}}
         };
         subject = mount(<MuiThemeProvider><Provider
             store={store}><SquadFormContainer {...props}/></Provider></MuiThemeProvider>)

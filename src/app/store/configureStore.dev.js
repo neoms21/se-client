@@ -31,6 +31,9 @@ export default function configureStore(history, initialState) {
   // Build the middleware for intercepting and dispatching navigation actions
   const routingMiddleware = routerMiddleware(history);
 
-  return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware, routingMiddleware,
-    reduxImmutableStateInvariant()), persistState()));
+    return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware, routingMiddleware,
+        reduxImmutableStateInvariant()), persistState(['user'])));
+
+    // return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(epicMiddleware, routingMiddleware,
+    //     reduxImmutableStateInvariant())));
 }

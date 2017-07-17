@@ -27,7 +27,6 @@ const validate = values => {
 const mapDispatchToProps = dispatch => {
     return {
         onSave: squadFormValues => {
-            console.log('Now running onSave action');
             dispatch(createSquad(squadFormValues));
         },
         onReceiveProps: (changedProps) => {
@@ -42,10 +41,10 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state, ownProps) => {
 
     let squad = getSquad(state, ownProps.match.params.id);
-
     return {
         saved: state.squads.saved,
         errors: state.squads.errors,
+        userId: state.user.currentUser._id,
         initialValues: {squadName: squad ? squad.name : ""}
     }
 

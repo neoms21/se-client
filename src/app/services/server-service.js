@@ -62,7 +62,7 @@ const login = (email, password) => {
                 token = resp.body.token;
                 // tell server that we are now authenticating the socket
                 socket.emit('authentication', resp.body);
-                ret.next({userName: email});
+                ret.next(resp.body);
             }
             else {
                 // error logging in
@@ -110,6 +110,7 @@ const sendCommand = (name, payload) => {
 };
 
 const sendQuery = (name, payload) => {
+    console.log('in send query', payload);
     // need to give it a correlation id
     let query = {properties: {queryName: name, correlationId: uuid.v4()}, payload: payload};
     // create observable for client
