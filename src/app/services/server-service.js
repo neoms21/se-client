@@ -120,7 +120,7 @@ const sendCommand = (name, payload) => {
 
     // send it
     try {
-        console.log('sending command ', command)
+        console.log('sending command ', command);
         socket.emit('command', command);
     }
     catch (err) {

@@ -4,7 +4,7 @@ import {
     verifyTokenSuccessEpic, verifyTokenEpic, verifyTokenFailureEpic
 } from '../modules/user/epics/user-epic';
 import {createPlayerEpic, fetchPlayersEpic, createPlayerSuccessEpic} from '../modules/players/epics/players-epic';
-import {createSquadEpic} from '../modules/squads/epics/squad-epic';
+import {createSquadEpic, deleteSquadEpic} from '../modules/squads/epics/squad-epic';
 import {fetchSquadsEpic} from '../modules/squads/epics/squad-epic';
 import {createSquadSuccessEpic} from '../modules/squads/epics/squad-epic';
 import * as AppEpics from './app-epics';
@@ -17,6 +17,7 @@ export const rootEpic = combineEpics(
     fetchPlayersEpic,
     fetchSquadsEpic,
     registerUserEpic,
+    deleteSquadEpic,
     signinUserEpic,
     signinUserSuccessEpic,
     registerUserSuccessEpic,
