@@ -44,3 +44,19 @@ export const fetchPlayersFailure = (errors) => ({
     type: types.FETCH_PLAYERS_FAILURE,
     errors: errors
 });
+export const deletePlayerSuccess = (id) => {
+
+    return ({
+        type: types.DELETE_PLAYER_SUCCESS,
+        payload: id
+    })
+};
+export const deletePlayerFailure = (errors) => ({
+    type: types.DELETE_PLAYER_FAILURE,
+    errors: errors
+});
+
+export const deletePlayer = (player) => ({
+    type: types.DELETE_PLAYER,
+    payload: {player: player}
+});

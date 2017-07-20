@@ -27,6 +27,11 @@ class PlayersComponent extends React.Component {
         this.props.history.push(`/squad/${this.props.match.params.id}/player`);
     };
 
+    deletePlayer = (player) => {
+        this.props.dispatch(playerActions.deletePlayer(player));
+        // this.props.history.push(`/squad/${this.props.match.params.id}/player`);
+    };
+
     render() {
         return (
             <div className="players-list">
@@ -36,7 +41,8 @@ class PlayersComponent extends React.Component {
                 <br/>
 
                 {this.props.players.map((p, i) => {
-                    return <Player key={i} name={p.playerName} click={this.editPlayer} player={p}/>;
+                    return <Player key={i} name={p.playerName} click={this.editPlayer} player={p}
+                                   deletePlayer={this.deletePlayer}/>;
                 })}
             </div>
         );
