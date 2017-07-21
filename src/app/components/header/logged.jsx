@@ -9,7 +9,9 @@ export default class Logged extends React.Component {
     render() {
         return (
             <div className="logged">
-                <span className="user-name"> Welcome {this.props.currentUser.name}</span>
+
+                <span
+                    className="user-name">  {this.props.currentUser ? 'Welcome ' + this.props.currentUser.name : ''}</span>
                 <IconMenu
                     {...this.props}
                     iconButtonElement={<IconButton>
@@ -26,7 +28,7 @@ export default class Logged extends React.Component {
 
                     <MenuItem primaryText='Refresh'/>
                     <MenuItem primaryText='Help'/>
-                    <MenuItem primaryText='Sign out'/>
+                    <MenuItem primaryText='Sign out' onClick={this.props.logout}/>
                 </IconMenu>
             </div>
         );

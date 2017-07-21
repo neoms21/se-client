@@ -22,3 +22,9 @@ export const fetchSquadsEpic = action$ => action$.ofType(ActionTypes.FETCH_SQUAD
     .mergeMap(action => sendQuery('FetchSquads', {userId: action.payload})
         .map(ev => ev.isFailure ? squadActions.fetchSquadFailure(ev.errors)
             : squadActions.fetchSquadSuccess(ev.data)));
+
+export const deleteSquadEpic = action$ => action$.ofType(ActionTypes.DELETE_SQUAD)
+    .mergeMap(action => sendCommand('DeleteSquad', action.payload)
+        .map(ev => ev.errors && ev.errors.length > 0 ?
+            squadActions.deleteSquadFailure(ev.errors)
+            : squadActions.deleteSquadSuccess(action.payload)));

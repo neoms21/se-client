@@ -4,28 +4,16 @@ import Logged from './logged';
 import Login from './login';
 import LeftHandMenu from "./LeftHandMenu";
 
-export default class HeaderComponent extends React.Component {
 
-    constructor(props) {
-        super(props);
+const Header = ({handleLeftIconClick, handleSignin, onLogout, currentUser}) => (
 
-        this.state = {
-            isSignedIn: false
-        };
-    }
+    <AppBar title='Sports Editor' onLeftIconButtonTouchTap={handleLeftIconClick}
+            iconElementLeft={currentUser ? <LeftHandMenu /> : <div></div>}
+            iconElementRight={currentUser
+                ? <Logged currentUser={currentUser} logout={onLogout}/>
+                : <Login handleSignin={handleSignin}/>}>
+    </AppBar>
+);
 
-    componentWillReceiveProps = (nextProps) => {
-        this.setState({isSignedIn: nextProps.currentUser !== undefined});
-    };
 
-    render = () => {
-        return (
-            <AppBar title='Sports Editor' onLeftIconButtonTouchTap={this.props.handleLeftIconClick}
-                    iconElementLeft={<LeftHandMenu />}
-                    iconElementRight={this.state.isSignedIn
-                        ? <Logged currentUser={this.props.currentUser}/>
-                        : <Login handleSignin={this.props.handleSignin}/>}>
-            </AppBar>
-        );
-    };
-};
+export default Header;
