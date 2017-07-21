@@ -15,7 +15,7 @@ export const createMatchEpic = action$ =>
 export const createMatchSuccessEpic = action$ =>
   action$.ofType(ActionTypes.CREATE_MATCH_SUCCESS)
     .mergeMap(action =>
-      Observable.of(push(`/match/${action.match.matchId}/selection-list`, action.message)));
+      Observable.of(push(`/match-list`, action.message)));
 
 // export const createMatchSelectionEpic = action$ =>
 //   action$.ofType(ActionTypes.CREATE_MATCH_SELECTION)
@@ -34,6 +34,16 @@ export const createMatchSuccessEpic = action$ =>
 
 export const addMatchSelectionEpic = action$ =>
   action$.ofType(ActionTypes.ADD_MATCH_SELECTION)
+    .mergeMap(action =>
+      Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`)));
+
+export const editMatchSelectionEpic = action$ =>
+  action$.ofType(ActionTypes.EDIT_MATCH_SELECTION)
+    .mergeMap(action =>
+      Observable.of(push(`/match/${action.matchSelection.matchId}/edit-selection/${action.matchSelection.selectionId}`)));
+
+export const saveMatchSelectionEpic = action$ =>
+  action$.ofType(ActionTypes.SAVE_MATCH_SELECTION)
     .mergeMap(action =>
       Observable.of(push(`/match/${action.matchSelection.matchId}/selection-list`)));
 

@@ -24,6 +24,8 @@ export const rootEpic = combineEpics(
   MatchEpics.createMatchSuccessEpic,
   MatchEpics.addMatchSelectionEpic,
   MatchEpics.addInfoEpic,
+  MatchEpics.editMatchSelectionEpic,
+  MatchEpics.saveMatchSelectionEpic,
   PlayerEpics.createPlayerEpic,
   PlayerEpics.fetchPlayersForSquadsEpic
 );

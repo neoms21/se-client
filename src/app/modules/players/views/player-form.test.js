@@ -47,12 +47,12 @@ describe("PlayerForm", () => {
     };
 
     //Here we show we can test asychronous actions triggered by our form.
-    it("calls reset after onSave", () => {
+    it("calls reset after onAdd", () => {
 
          //subject = buildSubject();
          //console.log(subject.find('form'));
 
-        // expect(onSave.callCount).to.equal(1)
+        // expect(onAdd.callCount).to.equal(1)
         // // This onSaveResponse isn't the 'real' response. But using .then()
         // // with it works here because it enforces that we run our expect check
         // // AFTER all the form submit logic has run.
@@ -89,7 +89,7 @@ describe("PlayerForm", () => {
     //             }
     //             subject = buildSubject()
     //             subject.find('form').simulate('submit')
-    //             expect(onSave.callCount).to.equal(1)
+    //             expect(onAdd.callCount).to.equal(1)
     //             return promiseReturnedFromFormHandler.then(() => {
     //                 throw new Error("Submission error should have been checked but wasn't")
     //             }).catch(error => {

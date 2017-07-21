@@ -1,11 +1,10 @@
 import React from 'react';
 import MatchEditSelectionForm from './match-edit-selection-form';
-import { addMatchSelection } from '../../../actions/match-actions';
+import { addMatchSelection, saveMatchSelection } from '../../../actions/match-actions';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { validateRequiredFields } from '../../../../../validators/validations';
 import { convertErrorArrayToObject } from '../../../../../services/utils-service';
-import { push } from 'react-router-redux';
 import * as uuid from 'uuid';
 
 const tempPositions = [
@@ -19,20 +18,22 @@ function mapStateToProps(state) {
   const errorDef = convertErrorArrayToObject(state.matchSelections.errors);
 
   return {
+    initialValues: state.matchSelections.matchSelection,
     availablePlayers: state.players.players || [],
     positions: tempPositions, //state.matchSelections.positions || [],
-    selectedMatch: state.matches.selectedMatch,
+    matchInfo: state.matches.selectedMatch,
+    matchSelection: state.matchSelections.matchSelection,
     errors: errorDef.fieldErrors,
     generalErrors: errorDef.generalErrors
   };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const location = ownProps.location;
 
   return {
-    onSave: (values, matchId) => {
-      dispatch(addMatchSelection({...values, selectionId: uuid.v4(), matchId}));
+    onSave: (values, matchId, selectionId) => {
+      selectionId ? dispatch(saveMatchSelection({...values, matchId}))
+        : dispatch(addMatchSelection({...values, selectionId: uuid.v4(), matchId}));
     }
   };
 };

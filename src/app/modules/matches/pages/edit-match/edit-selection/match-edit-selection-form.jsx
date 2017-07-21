@@ -18,36 +18,36 @@ export default class MatchEditSelectionForm extends React.Component {
     }
   }
 
-  getEditType = (selectedMatch) => {
-    return lodash.isNil(selectedMatch.selectionId) ? 'Create' : 'Edit';
+  getEditType = () => {
+    return lodash.isNil(this.props.matchSelection) ? 'Create' : 'Edit';
+  };
+
+  getSaveLabel = () => {
+    return lodash.isNil(this.props.matchSelection) ? 'Add' : 'Edit';
   };
 
   getErrorClasses = () => {
     return (this.props.generalErrors.length > 0 ? 'error' : '');
   };
 
-  onClose = () => {
-    //this.props.history.push(this.props.history.location.pathname.replace('edit-selection', 'selection-list'));
-  };
-
   onSave = (values) => {
-    this.props.onSave(values, this.props.selectedMatch.matchId);
-    //this.props.history.push(this.props.history.location.pathname.replace('edit-selection', 'selection-list'));
+    this.props.onSave(values, this.props.matchInfo.matchId, this.props.matchSelection ?
+      this.props.matchSelection.selectionId : null);
   };
 
   render = () => {
     const {
       availablePlayers,
       positions,
-      selectedMatch,
       handleSubmit,
       submitting,
-      generalErrors
+      generalErrors,
+      onClose
     } = this.props;
 
     return (
       <div className="match-edit-selection">
-        <h1>{this.getEditType(selectedMatch)} selection</h1>
+        <h1>{this.getEditType} selection</h1>
         <div className="match-info">
         </div>
         {availablePlayers.length === 0 ?
@@ -80,8 +80,8 @@ export default class MatchEditSelectionForm extends React.Component {
             )}
           </div>
           <div className="buttons">
-            <RaisedButton label="Add" primary={true} type="submit" disabled={submitting}/>
-            <RaisedButton label="Close" onTouchTap={::this.onClose}/>
+            <RaisedButton label={::this.getSaveLabel()} primary={true} type="submit" disabled={submitting}/>
+            <RaisedButton label="Close" onTouchTap={onClose}/>
           </div>
         </form>
       </div>
