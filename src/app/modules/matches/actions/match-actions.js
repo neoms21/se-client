@@ -1,7 +1,7 @@
 import * as types from './actionTypes';
 import * as uuid from 'uuid';
 
-export const createMatch = (matchInfo) => ({
+export const createMatch = (matchInfo, selections) => ({
   type: types.CREATE_MATCH,
   matchInfo: matchInfo
 });

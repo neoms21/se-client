@@ -29,7 +29,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-
   return {
     onSave: (values, matchId, selectionId) => {
       selectionId ? dispatch(saveMatchSelection({...values, matchId}))

@@ -8,16 +8,11 @@ export default function matchReducer(state = initialState, action) {
       return { ...state, selectedMatch: action.info, errors: {}};
 
     case types.CREATE_MATCH:
-      return {isLoading: true, ...state, errors: {}, selectedMatch: {}};
+      return {isLoading: true, ...state, errors: {}};
 
     case types.CREATE_MATCH_SUCCESS:
       return {
-        ...state, isLoading: false, message: action.message, errors: {},
-        selectedMatch: {
-          matchId: action.match.matchId,
-          squadName: action.match.squadName,
-          matchDate: action.match.matchDate
-        }
+        ...state, isLoading: false, message: action.message, errors: {}
       };
 
     case types.CREATE_MATCH_FAILURE:
