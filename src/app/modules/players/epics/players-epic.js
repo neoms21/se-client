@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 export const createPlayerEpic = action$ => action$.ofType(ActionTypes.CREATE_PLAYER)
     .mergeMap(action => sendCommand('CreatePlayer', action.payload)
         .map(ev => ev.errors && ev.errors.length > 0 ? playerActions.createPlayerFailure(ev.errors)
-            : playerActions.createPlayerSuccess(action.payload.player)));
+            : playerActions.createPlayerSuccess(action.payload)));
 
 export const createPlayerSuccessEpic = action$ => action$.ofType(ActionTypes.CREATE_PLAYER_SUCCESS)
     .mergeMap(action => {
