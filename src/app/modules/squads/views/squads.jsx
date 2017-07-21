@@ -4,6 +4,7 @@ import Squad from './squad'
 import './squad-list.scss'
 import RaisedButton from 'material-ui/RaisedButton';
 import * as squadActions from '../actions/squad-actions'
+import {deleteSquad} from "../actions/squad-actions";
 
 class SquadsComponent extends React.Component {
 
@@ -12,21 +13,17 @@ class SquadsComponent extends React.Component {
     }
 
     componentWillMount() {
-        console.log('in will mount', this.props.userId);
-        this.props.dispatch(squadActions.fetchSquads(this.props.userId));
+        if (this.props.userId)
+            this.props.dispatch(squadActions.fetchSquads(this.props.userId));
     }
 
     addSquad = () => {
-        console.log('in add');
         this.props.history.push('/squad');
     };
 
-    goToPlayers = (id) => {
-        this.props.history.push('squad/' + id + '/players');
-    };
-
-    editSquad = (squad) => {
-        this.props.history.push('squad/' + squad._id);
+    delete = (id) => {
+        console.log(id, 'deleting squad');
+        this.props.dispatch(deleteSquad(id))
     };
 
     render() {
@@ -36,7 +33,7 @@ class SquadsComponent extends React.Component {
                 <RaisedButton className="squad-list__button"
                               label="Add Squad" primary={true} onClick={this.addSquad}/>
                 {this.props.squads.map((squad, index) => {
-                    return <Squad key={index} id={squad._id} name={squad.name}/>;
+                    return <Squad key={index} id={squad._id} name={squad.name} deleteSquad={this.delete}/>;
                 })}
 
             </div>

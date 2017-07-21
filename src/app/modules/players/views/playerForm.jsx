@@ -6,10 +6,10 @@ import '../../../core.scss'
 import {stopSubmit} from 'redux-form';
 import {SelectField, MenuItem} from 'material-ui'
 const items = [
-    <MenuItem value='defender' primaryText="Defender"/>,
-    <MenuItem value='forward' primaryText="Forward"/>,
-    <MenuItem value='goalkeeper' primaryText="Goalkeeper"/>,
-    <MenuItem value='midfielder' primaryText="Midfielder"/>,
+    <MenuItem key="def" value='defender' primaryText="Defender"/>,
+    <MenuItem key='for' value='forward' primaryText="Forward"/>,
+    <MenuItem key="gk" value='goalkeeper' primaryText="Goalkeeper"/>,
+    <MenuItem key='mf' value='midfielder' primaryText="Midfielder"/>,
 ];
 
 const renderSelectField = ({input, label, meta: {touched, error}, children}) => (

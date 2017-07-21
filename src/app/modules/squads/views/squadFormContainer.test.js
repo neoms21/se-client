@@ -1,18 +1,9 @@
 import SquadFormContainer from './squadFormContainer'
 import React from 'react'
-
-// See README for discussion of chai, enzyme, and sinon
 import {expect} from 'chai'
 import {mount} from 'enzyme'
 import sinon from 'sinon'
-
-// In this file we're doing an integration test. Thus we need to hook up our
-// form component to Redux and Redux-Form. To do that, we need to create the
-// simplest redux store possible that will work with Redux-Form.
-import {reducer as formReducer} from 'redux-form'
-import squadReducer from '../reducers/squad-reducer';
-import userReducer from '../../user/reducers/user-reducer';
-import {createStore, combineReducers} from 'redux';
+import configureStore from 'redux-mock-store'
 import {Provider} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -20,13 +11,10 @@ describe("SquadFormContainer for add operations", () => {
     let store;
     let onSave;
     let subject;
+    const initialState = {user: {currentUser: {}}, squads: {squads: []}};
+    const mockStore = configureStore();
     beforeEach(() => {
-        store = createStore(combineReducers({
-            form: formReducer,
-            squads: squadReducer,
-            user: userReducer
-
-        }));
+        store = mockStore(initialState);
         onSave = sinon.stub().returns(Promise.resolve());
         const props = {
             onSave,

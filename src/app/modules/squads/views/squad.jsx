@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 import {blue500, red500, greenA200} from 'material-ui/styles/colors';
 import {NavLink} from 'react-router-dom'
 export default function Squad(props) {
+
     const iconStyles = {
         marginRight: 10,
         cursor: 'hand'
@@ -30,6 +31,13 @@ export default function Squad(props) {
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
             </NavLink>
+            <a onClick={() => {
+                props.deleteSquad(props.id);
+            }}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={red500}>delete</FontIcon>
+            </a>
         </div>
     )
 };

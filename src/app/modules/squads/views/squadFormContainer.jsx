@@ -13,10 +13,6 @@ class SquadFormContainer extends React.Component {
     constructor(props) {
         super(props);
     }
-
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-    }
 }
 
 const validate = values => {
