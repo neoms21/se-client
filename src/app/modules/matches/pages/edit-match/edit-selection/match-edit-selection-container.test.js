@@ -59,9 +59,10 @@ describe("EditMatchSelectionContainer", () => {
         });
 
         it('should call onSave when save button is clicked', () => {
-            const input = subject.find('button').first();
+            const input = subject.find('button[type="submit"]').first();
             input.simulate('click');
-            expect(onSave).to.have.been.called();
+            subject.simulate('submit');
+            expect(onSave.called).to.equal(true);
         });
     });
 
