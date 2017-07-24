@@ -10,25 +10,25 @@ import {Provider} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import playersReducer from '../../../../players/reducers/players-reducer';
 import matchesReducer from '../../../reducers/match-reducer';
-
+import configureStore from 'redux-mock-store';
 
 describe("EditMatchSelectionContainer", () => {
     let store;
     let onSave;
     let subject;
-    let state;
+    const middlewares = [];
+    const mockStore = configureStore(middlewares);
 
     beforeEach(() => {
-        store = createStore(combineReducers({
-            form: formReducer,
-            matchSelections: matchSelectionReducer,
-            players: playersReducer,
-            matches: matchesReducer
-        }));
-        onSave = sinon.stub().returns(Promise.resolve());
-        const props = {
-            onSave
-        };
+        // store = createStore(combineReducers({
+        //     form: formReducer,
+        //     matchSelections: matchSelectionReducer,
+        //     players: playersReducer,
+        //     matches: matchesReducer
+        // }));
+        store = mockStore({matchSelections: {errors: []}, players: {players: []}, matches: {selectedMatch: {}}});
+        //onSave = sinon.stub().returns(Promise.resolve());
+        const props = {};
         subject = mount(<MuiThemeProvider><Provider
             store={store}><MatchEditSelectionContainer {...props}/></Provider></MuiThemeProvider>);
 
@@ -59,14 +59,20 @@ describe("EditMatchSelectionContainer", () => {
         });
 
         it('should call onSave when save button is clicked', () => {
+            const container = subject.find('MatchEditSelectionContainer');
+            const spy = sinon.stub(container.props.onSave);
+            console.log('~~~~ ', container.props)
             const input = subject.find('button[type="submit"]').first();
             input.simulate('click');
-            subject.simulate('submit');
-            expect(onSave.called).to.equal(true);
+            expect(spy.called).to.equal(true);
         });
     });
 
     describe('validate', () => {
-
+        it('should return errors for empty array', () => {
+            const container = subject.find('MatchEditSelectionContainer');
+            const result = container.validate([]);
+            expect(result).to.be.defined;
+        });
     });
 });
