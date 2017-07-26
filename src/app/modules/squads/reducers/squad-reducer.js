@@ -22,7 +22,7 @@ export default function squadReducer(state = initialState, action) {
             return Object.assign({}, state, {saved: false});
         case types.CREATE_SQUAD_SUCCESS:
             return Object.assign({}, state, {saved: true, errors: []});
-        case types.DELETE_SQUAD:
+        case types.DELETE_SQUAD_SUCCESS:
             return Object.assign({}, state, {
                 squads: state.squads.filter(s => {
                     return s._id !== action.payload

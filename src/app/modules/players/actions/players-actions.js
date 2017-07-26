@@ -3,7 +3,7 @@ import * as types from './players.actionTypes';
 export const createPlayer = (player) => {
     return {
         type: types.CREATE_PLAYER,
-        payload: {player: player}
+        payload: player
     }
 };
 // //
@@ -34,7 +34,7 @@ export const fetchPlayersSuccess = (players) => (
     });
 
 export const createPlayerFailure = (errors) => {
-    console.log(errors);
+
     return ({
         type: types.CREATE_PLAYER_FAILURE,
         errors: errors
@@ -43,4 +43,20 @@ export const createPlayerFailure = (errors) => {
 export const fetchPlayersFailure = (errors) => ({
     type: types.FETCH_PLAYERS_FAILURE,
     errors: errors
+});
+export const deletePlayerSuccess = (id) => {
+
+    return ({
+        type: types.DELETE_PLAYER_SUCCESS,
+        payload: id
+    })
+};
+export const deletePlayerFailure = (errors) => ({
+    type: types.DELETE_PLAYER_FAILURE,
+    errors: errors
+});
+
+export const deletePlayer = (player) => ({
+    type: types.DELETE_PLAYER,
+    payload: player
 });

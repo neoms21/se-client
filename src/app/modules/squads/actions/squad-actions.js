@@ -42,6 +42,7 @@ export const deleteSquadFailure = (errors) => ({
     errors: errors
 });
 
-export const deleteSquadSuccess = () => ({
-    type: types.DELETE_SQUAD_SUCCESS
+export const deleteSquadSuccess = (id) => ({
+    type: types.DELETE_SQUAD_SUCCESS,
+    payload: id
 });

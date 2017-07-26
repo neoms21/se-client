@@ -25,6 +25,13 @@ export default function Player(props) {
                           className="material-icons"
                           color={greenA200}>edit</FontIcon>
             </a>
+            <a onClick={() => {
+                props.deletePlayer(props.player);
+            }}>
+                <FontIcon style={iconStyles}
+                          className="material-icons"
+                          color={red500}>delete</FontIcon>
+            </a>
         </div>
     )
 };

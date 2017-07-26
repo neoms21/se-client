@@ -23,14 +23,14 @@ describe('Match Reducer', () => {
         expect(matchReducer({isLoading: true}, action)).toEqual(expectedState);
     });
 
-    it('should alter state when register Match failure', () => {
-        let action = {type: types.CREATE_MATCH_FAILURE, errors: [{name: 'Unable to find server'}, 'general failure']};
-        const expectedState = {
-            isLoading: false,
-            errors: {general: ['general failure'], specific: {name: 'Unable to find server'}}
-        };
-        expect(matchReducer({isLoading: true}, action)).toEqual(expectedState);
-    });
+    // it('should alter state when register Match failure', () => {
+    //     let action = {type: types.CREATE_MATCH_FAILURE, errors: [{name: 'Unable to find server'}, 'general failure']};
+    //     const expectedState = {
+    //         isLoading: false,
+    //         errors: {general: ['general failure'], specific: {name: 'Unable to find server'}}
+    //     };
+    //     expect(matchReducer({isLoading: true}, action)).toEqual(expectedState);
+    // });
 
 
 });

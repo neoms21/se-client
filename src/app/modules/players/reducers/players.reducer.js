@@ -24,6 +24,12 @@ export default function playersReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 errors: action.errors
             });
+        case types.DELETE_PLAYER_SUCCESS:
+            return Object.assign({}, state, {
+                players: state.players.filter(p => {
+                    return p.id !== action.payload.id
+                })
+            });
         default:
             return state;
     }

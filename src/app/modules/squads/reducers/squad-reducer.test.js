@@ -17,7 +17,7 @@ describe('Squad Reducer', () => {
     it('should remove the squad when delete squad action is taken', () => {
         const initialState = {saved: false, squads: [{_id: '123', name: 's1'}, {_id: '345', name: 's1'}]};
         expect(SquadReducer(initialState,
-            {type: types.DELETE_SQUAD, payload: '123'}))
+            {type: types.DELETE_SQUAD_SUCCESS, payload: '123'}))
             .toEqual({saved: false, squads: [{_id: '345', name: 's1'}]});
     });
 });
