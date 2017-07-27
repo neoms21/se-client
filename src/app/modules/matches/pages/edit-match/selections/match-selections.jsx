@@ -17,22 +17,26 @@ class MatchSelectionsListComponent extends React.Component {
     super(props);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.errors && nextProps.errors.length === 0) {
-
-    }
-  }
+  // componentWillReceiveProps(nextProps, nextContext) {
+  //   if (nextProps.errors && nextProps.errors.length === 0) {
+  //
+  //   }
+  // }
 
   addSelection = () => {
     this.props.history.push('edit-selection');
   };
 
-  getEditUrl(selectionId) {
-    return this.props.history.location.pathname.replace('selection-list', 'edit-selection') + '/' + selectionId;
-  }
+  // getEditUrl(selectionId) {
+  //   return this.props.history.location.pathname.replace('selection-list', 'edit-selection') + '/' + selectionId;
+  // }
 
   close = () => {
-    this.props.history.push(`/editmatch/${this.props.matchId}`);
+    this.props.history.push(`/editmatch/${this.props.matchInfo.matchId}`);
+  };
+
+  save = () => {
+    this.props.onSave(this.props.matchInfo, this.props.selections);
   };
 
   // onDelete = (selection) => {
@@ -42,7 +46,6 @@ class MatchSelectionsListComponent extends React.Component {
   render() {
     const {
       selections,
-      onSave,
       onDelete,
       onEdit,
       errors
@@ -54,7 +57,7 @@ class MatchSelectionsListComponent extends React.Component {
         <div className="match-info">
         </div>
         <RaisedButton label="Add" primary={true} className="toolbar-button" onClick={::this.addSelection}/>
-        <RaisedButton label="Save" primary={true} className="toolbar-button" onClick={onSave}/>
+        <RaisedButton label="Save" primary={true} className="toolbar-button" onClick={::this.save}/>
         <RaisedButton label="Close" primary={false} className="toolbar-button" onClick={::this.close}/>
 
         {selections.map((selection, index) => {
@@ -106,15 +109,15 @@ const validate = (selections) => {
 function mapStateToProps(state) {
   return {
     selections: state.matchSelections.selections || [],
-    matchId: state.matches.selectedMatch.matchId,
+    matchInfo: state.matches.selectedMatch,
     errors: validate(state.matchSelections.selections)
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSave: (values, matchId) => {
-      dispatch(createMatch(values, matchId));
+    onSave: (matchInfo, selections) => {
+      dispatch(createMatch(matchInfo, selections));
     },
     onDelete: (matchSelectionId) => {
       dispatch(deleteMatchSelection(matchSelectionId));
