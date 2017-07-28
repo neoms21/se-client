@@ -19,7 +19,7 @@ export const createPlayerSuccessEpic = action$ => action$.ofType(ActionTypes.CRE
     });
 
 export const fetchPlayersEpic = action$ => action$.ofType(ActionTypes.FETCH_PLAYERS)
-    .mergeMap(action => sendQuery('FetchPlayers',  action.payload)
+    .mergeMap(action => sendQuery('FetchPlayers', {id: action.payload})
         .map(ev => ev.isFailure ? playerActions.fetchPlayersFailure(ev.errors)
             : playerActions.fetchPlayersSuccess(ev.data)));
 

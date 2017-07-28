@@ -3,8 +3,13 @@ import * as uuid from 'uuid';
 
 export const createMatch = (matchInfo, selections) => ({
     type: types.CREATE_MATCH,
-    matchInfo,
-    selections
+    payload: {
+        squad: matchInfo.squad,
+        matchDate: matchInfo.matchDate,
+        opposition: matchInfo.opposition,
+        playerPositions: selections
+    }
+
 });
 
 export const createMatchSuccess = (payload) => ({
