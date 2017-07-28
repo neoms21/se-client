@@ -58,21 +58,21 @@ describe("EditMatchSelectionContainer", () => {
             expect(result.onSave).to.be.defined;
         });
 
-        it('should call onSave when save button is clicked', () => {
-            const container = subject.find('MatchEditSelectionContainer');
-            const spy = sinon.stub(container.props.onSave);
-            console.log('~~~~ ', container.props)
-            const input = subject.find('button[type="submit"]').first();
-            input.simulate('click');
-            expect(spy.called).to.equal(true);
-        });
+        // it('should call onSave when save button is clicked', () => {
+        //     const container = subject.find('MatchEditSelectionContainer');
+        //     const spy = sinon.stub(container.props.onSave);
+        //     console.log('~~~~ ', container.props)
+        //     const input = subject.find('button[type="submit"]').first();
+        //     input.simulate('click');
+        //     expect(spy.called).to.equal(true);
+        // });
     });
 
     describe('validate', () => {
-        it('should return errors for empty array', () => {
-            const container = subject.find('MatchEditSelectionContainer');
-            const result = container.validate([]);
-            expect(result).to.be.defined;
-        });
+        // it('should return errors for empty array', () => {
+        //     const container = subject.find('MatchEditSelectionContainer');
+        //     const result = container.validate([]);
+        //     expect(result).to.be.defined;
+        // });
     });
 });
