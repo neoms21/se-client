@@ -7,15 +7,15 @@ describe('Match actions', () => {
             const result = MatchActions.createMatch({});
 
             expect(result.type).toBe(ActionTypes.CREATE_MATCH);
-            expect(typeof result.matchInfo).toBe('object');
+            expect(typeof result.payload).toBe('object');
         });
 
         it('should return payload for createMatch', () => {
-            const result = MatchActions.createMatch({opponents: 'Battersea', when: '12-jan-2017'});
+            const result = MatchActions.createMatch({opposition: 'Battersea', matchDate: '12-jan-2017'});
 
             expect(result.type).toBe(ActionTypes.CREATE_MATCH);
-            expect(result.matchInfo.opponents).toBe('Battersea');
-            expect(result.matchInfo.when).toBe('12-jan-2017');
+            expect(result.payload.opposition).toBe('Battersea');
+            expect(result.payload.matchDate).toBe('12-jan-2017');
         });
 
         it('should return correct object for Success', () => {
